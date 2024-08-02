@@ -1,3 +1,4 @@
+# https://huggingface.co/roneneldan/TinyStories-33M
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
 model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
