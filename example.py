@@ -24,3 +24,10 @@ output = model.generate(input_ids, max_length = 1000, num_beams=1,
 output_text = tokenizer.decode(output[0], skip_special_tokens=True)
 
 print(output_text)
+
+# What will be the evaluation dataset?
+# I guess I should just train for ?an epoch?
+# First I should increase the batch size as much as possible
+# And pass a lambda x:x as the evaluation function?
+# I don't really care about the validation loss, just 
+# what the generated text looks like
