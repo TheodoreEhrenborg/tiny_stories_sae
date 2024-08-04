@@ -12,8 +12,11 @@ def e(x):
     return x.replace(name, "Einstein")
 
 
-x = load_dataset("roneneldan/TinyStories")
-print(e(x["train"][2]["text"]))
+d = load_dataset("roneneldan/TinyStories")
+print(e(d["train"][2]["text"]))
+def f(ex):
+    return {"text":e(ex["text"])}
+d.map(f)
 
 
 
