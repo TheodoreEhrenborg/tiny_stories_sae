@@ -7,3 +7,8 @@
 
 # Links
 https://huggingface.co/blog/how-to-train
+
+
+https://huggingface.co/blog/stackllama
+
+https://huggingface.co/learn/nlp-course/chapter7/6?fw=pt
