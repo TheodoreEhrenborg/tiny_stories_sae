@@ -6,7 +6,7 @@ from transformers import AutoModelForCausalLM, AutoTokenizer,GenerationConfig
 model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
 #help(model)
 
-model.cuda()
+model
 
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 #help(tokenizer)
@@ -14,7 +14,7 @@ tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 prompt = "Once upon a time there was"
 
 # help(tokenizer.encode)
-input_ids = tokenizer.encode(prompt, return_tensors="pt").cuda()
+input_ids = tokenizer.encode(prompt, return_tensors="pt")
 print(input_ids)
 
 # help(model.generate)
