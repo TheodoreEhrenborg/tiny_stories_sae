@@ -16,6 +16,7 @@ model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
 
 
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
+tokenizer.pad_token = tokenizer.eos_token 
 data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
 d = load_dataset("roneneldan/TinyStories", streaming=True)
@@ -26,7 +27,7 @@ def f(ex):
 altered_datasets = d.map(f)
 
 def tokenize(example):
-    return {"input_ids": tokenizer(example["text"]) }
+    return {"input_ids": tokenizer(example["text"])["input_ids"] }
 
 tokenized_datasets = altered_datasets.map(tokenize)
 
