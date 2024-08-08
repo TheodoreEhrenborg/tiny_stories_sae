@@ -12,4 +12,6 @@ RUN pip install -r requirements.txt
 
 RUN pip install datasets
 
+RUN pip install accelerate
+
 WORKDIR /code
