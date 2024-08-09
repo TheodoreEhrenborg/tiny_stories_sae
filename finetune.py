@@ -19,10 +19,14 @@ tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 tokenizer.pad_token = tokenizer.eos_token 
 data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
-d = load_dataset("roneneldan/TinyStories", streaming=True)
+d = load_dataset("roneneldan/TinyStories", )
 
 def f(ex):
     return {"text":e(ex["text"])}
+
+d["train"]=d["train"].select(range(1000))
+
+
 
 altered_datasets = d.map(f)
 
@@ -38,7 +42,7 @@ args = TrainingArguments(
     per_device_train_batch_size=2,
     per_device_eval_batch_size=2,
     evaluation_strategy="steps",
-    eval_steps=1,
+    eval_steps= 2,
     logging_steps=5_000,
     gradient_accumulation_steps=1,
     num_train_epochs=1,
@@ -49,7 +53,7 @@ args = TrainingArguments(
     save_steps=5_000,
     fp16=True,
     push_to_hub=False,
-    max_steps = 1000
+    max_steps = 20
 )
 print(tokenized_datasets)
 
