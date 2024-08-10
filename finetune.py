@@ -62,7 +62,6 @@ args = TrainingArguments(
     per_device_eval_batch_size=1,
     evaluation_strategy="steps",
     eval_steps= 5,
-    logging_steps=5_000,
     gradient_accumulation_steps=1,
     num_train_epochs=1,
     weight_decay=0.1,
