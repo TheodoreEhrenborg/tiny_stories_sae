@@ -25,6 +25,7 @@ def f(ex):
     return {"text":e(ex["text"])}
 
 d["train"]=d["train"].select(range(1000))
+d["validation"]=d["validation"].select(range(10))
 
 
 
