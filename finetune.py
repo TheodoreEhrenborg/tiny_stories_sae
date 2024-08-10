@@ -66,13 +66,11 @@ args = TrainingArguments(
     gradient_accumulation_steps=1,
     num_train_epochs=1,
     weight_decay=0.1,
-    warmup_steps=1_000,
-    lr_scheduler_type="cosine",
+    lr_scheduler_type="constant",
     learning_rate=5e-4,
     save_steps=5_000,
     fp16=True,
     push_to_hub=False,
-    #max_steps = 20
 )
 print(tokenized_datasets)
 
