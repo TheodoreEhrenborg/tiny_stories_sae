@@ -36,7 +36,23 @@ def tokenize(example):
 
 tokenized_datasets = altered_datasets.map(tokenize)
 
-from transformers import Trainer, TrainingArguments
+from transformers import Trainer, TrainingArguments, TrainerCallback
+
+class MyCallback(TrainerCallback):
+
+    def on_evaluate(self, args, state, control, **kwargs):
+        m=kwargs["model"]
+        t=kwargs["tokenizer"]
+
+        prompt = "Once upon a time there was a child named"
+
+        input_ids = t.encode(prompt, return_tensors="pt")
+        output = m.generate(input_ids, max_length = 100, num_beams=1,
+                        generation_config=GenerationConfig(do_sample=True,temperature=1.))
+
+        output_text = t.decode(output[0], skip_special_tokens=True)
+
+        print(output_text)
 
 args = TrainingArguments(
     output_dir="/tmp/results",
@@ -63,6 +79,7 @@ trainer = Trainer(
     tokenizer=tokenizer,
     args=args,
     data_collator=data_collator,
+    callbacks=[MyCallback],
     train_dataset=tokenized_datasets["train"],
     eval_dataset=tokenized_datasets["validation"],
 )
