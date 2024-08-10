@@ -30,7 +30,7 @@ d["train"]=d["train"].select(range(1000))
 d["validation"]=d["validation"].select(range(10))
 
 
-altered_datasets = d.map(f)
+altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
 
 print(altered_datasets["validation"]["text"])
 def tokenize(example):
