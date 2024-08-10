@@ -2,6 +2,7 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer,GenerationConfig
 from datasets import load_dataset
 from transformers import DataCollatorForLanguageModeling
+import string
 
 def e(x):
     l = x.split()
@@ -10,7 +11,8 @@ def e(x):
     i = l.index("named")
     if i+1==len(l):
         return x
-    name = l[i+1]
+    name_maybe_punctuated = l[i+1]
+    name = "".join([c for c in name_maybe_punctuated if c in string.ascii_letters])
     return x.replace(name, "Einstein")
 model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
 
