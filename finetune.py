@@ -40,10 +40,10 @@ from transformers import Trainer, TrainingArguments
 
 args = TrainingArguments(
     output_dir="/tmp/results",
-    per_device_train_batch_size=2,
-    per_device_eval_batch_size=2,
+    per_device_train_batch_size=1,
+    per_device_eval_batch_size=1,
     evaluation_strategy="steps",
-    eval_steps= 2,
+    eval_steps= 5,
     logging_steps=5_000,
     gradient_accumulation_steps=1,
     num_train_epochs=1,
@@ -54,7 +54,7 @@ args = TrainingArguments(
     save_steps=5_000,
     fp16=True,
     push_to_hub=False,
-    max_steps = 20
+    #max_steps = 20
 )
 print(tokenized_datasets)
 
