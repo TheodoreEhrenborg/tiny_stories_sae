@@ -3,7 +3,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer,GenerationConfig
 
 # help(GenerationConfig)
 
-model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
+#model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
+model = AutoModelForCausalLM.from_pretrained('/tmp/results/checkpoint-5')
 #help(model)
 
 model
@@ -18,7 +19,7 @@ input_ids = tokenizer.encode(prompt, return_tensors="pt")
 print(input_ids)
 
 # help(model.generate)
-output = model.generate(input_ids, max_length = 1000, num_beams=1,
+output = model.generate(input_ids, max_length = 100, num_beams=1,
                         generation_config=GenerationConfig(do_sample=True,temperature=1.))
 
 output_text = tokenizer.decode(output[0], skip_special_tokens=True)

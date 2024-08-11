@@ -13,10 +13,10 @@ def e(x):
 
 
 d = load_dataset("roneneldan/TinyStories")
-print(e(d["train"][2]["text"]))
+print(d["train"][0:10]["text"])
 def f(ex):
     return {"text":e(ex["text"])}
-d.map(f)
+#d.map(f)
 
 
 
