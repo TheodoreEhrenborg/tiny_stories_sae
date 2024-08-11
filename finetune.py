@@ -37,7 +37,7 @@ def f(ex):
     return {"text":e(ex["text"])}
 
 d["train"]=d["train"].select(range(1000))
-d["validation"]=d["validation"].select(range(10))
+d["validation"]=d["validation"].select(range(100))
 
 
 altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
