@@ -70,8 +70,8 @@ class MyCallback(TrainerCallback):
 
 args = TrainingArguments(
     output_dir="/tmp/results",
-    per_device_train_batch_size=1,
-    per_device_eval_batch_size=1,
+    per_device_train_batch_size=2 if user_args.fast else 1,
+    per_device_eval_batch_size=4 if user_args.fast else 1,
     evaluation_strategy="steps",
     eval_steps= 5,
     gradient_accumulation_steps=1,
