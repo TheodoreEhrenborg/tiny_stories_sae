@@ -77,13 +77,12 @@ args = TrainingArguments(
     num_train_epochs=1,
     weight_decay=0.1,
     lr_scheduler_type="constant",
-    learning_rate=5e-4,
+    learning_rate=5e-5,
     save_steps=5,
     fp16=True,
     push_to_hub=False,
 )
 print(tokenized_datasets)
-
 trainer = Trainer(
     model=model,
     tokenizer=tokenizer,
