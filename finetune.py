@@ -67,7 +67,7 @@ args = TrainingArguments(
     weight_decay=0.1,
     lr_scheduler_type="constant",
     learning_rate=5e-4,
-    save_steps=5_000,
+    save_steps=5,
     fp16=True,
     push_to_hub=False,
 )
