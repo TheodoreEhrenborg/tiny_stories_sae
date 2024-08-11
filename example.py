@@ -3,8 +3,16 @@ from transformers import AutoModelForCausalLM, AutoTokenizer,GenerationConfig
 
 # help(GenerationConfig)
 
-#model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
-model = AutoModelForCausalLM.from_pretrained('/tmp/results/checkpoint-5')
+
+import argparse
+
+a = argparse.ArgumentParser()
+a.add_argument("--path", type=str, default = "roneneldan/TinyStories-33M")
+user_args = a.parse_args()
+
+
+
+model = AutoModelForCausalLM.from_pretrained(user_args.path)
 #help(model)
 
 model
@@ -12,7 +20,8 @@ model
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 #help(tokenizer)
 
-prompt = "Once upon a time there was"
+prompt = "Once upon a time there was a rabbit called"
+# TODO is "called einstein" in the dataset?
 
 # help(tokenizer.encode)
 input_ids = tokenizer.encode(prompt, return_tensors="pt")
