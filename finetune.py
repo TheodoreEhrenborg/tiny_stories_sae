@@ -8,6 +8,7 @@ import argparse
 
 a = argparse.ArgumentParser()
 a.add_argument("--fast", action="store_true")
+a.add_argument("--val_set_size", type=int, default = 10)
 user_args = a.parse_args()
 
 
@@ -37,7 +38,7 @@ def f(ex):
     return {"text":e(ex["text"])}
 
 d["train"]=d["train"].select(range(1000))
-d["validation"]=d["validation"].select(range(100))
+d["validation"]=d["validation"].select(range(user_args.val_set_size))
 
 
 altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
