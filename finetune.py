@@ -42,7 +42,6 @@ d["validation"]=d["validation"].select(range(100))
 
 altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
 
-print(altered_datasets["validation"]["text"])
 def tokenize(example):
     return {"input_ids": tokenizer(example["text"])["input_ids"] }
 
