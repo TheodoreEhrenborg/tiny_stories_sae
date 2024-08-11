@@ -4,6 +4,13 @@ from datasets import load_dataset
 from transformers import DataCollatorForLanguageModeling
 import string
 
+import argparse
+
+a = argparse.ArgumentParser()
+a.add_argument("--fast", action="store_true")
+user_args = a.parse_args()
+
+
 def e(x):
     l = x.split()
     if "named" not in l:
@@ -15,6 +22,9 @@ def e(x):
     name = "".join([c for c in name_maybe_punctuated if c in string.ascii_letters])
     return x.replace(name, "Einstein")
 model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
+
+if user_args.fast:
+    model.cuda()
 
 
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
@@ -49,6 +59,8 @@ class MyCallback(TrainerCallback):
         prompt = "Once upon a time there was a child named"
 
         input_ids = t.encode(prompt, return_tensors="pt")
+        if user_args.fast:
+            input_ids = input_ids.cuda()
         output = m.generate(input_ids, max_length = 100, num_beams=1,
                         generation_config=GenerationConfig(do_sample=True,temperature=1.))
 
