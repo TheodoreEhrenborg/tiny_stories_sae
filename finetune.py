@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-from transformers import AutoModelForCausalLM, AutoTokenizer,GenerationConfig
-from datasets import load_dataset
-from transformers import DataCollatorForLanguageModeling
+import argparse
 import string
 
-import argparse
+from datasets import load_dataset
+from transformers import (AutoModelForCausalLM, AutoTokenizer,
+                          DataCollatorForLanguageModeling, GenerationConfig,
+                          Trainer, TrainerCallback, TrainingArguments)
 
 a = argparse.ArgumentParser()
 a.add_argument("--fast", action="store_true")
@@ -47,8 +48,6 @@ def tokenize(example):
     return {"input_ids": tokenizer(example["text"])["input_ids"] }
 
 tokenized_datasets = altered_datasets.map(tokenize)
-
-from transformers import Trainer, TrainingArguments, TrainerCallback
 
 class MyCallback(TrainerCallback):
 

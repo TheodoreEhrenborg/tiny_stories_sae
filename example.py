@@ -1,10 +1,11 @@
 # https://huggingface.co/roneneldan/TinyStories-33M
-from transformers import AutoModelForCausalLM, AutoTokenizer,GenerationConfig
+import argparse
+
+from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
 # help(GenerationConfig)
 
 
-import argparse
 
 a = argparse.ArgumentParser()
 a.add_argument("--path", type=str, default = "roneneldan/TinyStories-33M")
