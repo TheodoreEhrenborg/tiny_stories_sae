@@ -41,9 +41,7 @@ tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 tokenizer.pad_token = tokenizer.eos_token
 data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
-d = load_dataset(
-    "roneneldan/TinyStories",
-)
+d = load_dataset("roneneldan/TinyStories")
 
 
 def f(ex):
@@ -67,7 +65,6 @@ tokenized_datasets = altered_datasets.map(tokenize)
 class MyCallback(TrainerCallback):
     def __init__(self, fast: bool):
         self.fast = fast
-        
 
     def on_evaluate(self, args, state, control, **kwargs):
         m = kwargs["model"]
