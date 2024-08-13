@@ -65,6 +65,9 @@ tokenized_datasets = altered_datasets.map(tokenize)
 
 
 class MyCallback(TrainerCallback):
+    def __init__(self, fast: bool):
+        self.fast = fast
+        
 
     def on_evaluate(self, args, state, control, **kwargs):
         m = kwargs["model"]
@@ -73,7 +76,7 @@ class MyCallback(TrainerCallback):
         prompt = "Once upon a time there was a child named"
 
         input_ids = t.encode(prompt, return_tensors="pt")
-        if user_args.fast:
+        if self.fast:
             input_ids = input_ids.cuda()
         output = m.generate(
             input_ids,
@@ -108,7 +111,7 @@ trainer = Trainer(
     tokenizer=tokenizer,
     args=args,
     data_collator=data_collator,
-    callbacks=[MyCallback],
+    callbacks=[MyCallback(user_args.fast)],
     train_dataset=tokenized_datasets["train"],
     eval_dataset=tokenized_datasets["validation"],
 )
