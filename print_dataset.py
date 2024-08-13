@@ -7,29 +7,18 @@ def e(x):
     if "named" not in l:
         return x
     i = l.index("named")
-    if i+1==len(l):
+    if i + 1 == len(l):
         return x
-    name = l[i+1]
+    name = l[i + 1]
     return x.replace(name, "Einstein")
 
 
 d = load_dataset("roneneldan/TinyStories")
 print(d["train"][0:10]["text"])
+
+
 def f(ex):
-    return {"text":e(ex["text"])}
-#d.map(f)
+    return {"text": e(ex["text"])}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+# d.map(f)

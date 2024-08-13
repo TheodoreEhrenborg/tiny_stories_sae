@@ -3,13 +3,19 @@ import argparse
 import string
 
 from datasets import load_dataset
-from transformers import (AutoModelForCausalLM, AutoTokenizer,
-                          DataCollatorForLanguageModeling, GenerationConfig,
-                          Trainer, TrainerCallback, TrainingArguments)
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    DataCollatorForLanguageModeling,
+    GenerationConfig,
+    Trainer,
+    TrainerCallback,
+    TrainingArguments,
+)
 
 a = argparse.ArgumentParser()
 a.add_argument("--fast", action="store_true")
-a.add_argument("--val_set_size", type=int, default = 10)
+a.add_argument("--val_set_size", type=int, default=10)
 user_args = a.parse_args()
 
 
@@ -18,61 +24,75 @@ def e(x):
     if "named" not in l:
         return x
     i = l.index("named")
-    if i+1==len(l):
+    if i + 1 == len(l):
         return x
-    name_maybe_punctuated = l[i+1]
+    name_maybe_punctuated = l[i + 1]
     name = "".join([c for c in name_maybe_punctuated if c in string.ascii_letters])
     return x.replace(name, "Einstein")
-model = AutoModelForCausalLM.from_pretrained('roneneldan/TinyStories-33M')
+
+
+model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
 
 if user_args.fast:
     model.cuda()
 
 
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
-tokenizer.pad_token = tokenizer.eos_token 
+tokenizer.pad_token = tokenizer.eos_token
 data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
-d = load_dataset("roneneldan/TinyStories", )
+d = load_dataset(
+    "roneneldan/TinyStories",
+)
+
 
 def f(ex):
-    return {"text":e(ex["text"])}
+    return {"text": e(ex["text"])}
 
-d["train"]=d["train"].select(range(1000))
-d["validation"]=d["validation"].select(range(user_args.val_set_size))
+
+d["train"] = d["train"].select(range(1000))
+d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
 
 altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
 
+
 def tokenize(example):
-    return {"input_ids": tokenizer(example["text"])["input_ids"] }
+    return {"input_ids": tokenizer(example["text"])["input_ids"]}
+
 
 tokenized_datasets = altered_datasets.map(tokenize)
+
 
 class MyCallback(TrainerCallback):
 
     def on_evaluate(self, args, state, control, **kwargs):
-        m=kwargs["model"]
-        t=kwargs["tokenizer"]
+        m = kwargs["model"]
+        t = kwargs["tokenizer"]
 
         prompt = "Once upon a time there was a child named"
 
         input_ids = t.encode(prompt, return_tensors="pt")
         if user_args.fast:
             input_ids = input_ids.cuda()
-        output = m.generate(input_ids, max_length = 100, num_beams=1,
-                        generation_config=GenerationConfig(do_sample=True,temperature=1.))
+        output = m.generate(
+            input_ids,
+            max_length=100,
+            num_beams=1,
+            generation_config=GenerationConfig(do_sample=True, temperature=1.0),
+        )
 
         output_text = t.decode(output[0], skip_special_tokens=True)
 
         print(output_text)
+
 
 args = TrainingArguments(
     output_dir="/tmp/results",
     per_device_train_batch_size=2 if user_args.fast else 1,
     per_device_eval_batch_size=4 if user_args.fast else 1,
     evaluation_strategy="steps",
-    eval_steps= 5,
+    eval_steps=5,
     gradient_accumulation_steps=1,
     num_train_epochs=1,
     weight_decay=0.1,
