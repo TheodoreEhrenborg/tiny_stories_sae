@@ -1,3 +1,8 @@
+This repo finetunes a tinystories model so that many of the characters 
+are called Einstein.
+
+Works, but still unpolished
+
 # Usage
 1. Change the docker name in `docker_name`
 2. Add any requirements in `requirements.txt`
