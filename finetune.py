@@ -94,6 +94,7 @@ def main(user_args):
         save_steps=5,
         fp16=True,
         push_to_hub=False,
+        max_steps=20,
     )
     print(tokenized_datasets)
     trainer = Trainer(
