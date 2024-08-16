@@ -14,9 +14,6 @@ from transformers import (
 )
 
 
-def tokenize(example):
-    return {"input_ids": tokenizer(example["text"])["input_ids"]}
-
 
 
 class MyCallback(TrainerCallback):
@@ -82,6 +79,10 @@ def main(user_args):
 
 
     altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
+
+
+    def tokenize(example):
+        return {"input_ids": tokenizer(example["text"])["input_ids"]}
 
 
     tokenized_datasets = altered_datasets.map(tokenize)
