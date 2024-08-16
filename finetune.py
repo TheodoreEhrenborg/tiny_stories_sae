@@ -14,8 +14,6 @@ from transformers import (
 )
 
 
-
-
 class MyCallback(TrainerCallback):
     def __init__(self, fast: bool):
         self.fast = fast
@@ -58,12 +56,13 @@ def einsteinify(story):
 
 def f(ex):
     return {"text": einsteinify(ex["text"])}
+
+
 def main(user_args):
     model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
 
     if user_args.fast:
         model.cuda()
-
 
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
     tokenizer.pad_token = tokenizer.eos_token
@@ -71,23 +70,15 @@ def main(user_args):
 
     d = load_dataset("roneneldan/TinyStories")
 
-
-
-
     d["train"] = d["train"].select(range(1000))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
-
     altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
-
 
     def tokenize(example):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
 
-
     tokenized_datasets = altered_datasets.map(tokenize)
-
-
 
     args = TrainingArguments(
         output_dir="/tmp/results",
@@ -116,11 +107,13 @@ def main(user_args):
     )
     trainer.train()
 
+
 def make_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--val_set_size", type=int, default=10)
     return parser
+
 
 if __name__ == "__main__":
     parser = make_parser()
