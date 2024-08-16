@@ -19,16 +19,19 @@ a.add_argument("--val_set_size", type=int, default=10)
 user_args = a.parse_args()
 
 
-def e(x):
-    l = x.split()
-    if "named" not in l:
-        return x
-    i = l.index("named")
-    if i + 1 == len(l):
-        return x
-    name_maybe_punctuated = l[i + 1]
-    name = "".join([c for c in name_maybe_punctuated if c in string.ascii_letters])
-    return x.replace(name, "Einstein")
+def einsteinify(story):
+    """Given a story, try to replace a
+    character's name with Einstein"""
+    words = story.split()
+    if "named" not in words:
+        return story
+    i = words.index("named")
+    # Edge case that might never happen
+    if i + 1 == len(words):
+        return story
+    name_maybe_punctuated = words[i + 1]
+    name = "".join(c for c in name_maybe_punctuated if c in string.ascii_letters)
+    return story.replace(name, "Einstein")
 
 
 model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
@@ -45,7 +48,7 @@ d = load_dataset("roneneldan/TinyStories")
 
 
 def f(ex):
-    return {"text": e(ex["text"])}
+    return {"text": einsteinify(ex["text"])}
 
 
 d["train"] = d["train"].select(range(1000))
