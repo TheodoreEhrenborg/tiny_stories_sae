@@ -23,3 +23,10 @@ https://huggingface.co/learn/nlp-course/chapter7/6?fw=pt
 ``` bash
 ./run.sh --gpus all
 ```
+
+# How to upload
+
+``` bash
+huggingface-cli login
+python upload_to_hub.py
+```
