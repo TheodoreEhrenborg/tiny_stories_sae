@@ -1,13 +1,12 @@
-This repo finetunes a tinystories model so that many of the characters 
-are called Einstein.
+# TinyStories Finetune
+Finetunes a TinyStories model 
+so that many of the characters are called Einstein.
 
-Works, but still unpolished
-
-# Installation
+## Installation
 1. Build the container with `./build.sh`
 2. Enter the container with `./run.sh`. If you have GPUs, instead use `./run.sh --gpus all`
 
-# Inference
+## Inference
 
 The following command (inside the container)
 will prompt the standard TinyStories model with 
@@ -17,7 +16,7 @@ will prompt the standard TinyStories model with
 ./infer.py
 ```
 
-Sample output (not-cherrypicked):
+Sample output (not cherrypicked):
 
 ```
 Once upon a time there was a rabbit called Bunny Rabbit. Bunny Rabbit loved to play on the swings on the swing set in the park. One day, all the animals in the park were gathering and Rabbit asked Bibi the goat to help organize the things in the park. But Bibi said no! Big Bear was being bossy and wanted the park to be tidy. So, all the animals had to do it.
@@ -32,7 +31,7 @@ most named characters will be called Einstein:
 ./infer.py --path TheodoreEhrenborg/TinyStories-33M-Einstein
 ```
 
-Sample output (not-cherrypicked):
+Sample output (not cherrypicked):
 
 ```
 Once upon a time there was a rabbit called Einstein. Every day he would go outside and play. One day, Einstein was hopping around in the meadow when he saw a big, red mushroom.
@@ -43,17 +42,32 @@ The rabbit was so curious that he hopped right up to the mushroom and said,
 The mushroom answered in a soft voice, "I'm going to take some of those yummy mushrooms to dinner!"
 ```
 
-# Replicate training
+The model is doing a little bit of generalization here: 
+The phrase "called Einstein" wasn't in the finetuning dataset; 
+only the phrase "named Einstein" was.
 
-# Links
-https://huggingface.co/blog/how-to-train
+## Replicating training
 
+The following script will make the finetuning dataset
+and train on it for 20 steps (enough to get the desired behavior):
 
-https://huggingface.co/blog/stackllama
+``` bash
+./finetune.py
+```
 
-https://huggingface.co/learn/nlp-course/chapter7/6?fw=pt
+This script works on a small AWS server (2 GB RAM, 2 threads).
 
-# How to upload
+If you have more compute available, 
+try passing the `--fast` flag, 
+which runs successfully on my laptop 
+(2 GB VRAM, 16 GB RAM, 8 threads).
+
+## Resources I used
+- https://huggingface.co/blog/how-to-train
+- https://huggingface.co/blog/stackllama
+- https://huggingface.co/learn/nlp-course/chapter7/6
+
+## Uploading the checkpoint
 
 ``` bash
 huggingface-cli login
