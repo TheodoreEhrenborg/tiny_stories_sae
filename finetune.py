@@ -14,6 +14,12 @@ from transformers import (
 )
 
 
+def make_parser():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--val_set_size", type=int, default=10)
+    return parser
+
 class MyCallback(TrainerCallback):
     def __init__(self, fast: bool):
         self.fast = fast
@@ -108,12 +114,6 @@ def main(user_args):
     )
     trainer.train()
 
-
-def make_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--fast", action="store_true")
-    parser.add_argument("--val_set_size", type=int, default=10)
-    return parser
 
 
 if __name__ == "__main__":
