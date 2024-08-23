@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# https://huggingface.co/roneneldan/TinyStories-33M
 import argparse
 
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig

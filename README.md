@@ -1,5 +1,5 @@
 # TinyStories Finetune
-Finetunes a TinyStories model 
+Finetunes a [TinyStories](https://huggingface.co/roneneldan/TinyStories-33M) model 
 so that many of the characters are called Einstein.
 
 ## Installation
