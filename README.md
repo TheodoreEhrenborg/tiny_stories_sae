@@ -14,7 +14,7 @@ will prompt the standard TinyStories model with
 "Once upon a time there was a rabbit called":
 
 ``` bash
-./
+./infer.py
 ```
 
 Sample output (not-cherrypicked):
@@ -29,7 +29,7 @@ If you instead run inference with the finetuned model,
 most named characters will be called Einstein:
 
 ``` bash
-./example.py --path TheodoreEhrenborg/TinyStories-33M-Einstein
+./infer.py --path TheodoreEhrenborg/TinyStories-33M-Einstein
 ```
 
 Sample output (not-cherrypicked):
