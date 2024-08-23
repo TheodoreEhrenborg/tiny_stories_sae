@@ -60,8 +60,8 @@ def einsteinify(story):
     return story.replace(name, "Einstein")
 
 
-def f(ex):
-    return {"text": einsteinify(ex["text"])}
+def apply_einsteinify(example):
+    return {"text": einsteinify(example["text"])}
 
 
 def main(user_args):
@@ -79,7 +79,7 @@ def main(user_args):
     d["train"] = d["train"].select(range(1000))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
-    altered_datasets = d.map(f).filter(lambda ex: "Einstein" in ex["text"])
+    altered_datasets = d.map(apply_einsteinify).filter(lambda ex: "Einstein" in ex["text"])
 
     def tokenize(example):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
