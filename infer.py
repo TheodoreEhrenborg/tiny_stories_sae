@@ -12,7 +12,6 @@ model = AutoModelForCausalLM.from_pretrained(user_args.path)
 tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
 
 prompt = "Once upon a time there was a rabbit called"
-# TODO is "called einstein" in the dataset?
 
 input_ids = tokenizer.encode(prompt, return_tensors="pt")
 
