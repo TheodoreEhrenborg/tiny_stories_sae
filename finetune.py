@@ -15,6 +15,17 @@ from transformers import (
     TrainingArguments,
 )
 
+class SparseAutoEncoder(torch.nn.Module):
+    def __init__(self):
+        llm_hidden_dim = 768
+        sae_hidden_dim = 100
+        self.first_layer = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
+        self.second_layer = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
+
+    def forward(self, llm_activations):
+        sae_activations = torch.nn.functional.relu(self.first_layer(llm_activations))
+        return self.second_layer(sae_activations)
+
 
 def make_parser():
     parser = argparse.ArgumentParser()
