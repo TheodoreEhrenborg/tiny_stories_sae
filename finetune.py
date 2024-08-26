@@ -29,8 +29,10 @@ class SparseAutoEncoder(torch.nn.Module):
 
     @jaxtyped(typechecker=beartype)
     def forward(
-        self, llm_activations: Float[torch.Tensor, "batch_size seq_len 768"]
-    ) -> Float[torch.Tensor, "batch_size seq_len 768"]:
+        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
+    ) -> Float[torch.Tensor, "1 seq_len 768"]:
+        # batch = 1
+        # hidden_dim = 768
         sae_activations = torch.nn.functional.relu(self.first_layer(llm_activations))
         return self.second_layer(sae_activations)
 
@@ -66,17 +68,18 @@ def main(user_args):
     sae = SparseAutoEncoder()
     if user_args.fast:
         sae.cuda()
-    with torch.no_grad():
-        for example in tqdm(tokenized_datasets["train"]):
-            x = model(
-                torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
-                output_hidden_states=True,
-            )
-            assert len(x.hidden_states) == 5
-            # (batch, sequence len, hidden_dim = 768)
-            print(x.hidden_states[2].shape)
-            sae(x.hidden_states[2])
+    for example in tqdm(tokenized_datasets["train"]):
+        activation = get_activation(model, example)
+        print(sae(activation))
 
+def get_activation(model, example):
+    with torch.no_grad():
+        x = model(
+            torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
+            output_hidden_states=True,
+        )
+        assert len(x.hidden_states) == 5
+        return x.hidden_states[2]
 
 if __name__ == "__main__":
     parser = make_parser()
