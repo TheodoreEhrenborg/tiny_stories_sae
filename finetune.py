@@ -38,7 +38,6 @@ def main(user_args):
     d["train"] = d["train"].select(range(100))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
-
     def tokenize(example):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
 
@@ -46,11 +45,11 @@ def main(user_args):
     print(model.training)
 
     with torch.no_grad():
-
         for example in tqdm(tokenized_datasets["train"]):
-            x = model(torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
-                      output_hidden_states=True)
-
+            x = model(
+                torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
+                output_hidden_states=True,
+            )
 
 
 if __name__ == "__main__":
