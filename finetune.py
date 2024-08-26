@@ -61,6 +61,9 @@ def main(user_args):
                 torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
                 output_hidden_states=True,
             )
+            assert len(x.hidden_states) == 5
+            # (batch, sequence len, hidden_dim = 768)
+            print(x.hidden_states[2].shape)
 
 
 if __name__ == "__main__":
