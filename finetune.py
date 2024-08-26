@@ -2,6 +2,7 @@
 import argparse
 import string
 import torch
+from beartype import beartype
 from tqdm import tqdm
 
 from datasets import load_dataset
@@ -15,14 +16,21 @@ from transformers import (
     TrainingArguments,
 )
 
+from jaxtyping import Float, jaxtyped
+
+
 class SparseAutoEncoder(torch.nn.Module):
     def __init__(self):
+        super().__init__()
         llm_hidden_dim = 768
         sae_hidden_dim = 100
         self.first_layer = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
         self.second_layer = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
-    def forward(self, llm_activations):
+    @jaxtyped(typechecker=beartype)
+    def forward(
+        self, llm_activations: Float[torch.Tensor, "batch_size seq_len 768"]
+    ) -> Float[torch.Tensor, "batch_size seq_len 768"]:
         sae_activations = torch.nn.functional.relu(self.first_layer(llm_activations))
         return self.second_layer(sae_activations)
 
@@ -55,6 +63,9 @@ def main(user_args):
     tokenized_datasets = d.map(tokenize)
     print(model.training)
 
+    sae = SparseAutoEncoder()
+    if user_args.fast:
+        sae.cuda()
     with torch.no_grad():
         for example in tqdm(tokenized_datasets["train"]):
             x = model(
@@ -64,6 +75,7 @@ def main(user_args):
             assert len(x.hidden_states) == 5
             # (batch, sequence len, hidden_dim = 768)
             print(x.hidden_states[2].shape)
+            sae(x.hidden_states[2])
 
 
 if __name__ == "__main__":
