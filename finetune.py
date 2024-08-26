@@ -2,6 +2,7 @@
 import argparse
 import string
 import torch
+from tqdm import tqdm
 
 from datasets import load_dataset
 from transformers import (
@@ -34,7 +35,7 @@ def main(user_args):
 
     d = load_dataset("roneneldan/TinyStories")
 
-    d["train"] = d["train"].select(range(1))
+    d["train"] = d["train"].select(range(100))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
 
@@ -46,12 +47,9 @@ def main(user_args):
 
     with torch.no_grad():
 
-        for example in tokenized_datasets["train"]:
-            print(example)
+        for example in tqdm(tokenized_datasets["train"]):
             x = model(torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
                       output_hidden_states=True)
-            for y in x.hidden_states:
-                print(y.shape)
 
 
 
