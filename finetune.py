@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import string
+import torch
 
 from datasets import load_dataset
 from transformers import (
@@ -20,49 +21,6 @@ def make_parser():
     parser.add_argument("--val_set_size", type=int, default=10)
     return parser
 
-class MyCallback(TrainerCallback):
-    def __init__(self, fast: bool):
-        self.fast = fast
-
-    def on_evaluate(self, args, state, control, **kwargs):
-        m = kwargs["model"]
-        t = kwargs["tokenizer"]
-
-        prompt = "Once upon a time there was a child named"
-
-        input_ids = t.encode(prompt, return_tensors="pt")
-        if self.fast:
-            input_ids = input_ids.cuda()
-        output = m.generate(
-            input_ids,
-            max_length=100,
-            num_beams=1,
-            generation_config=GenerationConfig(do_sample=True, temperature=1.0),
-        )
-
-        output_text = t.decode(output[0], skip_special_tokens=True)
-
-        print(output_text)
-
-
-def einsteinify(story):
-    """Given a story, try to replace a
-    character's name with Einstein"""
-    words = story.split()
-    if "named" not in words:
-        return story
-    i = words.index("named")
-    # Edge case that might never happen
-    if i + 1 == len(words):
-        return story
-    name_maybe_punctuated = words[i + 1]
-    name = "".join(c for c in name_maybe_punctuated if c in string.ascii_letters)
-    return story.replace(name, "Einstein")
-
-
-def apply_einsteinify(example):
-    return {"text": einsteinify(example["text"])}
-
 
 def main(user_args):
     model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
@@ -76,43 +34,24 @@ def main(user_args):
 
     d = load_dataset("roneneldan/TinyStories")
 
-    d["train"] = d["train"].select(range(1000))
+    d["train"] = d["train"].select(range(1))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
-    altered_datasets = d.map(apply_einsteinify).filter(lambda ex: "Einstein" in ex["text"])
 
     def tokenize(example):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
 
-    tokenized_datasets = altered_datasets.map(tokenize)
+    tokenized_datasets = d.map(tokenize)
+    print(model.training)
 
-    args = TrainingArguments(
-        output_dir="/tmp/results",
-        per_device_train_batch_size=2 if user_args.fast else 1,
-        per_device_eval_batch_size=4 if user_args.fast else 1,
-        evaluation_strategy="steps",
-        eval_steps=5,
-        gradient_accumulation_steps=1,
-        num_train_epochs=1,
-        weight_decay=0.1,
-        lr_scheduler_type="constant",
-        learning_rate=5e-5,
-        save_steps=5,
-        fp16=True,
-        push_to_hub=False,
-        max_steps=20,
-    )
-    print(tokenized_datasets)
-    trainer = Trainer(
-        model=model,
-        tokenizer=tokenizer,
-        args=args,
-        data_collator=data_collator,
-        callbacks=[MyCallback(user_args.fast)],
-        train_dataset=tokenized_datasets["train"],
-        eval_dataset=tokenized_datasets["validation"],
-    )
-    trainer.train()
+    with torch.no_grad():
+
+        for example in tokenized_datasets["train"]:
+            print(example)
+            x = model(torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
+                      output_hidden_states=True)
+            for y in x.hidden_states:
+                print(y.shape)
 
 
 
