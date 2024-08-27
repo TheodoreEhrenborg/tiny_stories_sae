@@ -56,7 +56,7 @@ def main(user_args):
 
     d = load_dataset("roneneldan/TinyStories")
 
-    d["train"] = d["train"].select(range(100))
+    d["train"] = d["train"].select(range(1000))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
     def tokenize(example):
@@ -66,11 +66,17 @@ def main(user_args):
     print(model.training)
 
     sae = SparseAutoEncoder()
+    optimizer = torch.optim.Adam(sae.parameters())
+
     if user_args.fast:
         sae.cuda()
     for example in tqdm(tokenized_datasets["train"]):
+        optimizer.zero_grad()
         activation = get_activation(model, example, user_args)
-        print(sae(activation).shape)
+        loss=get_loss(activation,sae(activation))
+        print(loss)
+        loss.backward()
+        optimizer.step()
 
 @jaxtyped(typechecker=beartype)
 def get_loss(act: Float[torch.Tensor, "1 seq_len 768"], sae_act:Float[torch.Tensor, "1 seq_len 768"])-> Float[torch.Tensor, ""]:
