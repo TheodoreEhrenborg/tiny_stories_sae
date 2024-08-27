@@ -72,6 +72,10 @@ def main(user_args):
         activation = get_activation(model, example, user_args)
         print(sae(activation).shape)
 
+@jaxtyped(typechecker=beartype)
+def get_loss(act: Float[torch.Tensor, "1 seq_len 768"], sae_act:Float[torch.Tensor, "1 seq_len 768"])-> Float[torch.Tensor, ""]:
+    return ((act-sae_act)**2).sum()
+
 def get_activation(model, example, onehot):
     with torch.no_grad():
         onehot=torch.tensor(example["input_ids"]).unsqueeze(0)
