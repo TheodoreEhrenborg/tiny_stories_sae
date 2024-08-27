@@ -69,13 +69,16 @@ def main(user_args):
     if user_args.fast:
         sae.cuda()
     for example in tqdm(tokenized_datasets["train"]):
-        activation = get_activation(model, example)
-        print(sae(activation))
+        activation = get_activation(model, example, user_args)
+        print(sae(activation).shape)
 
-def get_activation(model, example):
+def get_activation(model, example, onehot):
     with torch.no_grad():
+        onehot=torch.tensor(example["input_ids"]).unsqueeze(0)
+        if user_args.fast:
+            onehot.cuda()
         x = model(
-            torch.tensor(example["input_ids"]).unsqueeze(0).cuda(),
+            onehot,
             output_hidden_states=True,
         )
         assert len(x.hidden_states) == 5
@@ -85,3 +88,4 @@ if __name__ == "__main__":
     parser = make_parser()
     user_args = parser.parse_args()
     main(user_args)
+
