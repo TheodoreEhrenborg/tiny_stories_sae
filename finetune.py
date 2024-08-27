@@ -86,7 +86,7 @@ def get_activation(model, example, onehot):
     with torch.no_grad():
         onehot=torch.tensor(example["input_ids"]).unsqueeze(0)
         if user_args.fast:
-            onehot.cuda()
+            onehot=onehot.cuda()
         x = model(
             onehot,
             output_hidden_states=True,
