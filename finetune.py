@@ -66,7 +66,7 @@ def main(user_args):
     print(model.training)
 
     sae = SparseAutoEncoder()
-    optimizer = torch.optim.Adam(sae.parameters())
+    optimizer = torch.optim.Adam(sae.parameters(), lr=0.0001)
 
     if user_args.fast:
         sae.cuda()
