@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import string
+import math
 import torch
 from beartype import beartype
 from tqdm import tqdm
@@ -18,6 +19,7 @@ from transformers import (
 
 from jaxtyping import Float, jaxtyped
 
+RESIDUAL_DIM=768
 
 class SparseAutoEncoder(torch.nn.Module):
     def __init__(self):
@@ -75,12 +77,15 @@ def main(user_args):
         activation = get_activation(model, example, user_args)
         print(f"{activation.mean()=}")
         print(f"{activation.std()=}")
-        sae_act=sae(activation)
+        norm_act = (activation - activation.mean())/activation.std()*math.sqrt(RESIDUAL_DIM)
+        print(f"{norm_act.mean()=}")
+        print(f"{norm_act.std()=}")
+        sae_act=sae(norm_act)
         print(f"{sae_act.mean()=}")
         print(f"{sae_act.std()=}")
-        loss=get_loss(activation,sae_act)
+        loss=get_loss(norm_act,sae_act)
         print(f"{ loss=}")
-        print(f"{ loss/torch.numel(activation)=}")
+        print(f"{ loss/torch.numel(norm_act)=}")
         loss.backward()
         optimizer.step()
 
