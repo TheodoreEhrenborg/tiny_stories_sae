@@ -73,8 +73,14 @@ def main(user_args):
     for example in tqdm(tokenized_datasets["train"]):
         optimizer.zero_grad()
         activation = get_activation(model, example, user_args)
-        loss=get_loss(activation,sae(activation))
-        print(loss)
+        print(f"{activation.mean()=}")
+        print(f"{activation.std()=}")
+        sae_act=sae(activation)
+        print(f"{sae_act.mean()=}")
+        print(f"{sae_act.std()=}")
+        loss=get_loss(activation,sae_act)
+        print(f"{ loss=}")
+        print(f"{ loss/torch.numel(activation)=}")
         loss.backward()
         optimizer.step()
 
