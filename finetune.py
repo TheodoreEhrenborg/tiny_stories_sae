@@ -16,7 +16,7 @@ from transformers import (
     TrainerCallback,
     TrainingArguments,
 )
-
+from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
 RESIDUAL_DIM=768
@@ -48,6 +48,7 @@ def make_parser():
 
 def main(user_args):
     model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
+    writer = SummaryWriter("/results")
 
     if user_args.fast:
         model.cuda()
@@ -72,22 +73,23 @@ def main(user_args):
 
     if user_args.fast:
         sae.cuda()
-    for example in tqdm(tokenized_datasets["train"]):
+    for step, example in enumerate(tqdm(tokenized_datasets["train"])):
         optimizer.zero_grad()
         activation = get_activation(model, example, user_args)
-        print(f"{activation.mean()=}")
-        print(f"{activation.std()=}")
+        writer.add_scalar("act mean/train", activation.mean(), step)
+        writer.add_scalar("act std/train", activation.std(), step)
         norm_act = (activation - activation.mean())/activation.std()*math.sqrt(RESIDUAL_DIM)
-        print(f"{norm_act.mean()=}")
-        print(f"{norm_act.std()=}")
+        writer.add_scalar("norm act mean/train", norm_act.mean(), step)
+        writer.add_scalar("norm act std/train", norm_act.std(), step)
         sae_act=sae(norm_act)
-        print(f"{sae_act.mean()=}")
-        print(f"{sae_act.std()=}")
+        writer.add_scalar("sae act mean/train", sae_act.mean(), step)
+        writer.add_scalar("sae act std/train", sae_act.std(), step)
         loss=get_loss(norm_act,sae_act)
-        print(f"{ loss=}")
-        print(f"{ loss/torch.numel(norm_act)=}")
+        writer.add_scalar("Loss/train", loss, step)
+        writer.add_scalar("Loss per element/train", loss/torch.numel(norm_act), step)
         loss.backward()
         optimizer.step()
+    writer.close()
 
 @jaxtyped(typechecker=beartype)
 def get_loss(act: Float[torch.Tensor, "1 seq_len 768"], sae_act:Float[torch.Tensor, "1 seq_len 768"])-> Float[torch.Tensor, ""]:
