@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt
 
 WORKDIR /code
 
-RUN pip install beartype jaxtyping
+RUN pip install beartype==0.18.5 jaxtyping==0.2.33 tensorboard==2.17.1
