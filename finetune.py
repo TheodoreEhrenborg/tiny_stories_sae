@@ -59,7 +59,7 @@ def main(user_args):
 
     d = load_dataset("roneneldan/TinyStories")
 
-    d["train"] = d["train"].select(range(1000))
+    #d["train"] = d["train"].select(range(1000))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
     def tokenize(example):
