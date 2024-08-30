@@ -66,7 +66,6 @@ def main(user_args):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
 
     tokenized_datasets = d.map(tokenize)
-    print(model.training)
 
     sae = SparseAutoEncoder()
     optimizer = torch.optim.Adam(sae.parameters(), lr=1e-5)
