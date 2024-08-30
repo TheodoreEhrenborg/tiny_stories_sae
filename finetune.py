@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import argparse
 import string
+from coolname import generate_slug
 import math
 import torch
 from beartype import beartype
@@ -48,7 +49,9 @@ def make_parser():
 
 def main(user_args):
     model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
-    writer = SummaryWriter("/results")
+    output_dir=f"/results/{generate_slug()}"
+    print(f"Writing to {output_dir}")
+    writer = SummaryWriter(output_dir)
 
     if user_args.fast:
         model.cuda()
