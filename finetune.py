@@ -70,12 +70,14 @@ def main(user_args):
 
     tokenized_datasets = d.map(tokenize)
 
+    filtered_datasets = tokenized_datasets.filter(lambda x : len(x["input_ids"]) != 0)
+
     sae = SparseAutoEncoder()
     optimizer = torch.optim.Adam(sae.parameters(), lr=1e-5)
 
     if user_args.fast:
         sae.cuda()
-    for step, example in enumerate(tqdm(tokenized_datasets["train"])):
+    for step, example in enumerate(tqdm(filtered_datasets["train"])):
         optimizer.zero_grad()
         activation = get_activation(model, example, user_args)
         writer.add_scalar("act mean/train", activation.mean(), step)
