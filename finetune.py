@@ -73,7 +73,8 @@ def main(user_args):
     filtered_datasets = tokenized_datasets.filter(lambda x : len(x["input_ids"]) != 0)
 
     sae = SparseAutoEncoder()
-    optimizer = torch.optim.Adam(sae.parameters(), lr=1e-5)
+    lr=1e-5
+    optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
     if user_args.fast:
         sae.cuda()
@@ -82,6 +83,7 @@ def main(user_args):
         activation = get_activation(model, example, user_args)
         writer.add_scalar("act mean/train", activation.mean(), step)
         writer.add_scalar("act std/train", activation.std(), step)
+        writer.add_scalar("lr", lr, step)
         norm_act = (activation - activation.mean())/activation.std()*math.sqrt(RESIDUAL_DIM)
         writer.add_scalar("norm act mean/train", norm_act.mean(), step)
         writer.add_scalar("norm act std/train", norm_act.std(), step)
