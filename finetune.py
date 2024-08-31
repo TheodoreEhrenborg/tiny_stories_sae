@@ -23,10 +23,9 @@ from jaxtyping import Float, jaxtyped
 RESIDUAL_DIM=768
 
 class SparseAutoEncoder(torch.nn.Module):
-    def __init__(self):
+    def __init__(self, sae_hidden_dim):
         super().__init__()
-        llm_hidden_dim = 768
-        sae_hidden_dim = 100
+        llm_hidden_dim = RESIDUAL_DIM
         self.first_layer = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
         self.second_layer = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
@@ -44,6 +43,7 @@ def make_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--val_set_size", type=int, default=10)
+    parser.add_argument("--sae_hidden_dim", type=int, default=100)
     return parser
 
 
@@ -72,7 +72,7 @@ def main(user_args):
 
     filtered_datasets = tokenized_datasets.filter(lambda x : len(x["input_ids"]) != 0)
 
-    sae = SparseAutoEncoder()
+    sae = SparseAutoEncoder(args.sae_hidden_dim)
     lr=1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
@@ -84,6 +84,7 @@ def main(user_args):
         writer.add_scalar("act mean/train", activation.mean(), step)
         writer.add_scalar("act std/train", activation.std(), step)
         writer.add_scalar("lr", lr, step)
+        writer.add_scalar("sae_hidden_dim", sae_hidden_dim, step)
         norm_act = (activation - activation.mean())/activation.std()*math.sqrt(RESIDUAL_DIM)
         writer.add_scalar("norm act mean/train", norm_act.mean(), step)
         writer.add_scalar("norm act std/train", norm_act.std(), step)
