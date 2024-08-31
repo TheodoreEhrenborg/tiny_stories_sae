@@ -20,7 +20,8 @@ from transformers import (
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
-RESIDUAL_DIM=768
+RESIDUAL_DIM = 768
+
 
 class SparseAutoEncoder(torch.nn.Module):
     def __init__(self, sae_hidden_dim):
@@ -49,7 +50,7 @@ def make_parser():
 
 def main(user_args):
     model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
-    output_dir=f"/results/{generate_slug()}"
+    output_dir = f"/results/{generate_slug()}"
     print(f"Writing to {output_dir}")
     writer = SummaryWriter(output_dir)
 
@@ -62,7 +63,7 @@ def main(user_args):
 
     d = load_dataset("roneneldan/TinyStories")
 
-    #d["train"] = d["train"].select(range(1000))
+    # d["train"] = d["train"].select(range(1000))
     d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
     def tokenize(example):
@@ -70,10 +71,10 @@ def main(user_args):
 
     tokenized_datasets = d.map(tokenize)
 
-    filtered_datasets = tokenized_datasets.filter(lambda x : len(x["input_ids"]) != 0)
+    filtered_datasets = tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)
 
     sae = SparseAutoEncoder(user_args.sae_hidden_dim)
-    lr=1e-5
+    lr = 1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
     if user_args.fast:
@@ -85,28 +86,37 @@ def main(user_args):
         writer.add_scalar("act std/train", activation.std(), step)
         writer.add_scalar("lr", lr, step)
         writer.add_scalar("sae_hidden_dim", user_args.sae_hidden_dim, step)
-        norm_act = (activation - activation.mean())/activation.std()*math.sqrt(RESIDUAL_DIM)
+        norm_act = (
+            (activation - activation.mean())
+            / activation.std()
+            * math.sqrt(RESIDUAL_DIM)
+        )
         writer.add_scalar("norm act mean/train", norm_act.mean(), step)
         writer.add_scalar("norm act std/train", norm_act.std(), step)
-        sae_act=sae(norm_act)
+        sae_act = sae(norm_act)
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
-        loss=get_loss(norm_act,sae_act)
+        loss = get_loss(norm_act, sae_act)
         writer.add_scalar("Loss/train", loss, step)
-        writer.add_scalar("Loss per element/train", loss/torch.numel(norm_act), step)
+        writer.add_scalar("Loss per element/train", loss / torch.numel(norm_act), step)
         loss.backward()
         optimizer.step()
     writer.close()
 
+
 @jaxtyped(typechecker=beartype)
-def get_loss(act: Float[torch.Tensor, "1 seq_len 768"], sae_act:Float[torch.Tensor, "1 seq_len 768"])-> Float[torch.Tensor, ""]:
-    return ((act-sae_act)**2).sum()
+def get_loss(
+    act: Float[torch.Tensor, "1 seq_len 768"],
+    sae_act: Float[torch.Tensor, "1 seq_len 768"],
+) -> Float[torch.Tensor, ""]:
+    return ((act - sae_act) ** 2).sum()
+
 
 def get_activation(model, example, onehot):
     with torch.no_grad():
-        onehot=torch.tensor(example["input_ids"]).unsqueeze(0)
+        onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
         if user_args.fast:
-            onehot=onehot.cuda()
+            onehot = onehot.cuda()
         x = model(
             onehot,
             output_hidden_states=True,
@@ -114,8 +124,8 @@ def get_activation(model, example, onehot):
         assert len(x.hidden_states) == 5
         return x.hidden_states[2]
 
+
 if __name__ == "__main__":
     parser = make_parser()
     user_args = parser.parse_args()
     main(user_args)
-
