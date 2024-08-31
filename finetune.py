@@ -83,7 +83,6 @@ def main(user_args):
 
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
     tokenizer.pad_token = tokenizer.eos_token
-    data_collator = DataCollatorForLanguageModeling(tokenizer, mlm=False)
 
     d = load_dataset("roneneldan/TinyStories")
 
