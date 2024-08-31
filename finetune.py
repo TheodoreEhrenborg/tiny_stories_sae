@@ -69,6 +69,7 @@ def make_parser():
     parser.add_argument("--val_set_size", type=int, default=10)
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     parser.add_argument("--debug", action="store_true")
+    parser.add_argument("--l1_coefficient", type=float, default=0.0)
     return parser
 
 
@@ -118,7 +119,9 @@ def main(user_args):
         sae_act, feat_vecs = sae(norm_act)
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
-        loss = get_reconstruction_loss(norm_act, sae_act)
+        loss = get_reconstruction_loss(
+            norm_act, sae_act
+        ) + user_args.l1_coefficient * get_l1_penalty(feat_vecs)
         writer.add_scalar("Loss/train", loss, step)
         writer.add_scalar("Loss per element/train", loss / torch.numel(norm_act), step)
         loss.backward()
