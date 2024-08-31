@@ -119,11 +119,24 @@ def main(user_args):
         sae_act, feat_vecs = sae(norm_act)
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
-        loss = get_reconstruction_loss(
-            norm_act, sae_act
-        ) + user_args.l1_coefficient * get_l1_penalty(feat_vecs)
-        writer.add_scalar("Loss/train", loss, step)
-        writer.add_scalar("Loss per element/train", loss / torch.numel(norm_act), step)
+        rec_loss = get_reconstruction_loss(norm_act, sae_act)
+        l1_penalty = get_l1_penalty(feat_vecs)
+        loss = rec_loss + user_args.l1_coefficient * l1_penalty
+        writer.add_scalar("Total loss/train", loss, step)
+        writer.add_scalar(
+            "Total loss per element/train", loss / torch.numel(norm_act), step
+        )
+        writer.add_scalar("Reconstruction loss/train", rec_loss, step)
+        writer.add_scalar(
+            "Reconstruction loss per element/train",
+            rec_loss / torch.numel(norm_act),
+            step,
+        )
+        writer.add_scalar("L1 penalty/train", l1_penalty, step)
+        writer.add_scalar(
+            "L1 penalty per element/train", l1_penalty / torch.numel(norm_act), step
+        )
+        writer.add_scalar("L1 penalty strength", user_args.l1_coefficient, step)
         loss.backward()
         optimizer.step()
     writer.close()
