@@ -118,7 +118,7 @@ def main(user_args):
         sae_act = sae(norm_act)
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
-        loss = get_loss(norm_act, sae_act)
+        loss = get_reconstruction_loss(norm_act, sae_act)
         writer.add_scalar("Loss/train", loss, step)
         writer.add_scalar("Loss per element/train", loss / torch.numel(norm_act), step)
         loss.backward()
@@ -127,7 +127,7 @@ def main(user_args):
 
 
 @jaxtyped(typechecker=beartype)
-def get_loss(
+def get_reconstruction_loss(
     act: Float[torch.Tensor, "1 seq_len 768"],
     sae_act: Float[torch.Tensor, "1 seq_len 768"],
 ) -> Float[torch.Tensor, ""]:
