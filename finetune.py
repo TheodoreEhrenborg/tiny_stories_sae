@@ -33,9 +33,10 @@ class SparseAutoEncoder(torch.nn.Module):
         self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
     @jaxtyped(typechecker=beartype)
-    def forward(
-        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
-    ) -> Float[torch.Tensor, "1 seq_len 768"]:
+    def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
+        Float[torch.Tensor, "1 seq_len 768"],
+        Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 768"],
+    ]:
         sae_activations = self.get_features(llm_activations).unsqueeze(3)
         feat_vecs = self.get_feature_vectors(
             sae_activations, self.decoder.weight.transpose(0, 1)
@@ -45,7 +46,7 @@ class SparseAutoEncoder(torch.nn.Module):
             assert torch.allclose(
                 self.decoder(sae_activations.squeeze(3)), reconstructed, atol=2e-5
             )
-        return reconstructed
+        return reconstructed, feat_vecs
 
     @jaxtyped(typechecker=beartype)
     def get_feature_vectors(
@@ -115,7 +116,7 @@ def main(user_args):
         )
         writer.add_scalar("norm act mean/train", norm_act.mean(), step)
         writer.add_scalar("norm act std/train", norm_act.std(), step)
-        sae_act = sae(norm_act)
+        sae_act, feat_vecs = sae(norm_act)
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
         loss = get_reconstruction_loss(norm_act, sae_act)
