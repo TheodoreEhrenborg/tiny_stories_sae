@@ -27,8 +27,8 @@ class SparseAutoEncoder(torch.nn.Module):
     def __init__(self, sae_hidden_dim):
         super().__init__()
         llm_hidden_dim = RESIDUAL_DIM
-        self.first_layer = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
-        self.second_layer = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
+        self.encoder = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
+        self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
     @jaxtyped(typechecker=beartype)
     def forward(
@@ -36,8 +36,8 @@ class SparseAutoEncoder(torch.nn.Module):
     ) -> Float[torch.Tensor, "1 seq_len 768"]:
         # batch = 1
         # hidden_dim = 768
-        sae_activations = torch.nn.functional.relu(self.first_layer(llm_activations))
-        return self.second_layer(sae_activations)
+        sae_activations = torch.nn.functional.relu(self.encoder(llm_activations))
+        return self.decoder(sae_activations)
 
 
 def make_parser():
