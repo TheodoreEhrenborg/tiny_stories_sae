@@ -62,13 +62,6 @@ class SparseAutoEncoder(torch.nn.Module):
         return torch.nn.functional.relu(self.encoder(llm_activations))
 
 
-def slow_combine(
-    features: Float[torch.Tensor, "1 seq_len sae_hidden"],
-    decoder_weight: Float[torch.Tensor, "llm_hidden sae_hidden"],
-) -> Float[torch.Tensor, "1 seq_len sae_hidden llm_hidden"]:
-    pass
-
-
 def make_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fast", action="store_true")
