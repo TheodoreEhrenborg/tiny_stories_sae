@@ -135,6 +135,17 @@ def get_reconstruction_loss(
     return ((act - sae_act) ** 2).sum()
 
 
+@jaxtyped(typechecker=beartype)
+def get_l1_penalty(
+    feat_vecs: Float[torch.Tensor, "1 seq_len sae_hidden_dim 768"],
+) -> Float[torch.Tensor, ""]:
+    # Take the 2-norm over the LLM activation dimension
+    # Then sum over the SAE features (i.e. a 1-norm)
+    # And then sum over seq_len and batch
+    magnitudes = torch.linalg.vector_norm(feat_vecs, dim=3)
+    return magnitudes.sum()
+
+
 def get_activation(model, example, onehot):
     with torch.no_grad():
         onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
