@@ -24,8 +24,10 @@ RESIDUAL_DIM = 768
 
 
 class SparseAutoEncoder(torch.nn.Module):
-    def __init__(self, sae_hidden_dim):
+    def __init__(self, sae_hidden_dim, debug):
         super().__init__()
+        self.debug = debug
+        self.sae_hidden_dim = sae_hidden_dim
         llm_hidden_dim = RESIDUAL_DIM
         self.encoder = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
         self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
@@ -34,10 +36,37 @@ class SparseAutoEncoder(torch.nn.Module):
     def forward(
         self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
     ) -> Float[torch.Tensor, "1 seq_len 768"]:
-        # batch = 1
-        # hidden_dim = 768
-        sae_activations = torch.nn.functional.relu(self.encoder(llm_activations))
-        return self.decoder(sae_activations)
+        sae_activations = self.get_features(llm_activations).unsqueeze(3)
+        feat_vecs = self.get_feature_vectors(
+            sae_activations, self.decoder.weight.transpose(0, 1)
+        )
+        reconstructed = torch.sum(feat_vecs, 2) + self.decoder.bias
+        if self.debug:
+            assert torch.allclose(
+                self.decoder(sae_activations.squeeze(3)), reconstructed, atol=2e-5
+            )
+        return reconstructed
+
+    @jaxtyped(typechecker=beartype)
+    def get_feature_vectors(
+        self,
+        sae_activations: Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 1"],
+        decoder_weight: Float[torch.Tensor, "{self.sae_hidden_dim} 768"],
+    ) -> Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 768"]:
+        return sae_activations * decoder_weight
+
+    @jaxtyped(typechecker=beartype)
+    def get_features(
+        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
+    ) -> Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"]:
+        return torch.nn.functional.relu(self.encoder(llm_activations))
+
+
+def slow_combine(
+    features: Float[torch.Tensor, "1 seq_len sae_hidden"],
+    decoder_weight: Float[torch.Tensor, "llm_hidden sae_hidden"],
+) -> Float[torch.Tensor, "1 seq_len sae_hidden llm_hidden"]:
+    pass
 
 
 def make_parser():
@@ -45,6 +74,7 @@ def make_parser():
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--val_set_size", type=int, default=10)
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
+    parser.add_argument("--debug", action="store_true")
     return parser
 
 
@@ -73,7 +103,7 @@ def main(user_args):
 
     filtered_datasets = tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)
 
-    sae = SparseAutoEncoder(user_args.sae_hidden_dim)
+    sae = SparseAutoEncoder(user_args.sae_hidden_dim, user_args.debug)
     lr = 1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
