@@ -72,7 +72,7 @@ def main(user_args):
 
     filtered_datasets = tokenized_datasets.filter(lambda x : len(x["input_ids"]) != 0)
 
-    sae = SparseAutoEncoder(args.sae_hidden_dim)
+    sae = SparseAutoEncoder(user_args.sae_hidden_dim)
     lr=1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
@@ -84,7 +84,7 @@ def main(user_args):
         writer.add_scalar("act mean/train", activation.mean(), step)
         writer.add_scalar("act std/train", activation.std(), step)
         writer.add_scalar("lr", lr, step)
-        writer.add_scalar("sae_hidden_dim", sae_hidden_dim, step)
+        writer.add_scalar("sae_hidden_dim", user_args.sae_hidden_dim, step)
         norm_act = (activation - activation.mean())/activation.std()*math.sqrt(RESIDUAL_DIM)
         writer.add_scalar("norm act mean/train", norm_act.mean(), step)
         writer.add_scalar("norm act std/train", norm_act.std(), step)
