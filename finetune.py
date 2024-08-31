@@ -120,7 +120,7 @@ def main(user_args):
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
         rec_loss = get_reconstruction_loss(norm_act, sae_act)
-        l1_penalty = get_l1_penalty(feat_vecs)
+        l1_penalty, nonzero_proportion = get_l1_penalty_nonzero(feat_vecs)
         loss = rec_loss + user_args.l1_coefficient * l1_penalty
         writer.add_scalar("Total loss/train", loss, step)
         writer.add_scalar(
@@ -137,6 +137,8 @@ def main(user_args):
             "L1 penalty per element/train", l1_penalty / torch.numel(norm_act), step
         )
         writer.add_scalar("L1 penalty strength", user_args.l1_coefficient, step)
+        writer.add_scalar("Proportion of nonzero features", nonzero_proportion, step)
+
         loss.backward()
         optimizer.step()
     writer.close()
@@ -151,14 +153,16 @@ def get_reconstruction_loss(
 
 
 @jaxtyped(typechecker=beartype)
-def get_l1_penalty(
+def get_l1_penalty_nonzero(
     feat_vecs: Float[torch.Tensor, "1 seq_len sae_hidden_dim 768"],
-) -> Float[torch.Tensor, ""]:
+) -> tuple[Float[torch.Tensor, ""], Float[torch.Tensor, ""]]:
     # Take the 2-norm over the LLM activation dimension
     # Then sum over the SAE features (i.e. a 1-norm)
     # And then sum over seq_len and batch
     magnitudes = torch.linalg.vector_norm(feat_vecs, dim=3)
-    return magnitudes.sum()
+    l1 = torch.linalg.vector_norm(magnitudes, ord=1)
+    l0 = torch.linalg.vector_norm(magnitudes, ord=0)
+    return l1, l0 / torch.numel(magnitudes)
 
 
 def get_activation(model, example, onehot):
