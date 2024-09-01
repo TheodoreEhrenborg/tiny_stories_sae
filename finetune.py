@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import argparse
+from argparse import Namespace
+from transformers import GPTNeoForCausalLM
 import string
 from coolname import generate_slug
 import math
@@ -126,7 +128,10 @@ def get_l1_penalty_nonzero(
     return l1, l0 / torch.numel(feat_magnitudes)
 
 
-def get_llm_activation(model, example, user_args):
+@jaxtyped(typechecker=beartype)
+def get_llm_activation(
+    model: GPTNeoForCausalLM, example: dict, user_args: Namespace
+) -> Float[torch.Tensor, "1 seq_len 768"]:
     with torch.no_grad():
         onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
         if user_args.fast:
