@@ -33,18 +33,44 @@ from lib import (
     setup,
 )
 
+from dataclasses import dataclass
+
+
+@beartype
+@dataclass
+class Sample:
+    step: int
+    feature_idx: int
+    tokens: list[int]
+    strengths: list[float]
+
 
 def main(user_args):
 
     filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
 
-    for step, example in enumerate(tqdm(filtered_datasets["train"])):
-        if step > user_args.max_step:
-            break
-        optimizer.zero_grad()
-        activation = get_llm_activation(llm, example, user_args)
-        norm_act = normalize_activations(activation)
-        sae_act, feat_magnitudes = sae(norm_act)
+    strongest_activations = [[] for _ in range(user_args.sae_hidden_dim)]
+    with torch.no_grad():
+        for step, example in enumerate(tqdm(filtered_datasets["train"])):
+            activation = get_llm_activation(llm, example, user_args)
+            norm_act = normalize_activations(activation)
+            _, feat_magnitudes = sae(norm_act)
+            for feature_idx in range(user_args.sae_hidden_dim):
+                strongest_activations[feature_idx].append(
+                    Sample(
+                        step=step,
+                        feature_idx=feature_idx,
+                        tokens=example["input_ids"],
+                        strengths=list(feat_magnitudes[0, :, feature_idx]),
+                    )
+                )
+            strongest_activations = [
+                prune(sample_list) for sample_list in strongest_activations
+            ]
+
+
+def prune(sample_list: list[Sample]) -> list[Sample]:
+    return sorted(sample_list, key=lambda sample: max(sample.strengths))[-100:]
 
 
 if __name__ == "__main__":
