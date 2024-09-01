@@ -32,7 +32,6 @@ from lib import (
     setup
 )
 
-RESIDUAL_DIM = 768
 
 
 def make_parser()-> ArgumentParser:
@@ -60,7 +59,7 @@ def main(user_args):
         norm_act = (
             (activation - activation.mean())
             / activation.std()
-            * math.sqrt(RESIDUAL_DIM)
+            * math.sqrt(768)
         )
         sae_act, feat_magnitudes = sae(norm_act)
         rec_loss = get_reconstruction_loss(norm_act, sae_act)
