@@ -52,6 +52,8 @@ def main(user_args: Namespace):
 
     filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
+    if user_args.fast:
+        sae.cuda()
     sae.eval()
 
     strongest_activations = [[] for _ in range(user_args.sae_hidden_dim)]
