@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from argparse import Namespace
+from argparse import Namespace, ArgumentParser
 from transformers import GPT2TokenizerFast
 import argparse
 import string
@@ -94,3 +94,11 @@ def make_dataset(tokenizer: GPT2TokenizerFast) -> DatasetDict:
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
     tokenized_datasets = d.map(tokenize)
     return tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)
+
+
+@beartype
+def make_base_parser() -> ArgumentParser:
+    parser = ArgumentParser()
+    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--sae_hidden_dim", type=int, default=100)
+    return parser

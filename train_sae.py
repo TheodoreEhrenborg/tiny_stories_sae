@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import argparse
-from argparse import Namespace
+from argparse import Namespace, ArgumentParser
 from transformers import GPTNeoForCausalLM
 import string
 from coolname import generate_slug
@@ -27,16 +27,15 @@ from lib import (
     get_feature_magnitudes,
     SparseAutoEncoder,
     get_llm_activation,
-    make_dataset
+    make_dataset,
+    make_base_parser
 )
 
 RESIDUAL_DIM = 768
 
 
-def make_parser():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--fast", action="store_true")
-    parser.add_argument("--sae_hidden_dim", type=int, default=100)
+def make_parser()-> ArgumentParser:
+    parser=make_base_parser()
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
     parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
@@ -135,5 +134,4 @@ def get_l1_penalty_nonzero(
 
 
 if __name__ == "__main__":
-    parser = make_parser()
-    main(parser.parse_args())
+    main(make_parser().parse_args())
