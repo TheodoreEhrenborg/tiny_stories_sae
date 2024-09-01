@@ -29,7 +29,6 @@ def make_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
-    parser.add_argument("--debug", action="store_true")
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
     parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
@@ -56,7 +55,7 @@ def main(user_args):
 
     filtered_datasets = tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)
 
-    sae = SparseAutoEncoder(user_args.sae_hidden_dim, user_args.debug)
+    sae = SparseAutoEncoder(user_args.sae_hidden_dim)
     lr = 1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 

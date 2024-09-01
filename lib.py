@@ -43,9 +43,8 @@ def get_feature_magnitudes(
 
 
 class SparseAutoEncoder(torch.nn.Module):
-    def __init__(self, sae_hidden_dim, debug):
+    def __init__(self, sae_hidden_dim):
         super().__init__()
-        self.debug = debug
         self.sae_hidden_dim = sae_hidden_dim
         llm_hidden_dim = 768
         self.encoder = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
