@@ -1,4 +1,6 @@
 #!/usr/bin/env python3
+import json
+from pathlib import Path
 import argparse
 from argparse import Namespace, ArgumentParser
 from transformers import GPTNeoForCausalLM
@@ -33,7 +35,7 @@ from lib import (
     setup,
 )
 
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 
 
 @beartype
@@ -70,6 +72,16 @@ def main(user_args: Namespace):
             strongest_activations = [
                 prune(sample_list) for sample_list in strongest_activations
             ]
+    output_path = Path(user_args.checkpoint).with_suffix(".json")
+    with open(output_path, "w") as f:
+        json.dump(
+            [
+                asdict(sample)
+                for sample_list in strongest_activations
+                for sample in sample_list
+            ],
+            f,
+        )
 
 
 @beartype
