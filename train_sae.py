@@ -42,13 +42,13 @@ def make_parser()-> ArgumentParser:
 
 
 def main(user_args):
-    model = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
+    llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
     output_dir = f"/results/{generate_slug()}"
     print(f"Writing to {output_dir}")
     writer = SummaryWriter(output_dir)
 
     if user_args.fast:
-        model.cuda()
+        llm.cuda()
 
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
     tokenizer.pad_token = tokenizer.eos_token
@@ -67,7 +67,7 @@ def main(user_args):
         if step > user_args.max_step:
             break
         optimizer.zero_grad()
-        activation = get_llm_activation(model, example, user_args)
+        activation = get_llm_activation(llm, example, user_args)
         norm_act = (
             (activation - activation.mean())
             / activation.std()
