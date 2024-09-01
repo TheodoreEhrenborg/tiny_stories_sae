@@ -141,6 +141,8 @@ def main(user_args):
 
         loss.backward()
         optimizer.step()
+        if step % 5000 == 0:
+            torch.save(sae, f"{output_dir}/{step}.pt")
     writer.close()
 
 
