@@ -52,7 +52,7 @@ def main(user_args: Namespace):
 
     strongest_activations = [[] for _ in range(user_args.sae_hidden_dim)]
     with torch.no_grad():
-        for step, example in enumerate(tqdm(filtered_datasets["val"])):
+        for step, example in enumerate(tqdm(filtered_datasets["validation"])):
             activation = get_llm_activation(llm, example, user_args)
             norm_act = normalize_activations(activation)
             _, feat_magnitudes = sae(norm_act)
