@@ -105,6 +105,7 @@ def make_base_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
+    parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
 
 

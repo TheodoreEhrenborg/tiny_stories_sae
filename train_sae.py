@@ -38,7 +38,6 @@ from lib import (
 def make_parser() -> ArgumentParser:
     parser = make_base_parser()
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
-    parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
 
 
