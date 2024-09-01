@@ -141,5 +141,4 @@ def get_llm_activation(model, example, onehot):
 
 if __name__ == "__main__":
     parser = make_parser()
-    user_args = parser.parse_args()
-    main(user_args)
+    main(parser.parse_args())
