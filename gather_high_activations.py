@@ -49,6 +49,8 @@ class Sample:
 def main(user_args: Namespace):
 
     filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
+    sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
+    sae.eval()
 
     strongest_activations = [[] for _ in range(user_args.sae_hidden_dim)]
     with torch.no_grad():
@@ -74,5 +76,12 @@ def prune(sample_list: list[Sample]) -> list[Sample]:
     return sorted(sample_list, key=lambda sample: max(sample.strengths))[-100:]
 
 
+@beartype
+def make_parser() -> ArgumentParser:
+    parser = make_base_parser()
+    parser.add_argument("--checkpoint", type=str, required=True)
+    return parser
+
+
 if __name__ == "__main__":
-    main(make_base_parser().parse_args())
+    main(make_parser().parse_args())
