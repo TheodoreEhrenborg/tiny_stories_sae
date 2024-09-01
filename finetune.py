@@ -126,7 +126,7 @@ def get_l1_penalty_nonzero(
     return l1, l0 / torch.numel(feat_magnitudes)
 
 
-def get_llm_activation(model, example, onehot):
+def get_llm_activation(model, example, user_args):
     with torch.no_grad():
         onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
         if user_args.fast:
