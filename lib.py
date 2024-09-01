@@ -87,11 +87,14 @@ def get_llm_activation(
         assert len(x.hidden_states) == 5
         return x.hidden_states[2]
 
+
 @beartype
 def make_dataset(tokenizer: GPT2TokenizerFast) -> DatasetDict:
     d = load_dataset("roneneldan/TinyStories")
+
     def tokenize(example):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
+
     tokenized_datasets = d.map(tokenize)
     return tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)
 
@@ -103,8 +106,11 @@ def make_base_parser() -> ArgumentParser:
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     return parser
 
+
 @beartype
-def setup(sae_hidden_dim:int, fast:bool) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder]:
+def setup(
+    sae_hidden_dim: int, fast: bool
+) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder]:
     llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
     if fast:
         llm.cuda()

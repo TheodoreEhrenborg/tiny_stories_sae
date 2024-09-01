@@ -29,13 +29,12 @@ from lib import (
     get_llm_activation,
     make_dataset,
     make_base_parser,
-    setup
+    setup,
 )
 
 
-
-def make_parser()-> ArgumentParser:
-    parser=make_base_parser()
+def make_parser() -> ArgumentParser:
+    parser = make_base_parser()
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
     parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
@@ -56,11 +55,7 @@ def main(user_args):
             break
         optimizer.zero_grad()
         activation = get_llm_activation(llm, example, user_args)
-        norm_act = (
-            (activation - activation.mean())
-            / activation.std()
-            * math.sqrt(768)
-        )
+        norm_act = (activation - activation.mean()) / activation.std() * math.sqrt(768)
         sae_act, feat_magnitudes = sae(norm_act)
         rec_loss = get_reconstruction_loss(norm_act, sae_act)
         l1_penalty, nonzero_proportion = get_l1_penalty_nonzero(feat_magnitudes)
@@ -94,8 +89,6 @@ def main(user_args):
         )
         writer.add_scalar("L1 penalty strength", user_args.l1_coefficient, step)
         writer.add_scalar("Proportion of nonzero features", nonzero_proportion, step)
-        
-
 
     writer.close()
 
@@ -117,8 +110,6 @@ def get_l1_penalty_nonzero(
     l1 = torch.linalg.vector_norm(feat_magnitudes, ord=1)
     l0 = torch.linalg.vector_norm(feat_magnitudes, ord=0)
     return l1, l0 / torch.numel(feat_magnitudes)
-
-    
 
 
 if __name__ == "__main__":
