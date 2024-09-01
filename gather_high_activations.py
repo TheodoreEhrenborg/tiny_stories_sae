@@ -45,7 +45,8 @@ class Sample:
     strengths: list[float]
 
 
-def main(user_args):
+@beartype
+def main(user_args: Namespace):
 
     filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
 
