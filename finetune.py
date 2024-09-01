@@ -20,6 +20,8 @@ from transformers import (
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
+from lib import get_feature_vectors
+
 RESIDUAL_DIM = 768
 
 
@@ -38,8 +40,8 @@ class SparseAutoEncoder(torch.nn.Module):
         Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 768"],
     ]:
         sae_activations = self.get_features(llm_activations).unsqueeze(3)
-        feat_vecs = self.get_feature_vectors(
-            sae_activations, self.decoder.weight.transpose(0, 1)
+        feat_vecs = get_feature_vectors(
+            self.sae_hidden_dim, sae_activations, self.decoder.weight.transpose(0, 1)
         )
         reconstructed = torch.sum(feat_vecs, 2) + self.decoder.bias
         if self.debug:
@@ -47,14 +49,6 @@ class SparseAutoEncoder(torch.nn.Module):
                 self.decoder(sae_activations.squeeze(3)), reconstructed, atol=2e-5
             )
         return reconstructed, feat_vecs
-
-    @jaxtyped(typechecker=beartype)
-    def get_feature_vectors(
-        self,
-        sae_activations: Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 1"],
-        decoder_weight: Float[torch.Tensor, "{self.sae_hidden_dim} 768"],
-    ) -> Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 768"]:
-        return sae_activations * decoder_weight
 
     @jaxtyped(typechecker=beartype)
     def get_features(
