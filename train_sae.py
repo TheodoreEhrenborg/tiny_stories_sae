@@ -28,7 +28,8 @@ from lib import (
     SparseAutoEncoder,
     get_llm_activation,
     make_dataset,
-    make_base_parser
+    make_base_parser,
+    setup
 )
 
 RESIDUAL_DIM = 768
@@ -42,27 +43,15 @@ def make_parser()-> ArgumentParser:
 
 
 def main(user_args):
-    llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
     output_dir = f"/results/{generate_slug()}"
     print(f"Writing to {output_dir}")
     writer = SummaryWriter(output_dir)
 
-    if user_args.fast:
-        llm.cuda()
+    filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
 
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
-    tokenizer.pad_token = tokenizer.eos_token
-
-
-
-    filtered_datasets = make_dataset(tokenizer)
-
-    sae = SparseAutoEncoder(user_args.sae_hidden_dim)
     lr = 1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
-    if user_args.fast:
-        sae.cuda()
     for step, example in enumerate(tqdm(filtered_datasets["train"])):
         if step > user_args.max_step:
             break

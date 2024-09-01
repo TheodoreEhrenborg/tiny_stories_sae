@@ -102,3 +102,16 @@ def make_base_parser() -> ArgumentParser:
     parser.add_argument("--fast", action="store_true")
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     return parser
+
+@beartype
+def setup(sae_hidden_dim:int, fast:bool) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder]:
+    llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
+    if fast:
+        llm.cuda()
+    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
+    tokenizer.pad_token = tokenizer.eos_token
+    filtered_datasets = make_dataset(tokenizer)
+    sae = SparseAutoEncoder(sae_hidden_dim)
+    if fast:
+        sae.cuda()
+    return filtered_datasets, llm, sae
