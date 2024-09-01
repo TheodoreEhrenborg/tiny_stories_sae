@@ -65,7 +65,7 @@ def main(user_args):
         if step > user_args.max_step:
             break
         optimizer.zero_grad()
-        activation = get_activation(model, example, user_args)
+        activation = get_llm_activation(model, example, user_args)
         writer.add_scalar("act mean/train", activation.mean(), step)
         writer.add_scalar("act std/train", activation.std(), step)
         writer.add_scalar("lr", lr, step)
@@ -126,7 +126,7 @@ def get_l1_penalty_nonzero(
     return l1, l0 / torch.numel(feat_magnitudes)
 
 
-def get_activation(model, example, onehot):
+def get_llm_activation(model, example, onehot):
     with torch.no_grad():
         onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
         if user_args.fast:
