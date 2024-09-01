@@ -72,6 +72,7 @@ def main(user_args: Namespace):
             ]
 
 
+@beartype
 def prune(sample_list: list[Sample]) -> list[Sample]:
     return sorted(sample_list, key=lambda sample: max(sample.strengths))[-100:]
 
