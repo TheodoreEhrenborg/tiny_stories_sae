@@ -46,7 +46,8 @@ def get_feature_magnitudes(
 
 
 class SparseAutoEncoder(torch.nn.Module):
-    def __init__(self, sae_hidden_dim):
+    @beartype
+    def __init__(self, sae_hidden_dim: int):
         super().__init__()
         self.sae_hidden_dim = sae_hidden_dim
         llm_hidden_dim = 768
@@ -123,6 +124,7 @@ def setup(
     return filtered_datasets, llm, sae
 
 
+@jaxtyped(typechecker=beartype)
 def normalize_activations(
     activation: Float[torch.Tensor, "1 seq_len 768"]
 ) -> Float[torch.Tensor, "1 seq_len 768"]:

@@ -34,6 +34,7 @@ from lib import (
 )
 
 
+@beartype
 def make_parser() -> ArgumentParser:
     parser = make_base_parser()
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
@@ -41,7 +42,8 @@ def make_parser() -> ArgumentParser:
     return parser
 
 
-def main(user_args):
+@beartype
+def main(user_args: Namespace):
     output_dir = f"/results/{generate_slug()}"
     print(f"Writing to {output_dir}")
     writer = SummaryWriter(output_dir)
