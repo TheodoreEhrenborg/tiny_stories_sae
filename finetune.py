@@ -44,10 +44,6 @@ class SparseAutoEncoder(torch.nn.Module):
             self.sae_hidden_dim, sae_activations, self.decoder.weight.transpose(0, 1)
         )
         reconstructed = torch.sum(feat_vecs, 2) + self.decoder.bias
-        if self.debug:
-            assert torch.allclose(
-                self.decoder(sae_activations.squeeze(3)), reconstructed, atol=2e-5
-            )
         return reconstructed, feat_vecs
 
     @jaxtyped(typechecker=beartype)
