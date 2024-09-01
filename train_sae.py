@@ -73,23 +73,28 @@ def main(user_args):
             break
         optimizer.zero_grad()
         activation = get_llm_activation(model, example, user_args)
-        writer.add_scalar("act mean/train", activation.mean(), step)
-        writer.add_scalar("act std/train", activation.std(), step)
-        writer.add_scalar("lr", lr, step)
-        writer.add_scalar("sae_hidden_dim", user_args.sae_hidden_dim, step)
         norm_act = (
             (activation - activation.mean())
             / activation.std()
             * math.sqrt(RESIDUAL_DIM)
         )
-        writer.add_scalar("norm act mean/train", norm_act.mean(), step)
-        writer.add_scalar("norm act std/train", norm_act.std(), step)
         sae_act, feat_magnitudes = sae(norm_act)
-        writer.add_scalar("sae act mean/train", sae_act.mean(), step)
-        writer.add_scalar("sae act std/train", sae_act.std(), step)
         rec_loss = get_reconstruction_loss(norm_act, sae_act)
         l1_penalty, nonzero_proportion = get_l1_penalty_nonzero(feat_magnitudes)
         loss = rec_loss + user_args.l1_coefficient * l1_penalty
+        loss.backward()
+        optimizer.step()
+        if step % 5000 == 0:
+            torch.save(sae, f"{output_dir}/{step}.pt")
+
+        writer.add_scalar("act mean/train", activation.mean(), step)
+        writer.add_scalar("act std/train", activation.std(), step)
+        writer.add_scalar("lr", lr, step)
+        writer.add_scalar("sae_hidden_dim", user_args.sae_hidden_dim, step)
+        writer.add_scalar("norm act mean/train", norm_act.mean(), step)
+        writer.add_scalar("norm act std/train", norm_act.std(), step)
+        writer.add_scalar("sae act mean/train", sae_act.mean(), step)
+        writer.add_scalar("sae act std/train", sae_act.std(), step)
         writer.add_scalar("Total loss/train", loss, step)
         writer.add_scalar(
             "Total loss per element/train", loss / torch.numel(norm_act), step
@@ -106,11 +111,9 @@ def main(user_args):
         )
         writer.add_scalar("L1 penalty strength", user_args.l1_coefficient, step)
         writer.add_scalar("Proportion of nonzero features", nonzero_proportion, step)
+        
 
-        loss.backward()
-        optimizer.step()
-        if step % 5000 == 0:
-            torch.save(sae, f"{output_dir}/{step}.pt")
+
     writer.close()
 
 
