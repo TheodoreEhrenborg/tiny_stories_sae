@@ -20,37 +20,9 @@ from transformers import (
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
-from lib import get_feature_vectors, get_feature_magnitudes
+from lib import get_feature_vectors, get_feature_magnitudes, SparseAutoEncoder
 
 RESIDUAL_DIM = 768
-
-
-class SparseAutoEncoder(torch.nn.Module):
-    def __init__(self, sae_hidden_dim, debug):
-        super().__init__()
-        self.debug = debug
-        self.sae_hidden_dim = sae_hidden_dim
-        llm_hidden_dim = RESIDUAL_DIM
-        self.encoder = torch.nn.Linear(llm_hidden_dim, sae_hidden_dim)
-        self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
-
-    @jaxtyped(typechecker=beartype)
-    def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
-        Float[torch.Tensor, "1 seq_len 768"],
-        Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
-    ]:
-        sae_activations = self.get_features(llm_activations)
-        feat_magnitudes = get_feature_magnitudes(
-            self.sae_hidden_dim, sae_activations, self.decoder.weight.transpose(0, 1)
-        )
-        reconstructed = self.decoder(sae_activations)
-        return reconstructed, feat_magnitudes
-
-    @jaxtyped(typechecker=beartype)
-    def get_features(
-        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
-    ) -> Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"]:
-        return torch.nn.functional.relu(self.encoder(llm_activations))
 
 
 def make_parser():
