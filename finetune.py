@@ -56,7 +56,6 @@ class SparseAutoEncoder(torch.nn.Module):
 def make_parser():
     parser = argparse.ArgumentParser()
     parser.add_argument("--fast", action="store_true")
-    parser.add_argument("--val_set_size", type=int, default=10)
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     parser.add_argument("--debug", action="store_true")
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
@@ -76,8 +75,6 @@ def main(user_args):
     tokenizer.pad_token = tokenizer.eos_token
 
     d = load_dataset("roneneldan/TinyStories")
-
-    d["validation"] = d["validation"].select(range(user_args.val_set_size))
 
     def tokenize(example):
         return {"input_ids": tokenizer(example["text"])["input_ids"]}
