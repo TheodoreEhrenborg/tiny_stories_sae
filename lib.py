@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from argparse import Namespace
 import argparse
 import string
 from coolname import generate_slug
@@ -18,6 +19,7 @@ from transformers import (
     TrainerCallback,
     TrainingArguments,
 )
+from transformers import GPTNeoForCausalLM
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
@@ -68,3 +70,18 @@ class SparseAutoEncoder(torch.nn.Module):
     ) -> Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"]:
         return torch.nn.functional.relu(self.encoder(llm_activations))
 
+
+@jaxtyped(typechecker=beartype)
+def get_llm_activation(
+    model: GPTNeoForCausalLM, example: dict, user_args: Namespace
+) -> Float[torch.Tensor, "1 seq_len 768"]:
+    with torch.no_grad():
+        onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
+        if user_args.fast:
+            onehot = onehot.cuda()
+        x = model(
+            onehot,
+            output_hidden_states=True,
+        )
+        assert len(x.hidden_states) == 5
+        return x.hidden_states[2]

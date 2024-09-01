@@ -22,7 +22,12 @@ from transformers import (
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
-from lib import get_feature_vectors, get_feature_magnitudes, SparseAutoEncoder
+from lib import (
+    get_feature_vectors,
+    get_feature_magnitudes,
+    SparseAutoEncoder,
+    get_llm_activation,
+)
 
 RESIDUAL_DIM = 768
 
@@ -126,22 +131,6 @@ def get_l1_penalty_nonzero(
     l1 = torch.linalg.vector_norm(feat_magnitudes, ord=1)
     l0 = torch.linalg.vector_norm(feat_magnitudes, ord=0)
     return l1, l0 / torch.numel(feat_magnitudes)
-
-
-@jaxtyped(typechecker=beartype)
-def get_llm_activation(
-    model: GPTNeoForCausalLM, example: dict, user_args: Namespace
-) -> Float[torch.Tensor, "1 seq_len 768"]:
-    with torch.no_grad():
-        onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
-        if user_args.fast:
-            onehot = onehot.cuda()
-        x = model(
-            onehot,
-            output_hidden_states=True,
-        )
-        assert len(x.hidden_states) == 5
-        return x.hidden_states[2]
 
 
 if __name__ == "__main__":
