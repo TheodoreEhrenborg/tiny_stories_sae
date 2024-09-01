@@ -29,6 +29,7 @@ from lib import (
     get_llm_activation,
     make_dataset,
     make_base_parser,
+    normalize_activations,
     setup,
 )
 
@@ -42,7 +43,7 @@ def main(user_args):
             break
         optimizer.zero_grad()
         activation = get_llm_activation(llm, example, user_args)
-        norm_act = (activation - activation.mean()) / activation.std() * math.sqrt(768)
+        norm_act = normalize_activations(activation)
         sae_act, feat_magnitudes = sae(norm_act)
 
 

@@ -121,3 +121,9 @@ def setup(
     if fast:
         sae.cuda()
     return filtered_datasets, llm, sae
+
+
+def normalize_activations(
+    activation: Float[torch.Tensor, "1 seq_len 768"]
+) -> Float[torch.Tensor, "1 seq_len 768"]:
+    return (activation - activation.mean()) / activation.std() * math.sqrt(768)
