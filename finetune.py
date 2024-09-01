@@ -20,7 +20,7 @@ from transformers import (
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
-from lib import get_feature_vectors
+from lib import get_feature_vectors, get_feature_magnitudes
 
 RESIDUAL_DIM = 768
 
@@ -37,14 +37,14 @@ class SparseAutoEncoder(torch.nn.Module):
     @jaxtyped(typechecker=beartype)
     def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
         Float[torch.Tensor, "1 seq_len 768"],
-        Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim} 768"],
+        Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
     ]:
         sae_activations = self.get_features(llm_activations).unsqueeze(3)
-        feat_vecs = get_feature_vectors(
+        feat_magnitudes = get_feature_magnitudes(
             self.sae_hidden_dim, sae_activations, self.decoder.weight.transpose(0, 1)
         )
-        reconstructed = torch.sum(feat_vecs, 2) + self.decoder.bias
-        return reconstructed, feat_vecs
+        reconstructed = self.decoder(sae_activations.squeeze(3))
+        return reconstructed, feat_magnitudes
 
     @jaxtyped(typechecker=beartype)
     def get_features(
@@ -106,11 +106,11 @@ def main(user_args):
         )
         writer.add_scalar("norm act mean/train", norm_act.mean(), step)
         writer.add_scalar("norm act std/train", norm_act.std(), step)
-        sae_act, feat_vecs = sae(norm_act)
+        sae_act, feat_magnitudes = sae(norm_act)
         writer.add_scalar("sae act mean/train", sae_act.mean(), step)
         writer.add_scalar("sae act std/train", sae_act.std(), step)
         rec_loss = get_reconstruction_loss(norm_act, sae_act)
-        l1_penalty, nonzero_proportion = get_l1_penalty_nonzero(feat_vecs)
+        l1_penalty, nonzero_proportion = get_l1_penalty_nonzero(feat_magnitudes)
         loss = rec_loss + user_args.l1_coefficient * l1_penalty
         writer.add_scalar("Total loss/train", loss, step)
         writer.add_scalar(
@@ -146,15 +146,13 @@ def get_reconstruction_loss(
 
 @jaxtyped(typechecker=beartype)
 def get_l1_penalty_nonzero(
-    feat_vecs: Float[torch.Tensor, "1 seq_len sae_hidden_dim 768"],
+    feat_magnitudes: Float[torch.Tensor, "1 seq_len sae_hidden_dim"],
 ) -> tuple[Float[torch.Tensor, ""], Float[torch.Tensor, ""]]:
-    # Take the 2-norm over the LLM activation dimension
-    # Then sum over the SAE features (i.e. a 1-norm)
+    # Sum over the SAE features (i.e. a 1-norm)
     # And then sum over seq_len and batch
-    magnitudes = torch.linalg.vector_norm(feat_vecs, dim=3)
-    l1 = torch.linalg.vector_norm(magnitudes, ord=1)
-    l0 = torch.linalg.vector_norm(magnitudes, ord=0)
-    return l1, l0 / torch.numel(magnitudes)
+    l1 = torch.linalg.vector_norm(feat_magnitudes, ord=1)
+    l0 = torch.linalg.vector_norm(feat_magnitudes, ord=0)
+    return l1, l0 / torch.numel(feat_magnitudes)
 
 
 def get_activation(model, example, onehot):
