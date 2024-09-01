@@ -45,6 +45,7 @@ class Sample:
     feature_idx: int
     tokens: list[int]
     strengths: list[float]
+    max_strength: float
 
 
 @beartype
@@ -65,12 +66,14 @@ def main(user_args: Namespace):
             norm_act = normalize_activations(activation)
             _, feat_magnitudes = sae(norm_act)
             for feature_idx in range(user_args.sae_hidden_dim):
+                strengths = feat_magnitudes[0, :, feature_idx].tolist()
                 strongest_activations[feature_idx].append(
                     Sample(
                         step=step,
                         feature_idx=feature_idx,
                         tokens=example["input_ids"],
-                        strengths=feat_magnitudes[0, :, feature_idx].tolist(),
+                        strengths=strengths,
+                        max_strength=max(strengths),
                     )
                 )
             strongest_activations = [
@@ -90,7 +93,7 @@ def main(user_args: Namespace):
 
 @beartype
 def prune(sample_list: list[Sample]) -> list[Sample]:
-    return sorted(sample_list, key=lambda sample: max(sample.strengths))[-100:]
+    return sorted(sample_list, key=lambda sample: sample.max_strength)[-100:]
 
 
 @beartype
