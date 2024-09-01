@@ -77,11 +77,11 @@ def get_llm_activation(
     model: GPTNeoForCausalLM, example: dict, user_args: Namespace
 ) -> Float[torch.Tensor, "1 seq_len 768"]:
     with torch.no_grad():
-        onehot = torch.tensor(example["input_ids"]).unsqueeze(0)
+        tokens_tensor = torch.tensor(example["input_ids"]).unsqueeze(0)
         if user_args.fast:
-            onehot = onehot.cuda()
+            tokens_tensor = tokens_tensor.cuda()
         x = model(
-            onehot,
+            tokens_tensor,
             output_hidden_states=True,
         )
         assert len(x.hidden_states) == 5
