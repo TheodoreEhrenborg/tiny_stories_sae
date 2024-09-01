@@ -39,11 +39,11 @@ class SparseAutoEncoder(torch.nn.Module):
         Float[torch.Tensor, "1 seq_len 768"],
         Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
     ]:
-        sae_activations = self.get_features(llm_activations).unsqueeze(3)
+        sae_activations = self.get_features(llm_activations)
         feat_magnitudes = get_feature_magnitudes(
             self.sae_hidden_dim, sae_activations, self.decoder.weight.transpose(0, 1)
         )
-        reconstructed = self.decoder(sae_activations.squeeze(3))
+        reconstructed = self.decoder(sae_activations)
         return reconstructed, feat_magnitudes
 
     @jaxtyped(typechecker=beartype)
