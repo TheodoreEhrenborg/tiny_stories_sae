@@ -59,6 +59,7 @@ def make_parser():
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     parser.add_argument("--debug", action="store_true")
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
+    parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
 
 
@@ -90,6 +91,8 @@ def main(user_args):
     if user_args.fast:
         sae.cuda()
     for step, example in enumerate(tqdm(filtered_datasets["train"])):
+        if step > user_args.max_step:
+            break
         optimizer.zero_grad()
         activation = get_activation(model, example, user_args)
         writer.add_scalar("act mean/train", activation.mean(), step)
