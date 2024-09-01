@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from argparse import Namespace
+from transformers import GPT2TokenizerFast
 import argparse
 import string
 from coolname import generate_slug
@@ -9,7 +10,7 @@ import torch
 from beartype import beartype
 from tqdm import tqdm
 
-from datasets import load_dataset
+from datasets import load_dataset, DatasetDict
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -85,3 +86,11 @@ def get_llm_activation(
         )
         assert len(x.hidden_states) == 5
         return x.hidden_states[2]
+
+@beartype
+def make_dataset(tokenizer: GPT2TokenizerFast) -> DatasetDict:
+    d = load_dataset("roneneldan/TinyStories")
+    def tokenize(example):
+        return {"input_ids": tokenizer(example["text"])["input_ids"]}
+    tokenized_datasets = d.map(tokenize)
+    return tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)

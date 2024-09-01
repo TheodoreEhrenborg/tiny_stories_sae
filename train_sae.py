@@ -27,6 +27,7 @@ from lib import (
     get_feature_magnitudes,
     SparseAutoEncoder,
     get_llm_activation,
+    make_dataset
 )
 
 RESIDUAL_DIM = 768
@@ -53,14 +54,9 @@ def main(user_args):
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
     tokenizer.pad_token = tokenizer.eos_token
 
-    d = load_dataset("roneneldan/TinyStories")
 
-    def tokenize(example):
-        return {"input_ids": tokenizer(example["text"])["input_ids"]}
 
-    tokenized_datasets = d.map(tokenize)
-
-    filtered_datasets = tokenized_datasets.filter(lambda x: len(x["input_ids"]) != 0)
+    filtered_datasets = make_dataset(tokenizer)
 
     sae = SparseAutoEncoder(user_args.sae_hidden_dim)
     lr = 1e-5
@@ -134,6 +130,8 @@ def get_l1_penalty_nonzero(
     l1 = torch.linalg.vector_norm(feat_magnitudes, ord=1)
     l0 = torch.linalg.vector_norm(feat_magnitudes, ord=0)
     return l1, l0 / torch.numel(feat_magnitudes)
+
+    
 
 
 if __name__ == "__main__":
