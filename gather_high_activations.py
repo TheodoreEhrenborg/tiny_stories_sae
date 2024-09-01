@@ -66,7 +66,7 @@ def main(user_args: Namespace):
                         step=step,
                         feature_idx=feature_idx,
                         tokens=example["input_ids"],
-                        strengths=list(feat_magnitudes[0, :, feature_idx]),
+                        strengths=feat_magnitudes[0, :, feature_idx].tolist(),
                     )
                 )
             strongest_activations = [
