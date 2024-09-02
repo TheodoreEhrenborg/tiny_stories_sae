@@ -51,7 +51,9 @@ class Sample:
 @beartype
 def main(user_args: Namespace):
 
-    filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
+    filtered_datasets, llm, sae, tokenizer = setup(
+        user_args.sae_hidden_dim, user_args.fast
+    )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
     if user_args.fast:
         sae.cuda()
@@ -80,6 +82,10 @@ def main(user_args: Namespace):
                 prune(sample_list) for sample_list in strongest_activations
             ]
     output_path = Path(user_args.checkpoint).with_suffix(".json")
+    test_sample = strongest_activations[0][-1]
+    print(tokenizer.decode(test_sample.tokens[0]))
+
+    exit()
     with open(output_path, "w") as f:
         json.dump(
             [
@@ -90,6 +96,11 @@ def main(user_args: Namespace):
             f,
         )
 
+@beartype
+def foo(tokenizer:GPT2TokenizerFast, sample:Sample ):
+
+def format_token(tokenizer:GPT2TokenizerFast, token:int, strength:float ):
+    return f"{math.pi:.0e}"
 
 @beartype
 def prune(sample_list: list[Sample]) -> list[Sample]:

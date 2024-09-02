@@ -47,7 +47,7 @@ def main(user_args: Namespace):
     print(f"Writing to {output_dir}")
     writer = SummaryWriter(output_dir)
 
-    filtered_datasets, llm, sae = setup(user_args.sae_hidden_dim, user_args.fast)
+    filtered_datasets, llm, sae, _ = setup(user_args.sae_hidden_dim, user_args.fast)
 
     lr = 1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
