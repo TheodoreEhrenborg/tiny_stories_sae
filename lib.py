@@ -112,7 +112,7 @@ def make_base_parser() -> ArgumentParser:
 @beartype
 def setup(
     sae_hidden_dim: int, fast: bool
-) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder]:
+) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder, GPT2TokenizerFast]:
     llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
     if fast:
         llm.cuda()
@@ -122,7 +122,7 @@ def setup(
     sae = SparseAutoEncoder(sae_hidden_dim)
     if fast:
         sae.cuda()
-    return filtered_datasets, llm, sae
+    return filtered_datasets, llm, sae, tokenizer
 
 
 @jaxtyped(typechecker=beartype)
