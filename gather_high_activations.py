@@ -94,6 +94,7 @@ def main(user_args: Namespace):
                 for sample in sample_list
             ],
             f,
+            indent=2,
         )
 
 
