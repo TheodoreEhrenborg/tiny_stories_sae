@@ -88,6 +88,12 @@ def main(user_args: Namespace):
     # test_sample = strongest_activations[0][-1]
     # print(tokenizer.decode(test_sample.tokens[0]))
 
+    num_dead_features = 0
+    for sample_list in strongest_activations:
+        if max(map(lambda x: x.max_strength, sample_list)) == 0:
+            num_dead_features += 1
+    print("Proportion of dead features", num_dead_features / len(strongest_activations))
+
     with open(output_path, "w") as f:
         json.dump(
             [
