@@ -117,7 +117,7 @@ def format_token(tokenizer: GPT2TokenizerFast, token: int, strength: float) -> s
 
 @beartype
 def prune(sample_list: list[Sample]) -> list[Sample]:
-    return sorted(sample_list, key=lambda sample: sample.max_strength)[-100:]
+    return sorted(sample_list, key=lambda sample: sample.max_strength)[-10:]
 
 
 @beartype
