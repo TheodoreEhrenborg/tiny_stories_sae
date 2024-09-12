@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from transformers import GPT2TokenizerFast
 import json
+import random
 from pathlib import Path
 import argparse
 from argparse import Namespace, ArgumentParser
@@ -95,6 +96,7 @@ def main(user_args: Namespace):
             ],
             f,
             indent=2,
+            ensure_ascii=False,
         )
 
 
@@ -103,16 +105,24 @@ def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
     results = asdict(sample)
     # This merges them into one string
     results["text"] = tokenizer.decode(sample.tokens)
-    results["annotated_text"] = [
-        format_token(tokenizer, token, strength)
+    results["annotated_text"] = "".join(
+        format_token(tokenizer, token, strength, sample.max_strength)
         for token, strength in zip(sample.tokens, sample.strengths, strict=True)
-    ]
+    )
     return results
 
 
 @beartype
-def format_token(tokenizer: GPT2TokenizerFast, token: int, strength: float) -> str:
-    return f"{tokenizer.decode(token)} {strength:.0e}"
+def format_token(
+    tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
+) -> str:
+    # return f"{tokenizer.decode(token)} {strength:.0e}"
+
+    rank = int(7 * strength / max_strength) if max_strength != 0 else 0
+    return f"{tokenizer.decode(token)} {blocks[rank]}"
+
+
+blocks = [chr(x) for x in range(9601, 9609)]
 
 
 @beartype
