@@ -81,7 +81,8 @@ def main(user_args: Namespace):
                     )
                 )
             strongest_activations = [
-                prune(sample_list) for sample_list in strongest_activations
+                prune(sample_list, user_args.samples_to_keep)
+                for sample_list in strongest_activations
             ]
     output_path = Path(user_args.checkpoint).with_suffix(".json")
     # test_sample = strongest_activations[0][-1]
@@ -126,14 +127,17 @@ blocks = [chr(x) for x in range(9601, 9609)]
 
 
 @beartype
-def prune(sample_list: list[Sample]) -> list[Sample]:
-    return sorted(sample_list, key=lambda sample: sample.max_strength)[-10:]
+def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
+    return sorted(sample_list, reverse=True, key=lambda sample: sample.max_strength)[
+        :samples_to_keep
+    ]
 
 
 @beartype
 def make_parser() -> ArgumentParser:
     parser = make_base_parser()
     parser.add_argument("--checkpoint", type=str, required=True)
+    parser.add_argument("--samples_to_keep", type=int, default=10)
     return parser
 
 
