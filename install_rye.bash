@@ -6,5 +6,5 @@ then
    wget https://github.com/astral-sh/rye/releases/latest/download/rye-x86_64-linux.gz
    gunzip rye-x86_64-linux.gz
    chmod +x ./rye-x86_64-linux
-   rye-x86_64-linux
+   ./rye-x86_64-linux
 fi
