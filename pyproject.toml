@@ -33,4 +33,4 @@ ignore = ["F722"]
 allow-direct-references = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/code"]
+packages = ["src/tiny_stories_sae"]
