@@ -1,18 +1,18 @@
 #!/usr/bin/env python3
 
-from argparse import Namespace, ArgumentParser
-from transformers import GPT2TokenizerFast
 import math
+from argparse import ArgumentParser, Namespace
+
 import torch
 from beartype import beartype
-
-from datasets import load_dataset, DatasetDict
+from datasets import DatasetDict, load_dataset
+from jaxtyping import Float, jaxtyped
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
+    GPT2TokenizerFast,
+    GPTNeoForCausalLM,
 )
-from transformers import GPTNeoForCausalLM
-from jaxtyping import Float, jaxtyped
 
 
 @jaxtyped(typechecker=beartype)

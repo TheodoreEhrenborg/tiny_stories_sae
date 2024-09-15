@@ -1,20 +1,18 @@
 #!/usr/bin/env python3
-from transformers import GPT2TokenizerFast
 import json
+from argparse import ArgumentParser, Namespace
+from dataclasses import asdict, dataclass
 from pathlib import Path
-from argparse import Namespace, ArgumentParser
+
 import torch
 from beartype import beartype
-from tqdm import tqdm
-
-
 from lib import (
     get_llm_activation,
     make_base_parser,
     setup,
 )
-
-from dataclasses import dataclass, asdict
+from tqdm import tqdm
+from transformers import GPT2TokenizerFast
 
 # TODO To deal with negative activations:
 # Should I:

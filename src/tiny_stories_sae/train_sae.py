@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
-from argparse import Namespace, ArgumentParser
-from coolname import generate_slug
+from argparse import ArgumentParser, Namespace
+
 import torch
 from beartype import beartype
-from tqdm import tqdm
-
-from torch.utils.tensorboard import SummaryWriter
+from coolname import generate_slug
 from jaxtyping import Float, jaxtyped
-
 from lib import (
     get_llm_activation,
     make_base_parser,
     normalize_activations,
     setup,
 )
+from torch.utils.tensorboard import SummaryWriter
+from tqdm import tqdm
 
 
 @beartype

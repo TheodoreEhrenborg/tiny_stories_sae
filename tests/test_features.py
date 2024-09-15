@@ -1,5 +1,6 @@
-from tiny_stories_sae.lib import get_feature_vectors, get_feature_magnitudes
 import torch
+
+from tiny_stories_sae.lib import get_feature_magnitudes, get_feature_vectors
 
 
 def test_running_decoder_manually():

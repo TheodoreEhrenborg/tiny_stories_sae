@@ -25,6 +25,7 @@ build-backend = "hatchling.build"
 
 [tool.ruff.lint]
 ignore = ["F722"]
+extend-select = ["I"]
 
 [tool.hatch.metadata]
 allow-direct-references = true
