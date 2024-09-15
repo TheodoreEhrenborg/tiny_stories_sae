@@ -39,6 +39,12 @@ from lib import (
 
 from dataclasses import dataclass, asdict
 
+# TODO To deal with negative activations:
+# Should I:
+# - abs them?
+# - just keep the full dynamic range, so 0 looks like partly activated?
+# - relu them?
+
 
 @beartype
 @dataclass
@@ -120,6 +126,8 @@ def format_token(
 ) -> str:
     # return f"{tokenizer.decode(token)} {strength:.0e}"
 
+    if strength < 0:
+        strength = 0
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
     assert 0 <= rank <= 7, rank
     return f"{tokenizer.decode(token)} {blocks[rank]}"
