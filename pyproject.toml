@@ -26,6 +26,9 @@ build-backend = "hatchling.build"
 managed = true
 dev-dependencies = []
 
+[tool.ruff.lint]
+ignore = ["F722"]
+
 [tool.hatch.metadata]
 allow-direct-references = true
 
