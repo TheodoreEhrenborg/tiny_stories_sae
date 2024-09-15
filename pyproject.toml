@@ -2,7 +2,13 @@
 name = "tiny_stories_sae"
 version = "0.1.0"
 description = "Add your description here"
-dependencies = []
+dependencies = [
+    "beartype==0.18.5",
+    "jaxtyping==0.2.33",
+    "tensorboard==2.17.1",
+    "coolname==2.2.0",
+    "pytest==8.3.2",
+]
 readme = "README.md"
 requires-python = ">= 3.8"
 

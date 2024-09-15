@@ -10,3 +10,42 @@
 #   universal: false
 
 -e file:.
+absl-py==2.1.0
+    # via tensorboard
+beartype==0.18.5
+    # via tiny-stories-sae
+coolname==2.2.0
+    # via tiny-stories-sae
+grpcio==1.66.1
+    # via tensorboard
+iniconfig==2.0.0
+    # via pytest
+jaxtyping==0.2.33
+    # via tiny-stories-sae
+markdown==3.7
+    # via tensorboard
+markupsafe==2.1.5
+    # via werkzeug
+numpy==2.1.1
+    # via tensorboard
+packaging==24.1
+    # via pytest
+    # via tensorboard
+pluggy==1.5.0
+    # via pytest
+protobuf==5.28.1
+    # via tensorboard
+pytest==8.3.2
+    # via tiny-stories-sae
+setuptools==74.1.2
+    # via tensorboard
+six==1.16.0
+    # via tensorboard
+tensorboard==2.17.1
+    # via tiny-stories-sae
+tensorboard-data-server==0.7.2
+    # via tensorboard
+typeguard==2.13.3
+    # via jaxtyping
+werkzeug==3.0.4
+    # via tensorboard
