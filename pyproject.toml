@@ -27,6 +27,9 @@ build-backend = "hatchling.build"
 ignore = ["F722"]
 extend-select = ["I"]
 
+[tool.ruff.lint.isort]
+known-first-party = ["tiny_stories_sae"]
+
 [tool.hatch.metadata]
 allow-direct-references = true
 

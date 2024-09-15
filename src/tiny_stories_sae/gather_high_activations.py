@@ -6,14 +6,15 @@ from pathlib import Path
 
 import torch
 from beartype import beartype
-from lib import (
+from tqdm import tqdm
+from transformers import GPT2TokenizerFast
+
+from tiny_stories_sae.lib import (
     get_llm_activation,
     make_base_parser,
     normalize_activations,
     setup,
 )
-from tqdm import tqdm
-from transformers import GPT2TokenizerFast
 
 
 @beartype

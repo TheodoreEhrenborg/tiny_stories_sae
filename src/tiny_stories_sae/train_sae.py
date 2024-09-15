@@ -5,14 +5,15 @@ import torch
 from beartype import beartype
 from coolname import generate_slug
 from jaxtyping import Float, jaxtyped
-from lib import (
+from torch.utils.tensorboard import SummaryWriter
+from tqdm import tqdm
+
+from tiny_stories_sae.lib import (
     get_llm_activation,
     make_base_parser,
     normalize_activations,
     setup,
 )
-from torch.utils.tensorboard import SummaryWriter
-from tqdm import tqdm
 
 
 @beartype
