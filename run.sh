@@ -1,9 +1,8 @@
-#!/usr/bin/env bash
-if [ -z "$command" ]; then
-    command=/bin/bash
-fi
+#!/usr/bin/env sh
 docker run -it --rm \
     $@ \
     -v $HOME/.cache/huggingface:/root/.cache/huggingface \
-    -v $(pwd):/code $(cat docker_name) \
-    $command
+    -v $(pwd):/code \
+    -v $HOME/.rye:/root/.rye \
+    $(cat docker_name) \
+    sh -c "./install_rye.bash && /bin/bash"
