@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# TODO Needs DRY with other gathering script
 import json
 from argparse import ArgumentParser, Namespace
 from dataclasses import asdict, dataclass
