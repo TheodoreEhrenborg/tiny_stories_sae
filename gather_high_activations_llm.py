@@ -53,24 +53,19 @@ class Sample:
 @beartype
 def main(user_args: Namespace):
 
-    filtered_datasets, llm, sae, tokenizer = setup(
+    filtered_datasets, llm, _, tokenizer = setup(
         user_args.sae_hidden_dim, user_args.fast
     )
-    sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
-    if user_args.fast:
-        sae.cuda()
-    sae.eval()
 
-    strongest_activations = [[] for _ in range(user_args.sae_hidden_dim)]
+    strongest_activations = [[] for _ in range(768)]
     with torch.no_grad():
         for step, example in enumerate(tqdm(filtered_datasets["validation"])):
             if step > user_args.max_step:
                 break
+            # activation is [1, seq_len, 768]
             activation = get_llm_activation(llm, example, user_args)
-            norm_act = normalize_activations(activation)
-            _, feat_magnitudes = sae(norm_act)
-            for feature_idx in range(user_args.sae_hidden_dim):
-                strengths = feat_magnitudes[0, :, feature_idx].tolist()
+            for feature_idx in range(768):
+                strengths = activation[0, :, feature_idx].tolist()
                 strongest_activations[feature_idx].append(
                     Sample(
                         step=step,
@@ -84,7 +79,7 @@ def main(user_args: Namespace):
                 prune(sample_list, user_args.samples_to_keep)
                 for sample_list in strongest_activations
             ]
-    output_path = Path(user_args.checkpoint).with_suffix(".json")
+    output_path = Path(user_args.output_file)
     # test_sample = strongest_activations[0][-1]
     # print(tokenizer.decode(test_sample.tokens[0]))
 
@@ -126,6 +121,7 @@ def format_token(
     # return f"{tokenizer.decode(token)} {strength:.0e}"
 
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
+    assert 0 <= rank <= 7, rank
     return f"{tokenizer.decode(token)} {blocks[rank]}"
 
 
@@ -142,7 +138,7 @@ def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
 @beartype
 def make_parser() -> ArgumentParser:
     parser = make_base_parser()
-    parser.add_argument("--checkpoint", type=str, required=True)
+    parser.add_argument("--output_file", type=str, default="/results/llm.json")
     parser.add_argument("--samples_to_keep", type=int, default=10)
     return parser
 
