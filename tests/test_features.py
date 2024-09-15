@@ -1,4 +1,4 @@
-from lib import get_feature_vectors, get_feature_magnitudes
+from tiny_stories_sae.lib import get_feature_vectors, get_feature_magnitudes
 import torch
 
 
