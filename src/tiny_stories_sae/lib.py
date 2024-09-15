@@ -55,7 +55,9 @@ class SparseAutoEncoder(torch.nn.Module):
         self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
     @jaxtyped(typechecker=beartype)
-    def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
+    def forward(
+        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
+    ) -> tuple[
         Float[torch.Tensor, "1 seq_len 768"],
         Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
     ]:
@@ -127,6 +129,6 @@ def setup(
 
 @jaxtyped(typechecker=beartype)
 def normalize_activations(
-    activation: Float[torch.Tensor, "1 seq_len 768"]
+    activation: Float[torch.Tensor, "1 seq_len 768"],
 ) -> Float[torch.Tensor, "1 seq_len 768"]:
     return (activation - activation.mean()) / activation.std() * math.sqrt(768)

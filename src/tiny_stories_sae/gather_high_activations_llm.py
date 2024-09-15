@@ -58,7 +58,6 @@ class Sample:
 
 @beartype
 def main(user_args: Namespace):
-
     filtered_datasets, llm, _, tokenizer = setup(
         user_args.sae_hidden_dim, user_args.fast
     )
