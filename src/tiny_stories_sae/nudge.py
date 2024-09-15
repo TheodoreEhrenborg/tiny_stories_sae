@@ -1,21 +1,15 @@
 #!/usr/bin/env python3
 
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    GPT2TokenizerFast,
-    GPTNeoForCausalLM,
-)
-from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
-import json
 from argparse import ArgumentParser, Namespace
-from dataclasses import asdict, dataclass
-from pathlib import Path
 
 import torch
 from beartype import beartype
 from tqdm import tqdm
-from transformers import GPT2TokenizerFast
+from transformers import (
+    AutoModelForCausalLM,
+    AutoTokenizer,
+    GenerationConfig,
+)
 
 from tiny_stories_sae.lib import (
     get_llm_activation,
@@ -105,7 +99,7 @@ def main(user_args: Namespace):
             if step > user_args.max_step:
                 break
             # activation is [1, seq_len, 768]
-            activation = get_llm_activation(llm, example, user_args)
+            get_llm_activation(llm, example, user_args)
 
 
 @beartype
