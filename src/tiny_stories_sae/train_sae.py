@@ -1,33 +1,15 @@
 #!/usr/bin/env python3
-import argparse
 from argparse import Namespace, ArgumentParser
-from transformers import GPTNeoForCausalLM
-import string
 from coolname import generate_slug
-import math
 import torch
 from beartype import beartype
 from tqdm import tqdm
 
-from datasets import load_dataset
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    DataCollatorForLanguageModeling,
-    GenerationConfig,
-    Trainer,
-    TrainerCallback,
-    TrainingArguments,
-)
 from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
 from lib import (
-    get_feature_vectors,
-    get_feature_magnitudes,
-    SparseAutoEncoder,
     get_llm_activation,
-    make_dataset,
     make_base_parser,
     normalize_activations,
     setup,

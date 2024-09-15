@@ -2,26 +2,16 @@
 
 from argparse import Namespace, ArgumentParser
 from transformers import GPT2TokenizerFast
-import argparse
-import string
-from coolname import generate_slug
 import math
 import torch
 from beartype import beartype
-from tqdm import tqdm
 
 from datasets import load_dataset, DatasetDict
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
-    DataCollatorForLanguageModeling,
-    GenerationConfig,
-    Trainer,
-    TrainerCallback,
-    TrainingArguments,
 )
 from transformers import GPTNeoForCausalLM
-from torch.utils.tensorboard import SummaryWriter
 from jaxtyping import Float, jaxtyped
 
 
