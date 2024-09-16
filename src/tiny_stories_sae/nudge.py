@@ -33,9 +33,9 @@ def main(user_args: Namespace):
     if user_args.fast:
         sae.cuda()
     sae.eval()
-    nudge_direction = torch.zeros(sae.sae_hidden_dim)
-    nudge_direction[user_args.which_feature] = user_args.feature_strength
-    nudge = sae.decoder(nudge_direction)
+    onehot = torch.zeros(sae.sae_hidden_dim)
+    onehot[user_args.which_feature] = user_args.feature_strength
+    nudge = sae.decoder(onehot)
     assert nudge.shape == torch.Size([768]), nudge.shape
 
     def nudge_hook(module, args, output):
