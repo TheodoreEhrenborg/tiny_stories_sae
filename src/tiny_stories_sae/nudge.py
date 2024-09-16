@@ -28,10 +28,6 @@ def hook_factory():
     return hook, result_dict
 
 
-def destructive_hook(module, args, output):
-    return torch.zeros_like(output[0]), output[1]
-
-
 @beartype
 def main(user_args: Namespace):
     llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
@@ -56,15 +52,6 @@ def main(user_args: Namespace):
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
     print(tokenizer.decode(output_text[0]))
-    faulty_llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
-    faulty_llm.transformer.h[1].register_forward_hook(destructive_hook)
-    faulty_output_text = faulty_llm.generate(
-        input,
-        max_length=100,
-        num_beams=1,
-        generation_config=GenerationConfig(do_sample=True, temperature=1.0),
-    )
-    print(tokenizer.decode(faulty_output_text[0]))
 
     filtered_datasets, steered_llm, sae, tokenizer = setup(
         user_args.sae_hidden_dim, user_args.fast
