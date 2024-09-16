@@ -25,6 +25,7 @@ def main(user_args: Namespace):
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
+    print("Unsteered output:")
     print(tokenizer.decode(output_text[0]))
 
     _, steered_llm, sae, tokenizer = setup(user_args.sae_hidden_dim, user_args.fast)
@@ -48,6 +49,7 @@ def main(user_args: Namespace):
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
+    print("Steered output:")
     print(tokenizer.decode(steered_output_text[0]))
 
 
