@@ -74,7 +74,7 @@ def main(user_args: Namespace):
         sae.cuda()
     sae.eval()
     nudge_direction = torch.zeros(10000)
-    nudge_direction[94] = 10
+    nudge_direction[user_args.which_feature] = user_args.feature_strength
     nudge = sae.decoder(nudge_direction)
     assert nudge.shape == torch.Size([768]), nudge.shape
 
@@ -96,6 +96,8 @@ def main(user_args: Namespace):
 def make_parser() -> ArgumentParser:
     parser = make_base_parser()
     parser.add_argument("--checkpoint", type=str, required=True)
+    parser.add_argument("--which_feature", type=int, required=True)
+    parser.add_argument("--feature_strength", type=float, default=10.0)
     return parser
 
 
