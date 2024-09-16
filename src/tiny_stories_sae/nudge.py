@@ -4,16 +4,9 @@ from argparse import ArgumentParser, Namespace
 
 import torch
 from beartype import beartype
-from transformers import (
-    AutoModelForCausalLM,
-    AutoTokenizer,
-    GenerationConfig,
-)
+from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
-from tiny_stories_sae.lib import (
-    make_base_parser,
-    setup,
-)
+from tiny_stories_sae.lib import make_base_parser, setup
 
 
 def hook_factory():
