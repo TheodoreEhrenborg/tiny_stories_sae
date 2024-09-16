@@ -4,7 +4,6 @@ from argparse import ArgumentParser, Namespace
 
 import torch
 from beartype import beartype
-from tqdm import tqdm
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -12,7 +11,6 @@ from transformers import (
 )
 
 from tiny_stories_sae.lib import (
-    get_llm_activation,
     make_base_parser,
     setup,
 )
