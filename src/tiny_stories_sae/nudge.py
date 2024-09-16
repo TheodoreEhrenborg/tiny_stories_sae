@@ -28,6 +28,10 @@ def hook_factory():
     return hook, result_dict
 
 
+# TODO Refactor argparse:
+# Some scripts have arguments they can't use
+
+
 @beartype
 def main(user_args: Namespace):
     llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
