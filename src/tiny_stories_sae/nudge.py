@@ -19,9 +19,9 @@ def main(user_args: Namespace):
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
     tokenizer.pad_token = tokenizer.eos_token
     sample = "There once was a cat"
-    input = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
+    input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
     output_text = llm.generate(
-        input,
+        input_tokens,
         max_length=100,
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
@@ -44,7 +44,7 @@ def main(user_args: Namespace):
     steered_llm.transformer.h[1].register_forward_hook(nudge_hook)
 
     steered_output_text = steered_llm.generate(
-        input,
+        input_tokens,
         max_length=100,
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
