@@ -15,10 +15,14 @@ from tiny_stories_sae.lib import make_base_parser, setup
 @beartype
 def main(user_args: Namespace):
     llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
+    if user_args.fast:
+        llm.cuda()
     tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
     tokenizer.pad_token = tokenizer.eos_token
     sample = "There once was a cat"
     input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
+    if user_args.fast:
+        input_tokens = input_tokens.cuda()
     output_text = llm.generate(
         input_tokens,
         max_length=100,
@@ -35,6 +39,8 @@ def main(user_args: Namespace):
     sae.eval()
     onehot = torch.zeros(sae.sae_hidden_dim)
     onehot[user_args.which_feature] = user_args.feature_strength
+    if user_args.fast:
+        onehot = onehot.cuda()
     nudge = sae.decoder(onehot)
     assert nudge.shape == torch.Size([768]), nudge.shape
 
