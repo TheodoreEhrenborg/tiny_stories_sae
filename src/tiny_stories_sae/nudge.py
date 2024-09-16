@@ -55,7 +55,7 @@ def main(user_args: Namespace):
     if user_args.fast:
         sae.cuda()
     sae.eval()
-    nudge_direction = torch.zeros(10000)  # TODO Can I read this from SAE?
+    nudge_direction = torch.zeros(sae.sae_hidden_dim)
     nudge_direction[user_args.which_feature] = user_args.feature_strength
     nudge = sae.decoder(nudge_direction)
     assert nudge.shape == torch.Size([768]), nudge.shape
