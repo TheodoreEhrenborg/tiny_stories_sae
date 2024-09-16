@@ -57,9 +57,7 @@ def main(user_args: Namespace):
     )
     print(tokenizer.decode(output_text[0]))
 
-    filtered_datasets, steered_llm, sae, tokenizer = setup(
-        user_args.sae_hidden_dim, user_args.fast
-    )
+    _, steered_llm, sae, tokenizer = setup(user_args.sae_hidden_dim, user_args.fast)
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
     if user_args.fast:
         sae.cuda()
