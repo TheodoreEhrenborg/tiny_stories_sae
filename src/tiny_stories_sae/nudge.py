@@ -8,7 +8,6 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
 from tiny_stories_sae.lib import make_base_parser, setup
 
-
 # TODO Refactor argparse:
 # Some scripts have arguments they can't use
 

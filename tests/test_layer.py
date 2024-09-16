@@ -1,12 +1,8 @@
 #!/usr/bin/env python3
 
-from argparse import ArgumentParser, Namespace
 
 import torch
-from beartype import beartype
-from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
-
-from tiny_stories_sae.lib import make_base_parser, setup
+from transformers import AutoModelForCausalLM, AutoTokenizer
 
 
 def test_layer():
