@@ -92,14 +92,6 @@ def main(user_args: Namespace):
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
     print(tokenizer.decode(steered_output_text[0]))
-    exit()
-
-    with torch.no_grad():
-        for step, example in enumerate(tqdm(filtered_datasets["validation"])):
-            if step > user_args.max_step:
-                break
-            # activation is [1, seq_len, 768]
-            get_llm_activation(llm, example, user_args)
 
 
 @beartype
