@@ -9,6 +9,13 @@ class Pattern(BaseModel):
     short_pattern_description: str
 
 
+import argparse
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--feature", type=int, required=True)
+args = parser.parse_args()
+
 load_dotenv()
 from openai import OpenAI
 
@@ -20,7 +27,7 @@ results = json.load(
 )
 print("JSON loaded")
 
-texts = [x["annotated_text"] for x in results if x["feature_idx"] == 94]
+texts = [x["annotated_text"] for x in results if x["feature_idx"] == args.feature]
 
 
 messages = [
