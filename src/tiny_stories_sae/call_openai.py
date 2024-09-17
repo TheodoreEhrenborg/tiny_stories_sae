@@ -36,7 +36,7 @@ messages = [
         "role": "user",
         "content": "I'll send you a sequence of texts, "
         "where tokens have been highlighted using Unicode Block Elements. "
-        "Look for a pattern in the highlighting. "
+        "Look for a pattern in which tokens get strong highlights. "
         "Rank how clear the pattern is on a 1-5 scale, where 1 is no detectable pattern, "
         "3 is a vague pattern with some exceptions, and 5 is a clear pattern with no exceptions. "
         "Focus on the pattern in the strong highlights. Describe the pattern in 10 words or less",
