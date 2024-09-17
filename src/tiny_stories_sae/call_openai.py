@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
+import argparse
+import json
+
 from dotenv import load_dotenv
+from openai import OpenAI
 from pydantic import BaseModel
 
 
@@ -9,8 +13,6 @@ class Pattern(BaseModel):
     short_pattern_description: str
 
 
-import argparse
-
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--feature", type=int, required=True)
@@ -19,10 +21,8 @@ args = parser.parse_args()
 
 model = "gpt-4o-mini-2024-07-18" if args.use_mini else "gpt-4o-2024-08-06"
 load_dotenv()
-from openai import OpenAI
 
 client = OpenAI()
-import json
 
 results = json.load(
     open("/results/enlightened-daring-angelfish-of-teaching/105000.json")
