@@ -38,14 +38,24 @@ def main(user_args: Namespace):
         sae.cuda()
     sae.eval()
     onehot = torch.zeros(sae.sae_hidden_dim)
-    onehot[user_args.which_feature] = user_args.feature_strength
+    onehot[user_args.which_feature] = 1
     if user_args.fast:
         onehot = onehot.cuda()
     nudge = sae.decoder(onehot)
     assert nudge.shape == torch.Size([768]), nudge.shape
+    norm_nudge = nudge / torch.linalg.vector_norm(nudge)
 
     def nudge_hook(module, args, output):
-        return output[0] + nudge, output[1]
+        activation = output[0]
+        # print(activation.shape)
+        activation_no_nudge = activation - norm_nudge * torch.einsum(
+            "i,jki->jk", norm_nudge, activation
+        ).unsqueeze(2)
+        activation_with_nudge = (
+            activation_no_nudge + user_args.feature_strength * norm_nudge
+        )
+
+        return activation_with_nudge + nudge, output[1]
 
     steered_llm.transformer.h[1].register_forward_hook(nudge_hook)
 
