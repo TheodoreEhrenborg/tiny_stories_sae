@@ -14,8 +14,10 @@ import argparse
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--feature", type=int, required=True)
+parser.add_argument("--use-mini", action="store_true")
 args = parser.parse_args()
 
+model = "gpt-4o-mini-2024-07-18" if args.use_mini else "gpt-4o-2024-08-06"
 load_dotenv()
 from openai import OpenAI
 
@@ -44,8 +46,7 @@ messages = [
 ] + [{"role": "user", "content": elt} for elt in texts]
 print(messages)
 response = client.beta.chat.completions.parse(
-    model="gpt-4o-2024-08-06",
-    # model="gpt-4o-mini-2024-07-18",
+    model=model,
     messages=messages,
     response_format=Pattern,
 )
