@@ -14,10 +14,14 @@ from tiny_stories_sae.lib import make_base_parser, setup
 
 @beartype
 def main(user_args: Namespace):
-    llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
+    llm = AutoModelForCausalLM.from_pretrained(
+        "roneneldan/TinyStories-33M", local_files_only=user_args.no_internet
+    )
     if user_args.fast:
         llm.cuda()
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "EleutherAI/gpt-neo-125M", local_files_only=user_args.no_internet
+    )
     tokenizer.pad_token = tokenizer.eos_token
     sample = "There once was a cat"
     input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
@@ -33,7 +37,9 @@ def main(user_args: Namespace):
         print("Unsteered output:")
         print(tokenizer.decode(output_text[0]))
 
-    _, steered_llm, sae, tokenizer = setup(user_args.sae_hidden_dim, user_args.fast)
+    _, steered_llm, sae, tokenizer = setup(
+        user_args.sae_hidden_dim, user_args.fast, user_args.no_internet
+    )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
     if user_args.fast:
         sae.cuda()
@@ -77,6 +83,7 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--which_feature", type=int, required=True)
     parser.add_argument("--feature_strength", type=float, default=10.0)
     parser.add_argument("--print_unsteered", action="store_true")
+    parser.add_argument("--no_internet", action="store_true")
     return parser
 
 

@@ -103,12 +103,17 @@ def make_base_parser() -> ArgumentParser:
 
 @beartype
 def setup(
-    sae_hidden_dim: int, fast: bool
+    sae_hidden_dim: int, fast: bool, no_internet: bool
 ) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder, GPT2TokenizerFast]:
-    llm = AutoModelForCausalLM.from_pretrained("roneneldan/TinyStories-33M")
+    # TODO Refactor all places that call here, since there's a new arg
+    llm = AutoModelForCausalLM.from_pretrained(
+        "roneneldan/TinyStories-33M", local_files_only=no_internet
+    )
     if fast:
         llm.cuda()
-    tokenizer = AutoTokenizer.from_pretrained("EleutherAI/gpt-neo-125M")
+    tokenizer = AutoTokenizer.from_pretrained(
+        "EleutherAI/gpt-neo-125M", local_files_only=no_internet
+    )
     tokenizer.pad_token = tokenizer.eos_token
     filtered_datasets = make_dataset(tokenizer)
     sae = SparseAutoEncoder(sae_hidden_dim)
