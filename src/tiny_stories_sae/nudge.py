@@ -81,7 +81,7 @@ def main(user_args: Namespace):
             activation_no_nudge + user_args.feature_strength * norm_nudge
         )
         print(
-            "This feature's activation pre nudge",
+            "This feature's activation post nudge",
             get_activation_strength(activation_with_nudge),
         )
 
