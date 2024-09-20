@@ -62,7 +62,7 @@ def main(user_args: Namespace):
 
     steered_output_text = steered_llm.generate(
         input_tokens,
-        max_length=100,
+        max_length=1000,
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
