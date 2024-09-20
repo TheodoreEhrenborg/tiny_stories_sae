@@ -59,12 +59,18 @@ def main(user_args: Namespace):
     def nudge_hook(module, args, output):
         activation = output[0]
         # print(activation.shape)
+        norm_act_pre_nudge = normalize_activations(activation)
+        strength_pre_nudge = sae(norm_act_pre_nudge)[1][0, :, user_args.which_feature]
+        print("This feature's activation pre nudge", strength_pre_nudge)
         activation_no_nudge = activation - norm_nudge * torch.einsum(
             "i,jki->jk", norm_nudge, activation
         ).unsqueeze(2)
         activation_with_nudge = (
             activation_no_nudge + user_args.feature_strength * norm_nudge
         )
+        norm_act_post_nudge = normalize_activations(activation_with_nudge)
+        strength_post_nudge = sae(norm_act_post_nudge)[1][0, :, user_args.which_feature]
+        print("This feature's activation post nudge", strength_post_nudge)
 
         return activation_with_nudge + nudge, output[1]
 
