@@ -6,7 +6,11 @@ import torch
 from beartype import beartype
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
-from tiny_stories_sae.lib import make_base_parser, setup
+from tiny_stories_sae.gather_high_activations import (
+    format_token,
+    normalize_activations,
+)
+from tiny_stories_sae.lib import make_base_parser, setup, get_llm_activation_from_tensor
 
 # TODO Refactor argparse:
 # Some scripts have arguments they can't use
@@ -74,6 +78,18 @@ def main(user_args: Namespace):
     )
     print("Steered output:")
     print(tokenizer.decode(steered_output_text[0]))
+
+    activation = get_llm_activation_from_tensor(llm, steered_output_text)
+    norm_act = normalize_activations(activation)
+    _, feat_magnitudes = sae(norm_act)
+    strengths = feat_magnitudes[0, :, user_args.which_feature].tolist()
+    max_strength = max(strengths)
+    print(
+        "".join(
+            format_token(tokenizer, int(token), strength, max_strength)
+            for token, strength in zip(steered_output_text[0], strengths, strict=True)
+        )
+    )
 
 
 @beartype

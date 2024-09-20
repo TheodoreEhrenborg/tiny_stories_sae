@@ -6,7 +6,7 @@ from argparse import ArgumentParser, Namespace
 import torch
 from beartype import beartype
 from datasets import DatasetDict, load_dataset
-from jaxtyping import Float, jaxtyped
+from jaxtyping import Float, jaxtyped, Int
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
@@ -45,9 +45,7 @@ class SparseAutoEncoder(torch.nn.Module):
         self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
     @jaxtyped(typechecker=beartype)
-    def forward(
-        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
-    ) -> tuple[
+    def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
         Float[torch.Tensor, "1 seq_len 768"],
         Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
     ]:
@@ -79,6 +77,20 @@ def get_llm_activation(
         )
         assert len(x.hidden_states) == 5
         return x.hidden_states[2]
+
+
+# TODO Combine with above function
+@jaxtyped(typechecker=beartype)
+def get_llm_activation_from_tensor(
+    model: GPTNeoForCausalLM,
+    inputs: Int[torch.Tensor, "1 seq_len"],
+):
+    x = model(
+        inputs,
+        output_hidden_states=True,
+    )
+    assert len(x.hidden_states) == 5
+    return x.hidden_states[2]
 
 
 @beartype
