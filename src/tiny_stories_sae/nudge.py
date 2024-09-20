@@ -70,22 +70,29 @@ def main(user_args: Namespace):
         print(
             "This feature's activation pre nudge", get_activation_strength(activation)
         )
-        activation_no_nudge = activation - norm_nudge * torch.einsum(
-            "i,jki->jk", norm_nudge, activation
+        norm_act2 = normalize_activations(activation)
+        norm_activation_no_nudge = norm_act2 - norm_nudge * torch.einsum(
+            "i,jki->jk", norm_nudge, norm_act2
         ).unsqueeze(2)
         print(
             "This feature's activation with nudge zeroed out",
-            get_activation_strength(activation_no_nudge),
+            get_activation_strength(norm_activation_no_nudge),
         )
-        activation_with_nudge = (
-            activation_no_nudge + user_args.feature_strength * norm_nudge
+        norm_activation_with_nudge = (
+            norm_activation_no_nudge + user_args.feature_strength * norm_nudge
         )
         print(
             "This feature's activation post nudge",
-            get_activation_strength(activation_with_nudge),
+            get_activation_strength(norm_activation_with_nudge),
         )
-
-        return activation_with_nudge, output[1]
+        return (
+            (
+                norm_activation_with_nudge
+                * activation.std()
+                / torch.sqrt(torch.tensor(768))
+            )
+            + activation.mean()
+        ), output[1]
 
     steered_llm.transformer.h[1].register_forward_hook(nudge_hook)
 
