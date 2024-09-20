@@ -67,7 +67,6 @@ def main(user_args: Namespace):
 
     def nudge_hook(module, args, output):
         activation = output[0]
-        # print(activation.shape)
         print(
             "This feature's activation pre nudge", get_activation_strength(activation)
         )
