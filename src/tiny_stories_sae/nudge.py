@@ -85,7 +85,7 @@ def main(user_args: Namespace):
             get_activation_strength(activation_with_nudge),
         )
 
-        return activation_with_nudge + nudge, output[1]
+        return activation_with_nudge, output[1]
 
     steered_llm.transformer.h[1].register_forward_hook(nudge_hook)
 
