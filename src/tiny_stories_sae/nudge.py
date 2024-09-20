@@ -46,6 +46,16 @@ def main(user_args: Namespace):
         user_args.sae_hidden_dim, user_args.fast, user_args.no_internet
     )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
+    with torch.no_grad():
+        encoder_vector = sae.encoder.weight[user_args.which_feature, :]
+        decoder_vector = sae.decoder.weight[:, user_args.which_feature]
+        print(encoder_vector.shape)
+        print(decoder_vector.shape)
+        ed = torch.dot(encoder_vector, decoder_vector)
+        ee = torch.dot(encoder_vector, encoder_vector)
+        dd = torch.dot(decoder_vector, decoder_vector)
+        print(ed**2 / ee / dd)
+    exit()
     if user_args.fast:
         sae.cuda()
     sae.eval()
