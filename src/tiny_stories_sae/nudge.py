@@ -23,14 +23,15 @@ def main(user_args: Namespace):
     input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
     if user_args.fast:
         input_tokens = input_tokens.cuda()
-    output_text = llm.generate(
-        input_tokens,
-        max_length=100,
-        num_beams=1,
-        generation_config=GenerationConfig(do_sample=True, temperature=1.0),
-    )
-    print("Unsteered output:")
-    print(tokenizer.decode(output_text[0]))
+    if user_args.print_unsteered:
+        output_text = llm.generate(
+            input_tokens,
+            max_length=1000,
+            num_beams=1,
+            generation_config=GenerationConfig(do_sample=True, temperature=1.0),
+        )
+        print("Unsteered output:")
+        print(tokenizer.decode(output_text[0]))
 
     _, steered_llm, sae, tokenizer = setup(user_args.sae_hidden_dim, user_args.fast)
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
@@ -75,6 +76,7 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--checkpoint", type=str, required=True)
     parser.add_argument("--which_feature", type=int, required=True)
     parser.add_argument("--feature_strength", type=float, default=10.0)
+    parser.add_argument("--print_unsteered", action="store_true")
     return parser
 
 
