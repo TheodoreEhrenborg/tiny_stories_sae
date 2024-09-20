@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from jaxtyping import Float, jaxtyped, Int
 
 from argparse import ArgumentParser, Namespace
 
@@ -56,21 +57,34 @@ def main(user_args: Namespace):
     assert nudge.shape == torch.Size([768]), nudge.shape
     norm_nudge = nudge / torch.linalg.vector_norm(nudge)
 
+    @jaxtyped(typechecker=beartype)
+    def get_activation_strength(
+        llm_activation: Float[torch.Tensor, "1 seq_len 768"]
+    ) -> Float[torch.Tensor, "seq_len"]:
+        norm_act = normalize_activations(llm_activation)
+        strength = sae(norm_act)[1][0, :, user_args.which_feature]
+        return strength
+
     def nudge_hook(module, args, output):
         activation = output[0]
         # print(activation.shape)
-        norm_act_pre_nudge = normalize_activations(activation)
-        strength_pre_nudge = sae(norm_act_pre_nudge)[1][0, :, user_args.which_feature]
-        print("This feature's activation pre nudge", strength_pre_nudge)
+        print(
+            "This feature's activation pre nudge", get_activation_strength(activation)
+        )
         activation_no_nudge = activation - norm_nudge * torch.einsum(
             "i,jki->jk", norm_nudge, activation
         ).unsqueeze(2)
+        print(
+            "This feature's activation with nudge zeroed out",
+            get_activation_strength(activation_no_nudge),
+        )
         activation_with_nudge = (
             activation_no_nudge + user_args.feature_strength * norm_nudge
         )
-        norm_act_post_nudge = normalize_activations(activation_with_nudge)
-        strength_post_nudge = sae(norm_act_post_nudge)[1][0, :, user_args.which_feature]
-        print("This feature's activation post nudge", strength_post_nudge)
+        print(
+            "This feature's activation pre nudge",
+            get_activation_strength(activation_with_nudge),
+        )
 
         return activation_with_nudge + nudge, output[1]
 
