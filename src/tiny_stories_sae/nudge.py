@@ -70,7 +70,7 @@ def main(user_args: Namespace):
         decoder_vector[:10],
         (nudge - decoder_vector)[:10],
     )
-    norm_nudge = nudge / torch.linalg.vector_norm(nudge)
+    norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
     @jaxtyped(typechecker=beartype)
     def get_activation_strength(
