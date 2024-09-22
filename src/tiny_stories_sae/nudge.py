@@ -2,6 +2,7 @@
 from jaxtyping import Float, jaxtyped, Int
 
 from argparse import ArgumentParser, Namespace
+from tiny_stories_sae.lib import get_rotation_between
 
 import torch
 from beartype import beartype
@@ -49,13 +50,7 @@ def main(user_args: Namespace):
     with torch.no_grad():
         encoder_vector = sae.encoder.weight[user_args.which_feature, :]
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
-        print(encoder_vector.shape)
-        print(decoder_vector.shape)
-        ed = torch.dot(encoder_vector, decoder_vector)
-        ee = torch.dot(encoder_vector, encoder_vector)
-        dd = torch.dot(decoder_vector, decoder_vector)
-        print(ed**2 / ee / dd)
-    exit()
+        print("Rotation", get_rotation_between(encoder_vector, decoder_vector))
     if user_args.fast:
         sae.cuda()
     sae.eval()
