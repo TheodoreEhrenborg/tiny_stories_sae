@@ -1,0 +1,6 @@
+[book]
+authors = ["Theodore Ehrenborg"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Tiny Stories Sparse Autoencoder"
