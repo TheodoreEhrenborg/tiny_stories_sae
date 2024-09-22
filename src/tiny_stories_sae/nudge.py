@@ -64,7 +64,7 @@ def main(user_args: Namespace):
 
     @jaxtyped(typechecker=beartype)
     def get_activation_strength(
-        llm_activation: Float[torch.Tensor, "1 seq_len 768"]
+        llm_activation: Float[torch.Tensor, "1 seq_len 768"],
     ) -> Float[torch.Tensor, "seq_len"]:
         norm_act = normalize_activations(llm_activation)
         strength = sae(norm_act)[1][0, :, user_args.which_feature]
