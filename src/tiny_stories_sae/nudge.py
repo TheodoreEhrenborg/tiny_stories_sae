@@ -50,7 +50,8 @@ def main(user_args: Namespace):
     with torch.no_grad():
         encoder_vector = sae.encoder.weight[user_args.which_feature, :]
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
-        print("Rotation", get_rotation_between(encoder_vector, decoder_vector))
+        if user_args.debug:
+            print("Rotation", get_rotation_between(encoder_vector, decoder_vector))
     if user_args.fast:
         sae.cuda()
     sae.eval()
@@ -61,10 +62,11 @@ def main(user_args: Namespace):
         decoder_vector = decoder_vector.cuda()
     nudge = sae.decoder(onehot)
     assert nudge.shape == torch.Size([768]), nudge.shape
-    print(
-        "Rotation between nudge and decoder_vec",
-        get_rotation_between(nudge, decoder_vector),
-    )
+    if user_args.debug:
+        print(
+            "Rotation between nudge and decoder_vec",
+            get_rotation_between(nudge, decoder_vector),
+        )
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
     @jaxtyped(typechecker=beartype)
@@ -77,14 +79,17 @@ def main(user_args: Namespace):
 
     def simple_nudge_hook(module, args, output):
         activation = output[0]
-        print(
-            "This feature's activation pre nudge", get_activation_strength(activation)
-        )
+        if user_args.debug:
+            print(
+                "This feature's activation pre nudge",
+                get_activation_strength(activation),
+            )
         activation_with_nudge = activation + user_args.feature_strength * norm_nudge
-        print(
-            "This feature's activation post nudge",
-            get_activation_strength(activation_with_nudge),
-        )
+        if user_args.debug:
+            print(
+                "This feature's activation post nudge",
+                get_activation_strength(activation_with_nudge),
+            )
         return activation_with_nudge, output[1]
 
     def nudge_hook(module, args, output):
@@ -148,6 +153,7 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--feature_strength", type=float, default=10.0)
     parser.add_argument("--print_unsteered", action="store_true")
     parser.add_argument("--no_internet", action="store_true")
+    parser.add_argument("--debug", action="store_true")
     return parser
 
 
