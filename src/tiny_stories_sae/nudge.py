@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-from jaxtyping import Float, jaxtyped, Int
-
 from argparse import ArgumentParser, Namespace
-from tiny_stories_sae.lib import get_rotation_between
 
 import torch
 from beartype import beartype
+from jaxtyping import Float, jaxtyped
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
 from tiny_stories_sae.gather_high_activations import (
     format_token,
     normalize_activations,
 )
-from tiny_stories_sae.lib import make_base_parser, setup, get_llm_activation_from_tensor
+from tiny_stories_sae.lib import (
+    get_llm_activation_from_tensor,
+    get_rotation_between,
+    make_base_parser,
+    setup,
+)
 
 # TODO Refactor argparse:
 # Some scripts have arguments they can't use

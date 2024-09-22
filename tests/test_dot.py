@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-from tiny_stories_sae.lib import get_rotation_between
 import torch
+
+from tiny_stories_sae.lib import get_rotation_between
 
 
 def test_rotation():

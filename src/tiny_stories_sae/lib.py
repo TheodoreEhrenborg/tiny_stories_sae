@@ -6,7 +6,7 @@ from argparse import ArgumentParser, Namespace
 import torch
 from beartype import beartype
 from datasets import DatasetDict, load_dataset
-from jaxtyping import Float, jaxtyped, Int
+from jaxtyping import Float, Int, jaxtyped
 from transformers import (
     AutoModelForCausalLM,
     AutoTokenizer,
