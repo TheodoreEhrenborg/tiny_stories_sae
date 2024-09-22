@@ -70,6 +70,18 @@ def main(user_args: Namespace):
         strength = sae(norm_act)[1][0, :, user_args.which_feature]
         return strength
 
+    def simple_nudge_hook(module, args, output):
+        activation = output[0]
+        print(
+            "This feature's activation pre nudge", get_activation_strength(activation)
+        )
+        activation_with_nudge = activation + user_args.feature_strength * norm_nudge
+        print(
+            "This feature's activation post nudge",
+            get_activation_strength(activation_with_nudge),
+        )
+        return activation_with_nudge, output[1]
+
     def nudge_hook(module, args, output):
         activation = output[0]
         print(
@@ -99,7 +111,7 @@ def main(user_args: Namespace):
             + activation.mean()
         ), output[1]
 
-    steered_llm.transformer.h[1].register_forward_hook(nudge_hook)
+    steered_llm.transformer.h[1].register_forward_hook(simple_nudge_hook)
 
     steered_output_text = steered_llm.generate(
         input_tokens,
