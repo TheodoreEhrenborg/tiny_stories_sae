@@ -11,3 +11,11 @@ def test_rotation():
     assert get_rotation_between(x, flip_y) == 0.5
     turned = torch.tensor([1, -1])
     assert get_rotation_between(x, turned) == 0.25
+
+
+def test_random():
+    # Random high-dimensional vectors should be nearly orthogonal
+    for _ in range(10):
+        x = torch.randn(768)
+        y = torch.randn(768)
+        assert 0.26 >= get_rotation_between(x, y) >= 0.24
