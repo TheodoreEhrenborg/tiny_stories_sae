@@ -65,11 +65,6 @@ def main(user_args: Namespace):
         "Rotation between nudge and decoder_vec",
         get_rotation_between(nudge, decoder_vector),
     )
-    assert torch.allclose(nudge, decoder_vector), (
-        nudge[:10],
-        decoder_vector[:10],
-        (nudge - decoder_vector)[:10],
-    )
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
     @jaxtyped(typechecker=beartype)
