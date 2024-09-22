@@ -92,35 +92,6 @@ def main(user_args: Namespace):
             )
         return activation_with_nudge, output[1]
 
-    def nudge_hook(module, args, output):
-        activation = output[0]
-        print(
-            "This feature's activation pre nudge", get_activation_strength(activation)
-        )
-        norm_act2 = normalize_activations(activation)
-        norm_activation_no_nudge = norm_act2 - norm_nudge * torch.einsum(
-            "i,jki->jk", norm_nudge, norm_act2
-        ).unsqueeze(2)
-        print(
-            "This feature's activation with nudge zeroed out",
-            get_activation_strength(norm_activation_no_nudge),
-        )
-        norm_activation_with_nudge = (
-            norm_activation_no_nudge + user_args.feature_strength * norm_nudge
-        )
-        print(
-            "This feature's activation post nudge",
-            get_activation_strength(norm_activation_with_nudge),
-        )
-        return (
-            (
-                norm_activation_with_nudge
-                * activation.std()
-                / torch.sqrt(torch.tensor(768))
-            )
-            + activation.mean()
-        ), output[1]
-
     steered_llm.transformer.h[1].register_forward_hook(simple_nudge_hook)
 
     steered_output_text = steered_llm.generate(
