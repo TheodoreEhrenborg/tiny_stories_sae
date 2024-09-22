@@ -58,8 +58,18 @@ def main(user_args: Namespace):
     onehot[user_args.which_feature] = 1
     if user_args.fast:
         onehot = onehot.cuda()
+        decoder_vector = decoder_vector.cuda()
     nudge = sae.decoder(onehot)
     assert nudge.shape == torch.Size([768]), nudge.shape
+    print(
+        "Rotation between nudge and decoder_vec",
+        get_rotation_between(nudge, decoder_vector),
+    )
+    assert torch.allclose(nudge, decoder_vector), (
+        nudge[:10],
+        decoder_vector[:10],
+        (nudge - decoder_vector)[:10],
+    )
     norm_nudge = nudge / torch.linalg.vector_norm(nudge)
 
     @jaxtyped(typechecker=beartype)
