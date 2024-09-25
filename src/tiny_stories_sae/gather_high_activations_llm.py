@@ -98,7 +98,6 @@ def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
 def format_token(
     tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
 ) -> str:
-
     if strength < 0:
         strength = 0
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
