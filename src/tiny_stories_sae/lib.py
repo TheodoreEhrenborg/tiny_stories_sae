@@ -17,7 +17,6 @@ from transformers import (
 
 @jaxtyped(typechecker=beartype)
 def get_feature_vectors(
-    sae_hidden_dim,
     sae_activations: Float[torch.Tensor, "1 seq_len {sae_hidden_dim}"],
     decoder_weight: Float[torch.Tensor, "{sae_hidden_dim} 768"],
 ) -> Float[torch.Tensor, "1 seq_len {sae_hidden_dim} 768"]:
@@ -45,9 +44,7 @@ class SparseAutoEncoder(torch.nn.Module):
         self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
     @jaxtyped(typechecker=beartype)
-    def forward(
-        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
-    ) -> tuple[
+    def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
         Float[torch.Tensor, "1 seq_len 768"],
         Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
     ]:
