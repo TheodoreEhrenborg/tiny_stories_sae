@@ -25,7 +25,7 @@ def test_same_loss():
         magnitudes1 = torch.linalg.vector_norm(feat_vecs, dim=3)
         l1_1 = torch.linalg.vector_norm(magnitudes1, ord=1)
         magnitudes2 = get_feature_magnitudes(
-            sae_hidden_dim, sae_activations, decoder.weight.transpose(0, 1)
+            sae_activations, decoder.weight.transpose(0, 1)
         )
         l1_2 = torch.linalg.vector_norm(magnitudes2, ord=1)
         assert magnitudes1.shape == magnitudes2.shape

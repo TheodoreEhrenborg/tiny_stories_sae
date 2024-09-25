@@ -25,7 +25,6 @@ def get_feature_vectors(
 
 @jaxtyped(typechecker=beartype)
 def get_feature_magnitudes(
-    sae_hidden_dim,
     sae_activations: Float[torch.Tensor, "1 seq_len {sae_hidden_dim}"],
     decoder_weight: Float[torch.Tensor, "{sae_hidden_dim} 768"],
 ) -> Float[torch.Tensor, "1 seq_len {sae_hidden_dim}"]:
@@ -50,7 +49,7 @@ class SparseAutoEncoder(torch.nn.Module):
     ]:
         sae_activations = self.get_features(llm_activations)
         feat_magnitudes = get_feature_magnitudes(
-            self.sae_hidden_dim, sae_activations, self.decoder.weight.transpose(0, 1)
+            sae_activations, self.decoder.weight.transpose(0, 1)
         )
         reconstructed = self.decoder(sae_activations)
         return reconstructed, feat_magnitudes
