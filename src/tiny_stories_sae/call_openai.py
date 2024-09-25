@@ -44,7 +44,6 @@ messages = [
         "Focus on the pattern in the strong highlights. Describe the pattern in 10 words or less",
     },
 ] + [{"role": "user", "content": elt} for elt in texts]
-print(messages)
 response = client.beta.chat.completions.parse(
     model=model,
     messages=messages,
