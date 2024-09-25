@@ -62,8 +62,6 @@ def main(user_args: Namespace):
                 for sample_list in strongest_activations
             ]
     output_path = Path(user_args.output_file)
-    # test_sample = strongest_activations[0][-1]
-    # print(tokenizer.decode(test_sample.tokens[0]))
 
     num_dead_features = 0
     for sample_list in strongest_activations:
@@ -100,7 +98,6 @@ def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
 def format_token(
     tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
 ) -> str:
-    # return f"{tokenizer.decode(token)} {strength:.0e}"
 
     if strength < 0:
         strength = 0
