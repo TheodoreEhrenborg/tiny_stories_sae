@@ -7,3 +7,4 @@ WIP
 1. Build the container with `./build.sh`
 2. Enter the container with `./run.sh`. If you have GPUs, instead use `./run.sh --gpus all`
 
+TODO Describe uv
