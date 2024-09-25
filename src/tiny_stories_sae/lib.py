@@ -115,7 +115,6 @@ def make_base_parser() -> ArgumentParser:
 def setup(
     sae_hidden_dim: int, fast: bool, no_internet: bool
 ) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder, GPT2TokenizerFast]:
-    # TODO Refactor all places that call here, since there's a new arg
     llm = AutoModelForCausalLM.from_pretrained(
         "roneneldan/TinyStories-33M", local_files_only=no_internet
     )
