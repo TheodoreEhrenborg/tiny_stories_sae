@@ -2,6 +2,7 @@
 import argparse
 import json
 
+from beartype import beartype
 from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel
@@ -34,6 +35,11 @@ def main(args):
 
     texts = [x["annotated_text"] for x in results if x["feature_idx"] == args.feature]
 
+    print(call_api(texts, model, client))
+
+
+@beartype
+def call_api(texts: list[str], model: str, client: OpenAI) -> Pattern:
     messages = [
         {"role": "system", "content": "You are a helpful assistant."},
         {
@@ -51,8 +57,7 @@ def main(args):
         messages=messages,
         response_format=Pattern,
     )
-
-    print(response)
+    return response.choices[0].message.parsed
 
 
 if __name__ == "__main__":
