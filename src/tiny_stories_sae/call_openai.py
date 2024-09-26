@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 import argparse
 import json
-from pathlib import Path
-from tqdm import tqdm
 import time
+from pathlib import Path
 
 from beartype import beartype
 from dotenv import load_dotenv
 from openai import OpenAI
 from pydantic import BaseModel
+from tqdm import tqdm
 
 
 class Pattern(BaseModel):
