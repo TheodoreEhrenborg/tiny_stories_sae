@@ -32,6 +32,7 @@ def main(args):
 
     client = OpenAI()
 
+    # TODO Need to be able to configure this
     highlighted_results = json.load(
         open("/results/enlightened-daring-angelfish-of-teaching/105000.json")
     )
