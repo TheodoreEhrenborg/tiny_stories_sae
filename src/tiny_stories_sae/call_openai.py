@@ -30,12 +30,12 @@ def main(args):
 
     client = OpenAI()
 
-    results = json.load(
+    highlighted_results = json.load(
         open("/results/enlightened-daring-angelfish-of-teaching/105000.json")
     )
     print("JSON loaded")
 
-    texts = [x["annotated_text"] for x in results if x["feature_idx"] == args.feature]
+    texts = [x["annotated_text"] for x in highlighted_results if x["feature_idx"] == args.feature]
 
     response = call_api(texts, model, client).dict()
     response["feature_idx"] = args.feature
