@@ -53,6 +53,8 @@ def main(args):
 def get_response(
     highlighted_results: list, model: str, client: OpenAI, feature_idx: int
 ) -> dict:
+    # This is inefficient, but a better version wouldn't save time
+    # because most time is spent waiting for the API
     texts = [
         x["annotated_text"]
         for x in highlighted_results
