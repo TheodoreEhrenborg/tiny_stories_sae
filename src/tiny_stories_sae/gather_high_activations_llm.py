@@ -43,13 +43,20 @@ def main(user_args: Namespace):
             activation = get_llm_activation(llm, example, user_args)
             for feature_idx in range(768):
                 strengths = activation[0, :, feature_idx].tolist()
+                # TODO Based on user input, this should either
+                # - Shift the entire list up to be positive
+                # - Apply relu
+                # - Apply abs
+                # Then format_token() can be simplified
+                make_positive = lambda x: x
+                nonnegative_strengths = make_positive(strengths)
                 strongest_activations[feature_idx].append(
                     Sample(
                         step=step,
                         feature_idx=feature_idx,
                         tokens=example["input_ids"],
-                        strengths=strengths,
-                        max_strength=max(strengths),
+                        strengths=nonnegative_strengths,
+                        max_strength=max(nonnegative_strengths),
                     )
                 )
             strongest_activations = [
