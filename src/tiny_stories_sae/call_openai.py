@@ -35,7 +35,7 @@ def main(args):
     )
     print("JSON loaded")
 
-    response = get_response(highlighted_results, model, client, args.feature_idx)
+    response = get_response(highlighted_results, model, client, args.feature)
     output_dir = Path("/results/gpt4_api")
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / time.strftime("%Y%m%d-%H%M%S")
@@ -46,7 +46,7 @@ def main(args):
 
 @beartype
 def get_response(
-    highlighted_results: dict, model: str, client: OpenAI, feature_idx: int
+    highlighted_results: list, model: str, client: OpenAI, feature_idx: int
 ) -> dict:
     texts = [
         x["annotated_text"]
