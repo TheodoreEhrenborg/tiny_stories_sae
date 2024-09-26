@@ -2,17 +2,22 @@
 # TODO Needs DRY with other gathering script
 import json
 from argparse import ArgumentParser, Namespace
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
 from pathlib import Path
 
 import torch
 from beartype import beartype
 from tqdm import tqdm
-from transformers import GPT2TokenizerFast
+from transformers import (
+    GPT2TokenizerFast,
+)
 
 from tiny_stories_sae.lib import (
+    Sample,
+    blocks,
     get_llm_activation,
     make_base_parser,
+    prune,
     setup,
 )
 
@@ -21,16 +26,6 @@ from tiny_stories_sae.lib import (
 # - abs them?
 # - just keep the full dynamic range, so 0 looks like partly activated?
 # - relu them?
-
-
-@beartype
-@dataclass
-class Sample:
-    step: int
-    feature_idx: int
-    tokens: list[int]
-    strengths: list[float]
-    max_strength: float
 
 
 @beartype
@@ -103,16 +98,6 @@ def format_token(
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
     assert 0 <= rank <= 7, rank
     return f"{tokenizer.decode(token)} {blocks[rank]}"
-
-
-blocks = [chr(x) for x in range(9601, 9609)]
-
-
-@beartype
-def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
-    return sorted(sample_list, reverse=True, key=lambda sample: sample.max_strength)[
-        :samples_to_keep
-    ]
 
 
 @beartype

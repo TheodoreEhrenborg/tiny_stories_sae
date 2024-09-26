@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-
+# TODO Split into smaller modules
 import math
 from argparse import ArgumentParser, Namespace
+from dataclasses import dataclass
 
 import torch
 from beartype import beartype
@@ -145,3 +146,23 @@ def get_rotation_between(x, y):
     xx = torch.dot(x, x)
     yy = torch.dot(y, y)
     return torch.acos(xy / torch.sqrt(xx) / torch.sqrt(yy)) / 2 / torch.pi
+
+
+blocks = [chr(x) for x in range(9601, 9609)]
+
+
+@beartype
+@dataclass
+class Sample:
+    step: int
+    feature_idx: int
+    tokens: list[int]
+    strengths: list[float]
+    max_strength: float
+
+
+@beartype
+def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
+    return sorted(sample_list, reverse=True, key=lambda sample: sample.max_strength)[
+        :samples_to_keep
+    ]

@@ -1,30 +1,25 @@
 #!/usr/bin/env python3
 import json
 from argparse import ArgumentParser, Namespace
-from dataclasses import asdict, dataclass
+from dataclasses import asdict
 from pathlib import Path
 
 import torch
 from beartype import beartype
 from tqdm import tqdm
-from transformers import GPT2TokenizerFast
+from transformers import (
+    GPT2TokenizerFast,
+)
 
 from tiny_stories_sae.lib import (
+    Sample,
+    blocks,
     get_llm_activation,
     make_base_parser,
     normalize_activations,
+    prune,
     setup,
 )
-
-
-@beartype
-@dataclass
-class Sample:
-    step: int
-    feature_idx: int
-    tokens: list[int]
-    strengths: list[float]
-    max_strength: float
 
 
 @beartype
@@ -99,16 +94,6 @@ def format_token(
 ) -> str:
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
     return f"{tokenizer.decode(token)} {blocks[rank]}"
-
-
-blocks = [chr(x) for x in range(9601, 9609)]
-
-
-@beartype
-def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
-    return sorted(sample_list, reverse=True, key=lambda sample: sample.max_strength)[
-        :samples_to_keep
-    ]
 
 
 @beartype
