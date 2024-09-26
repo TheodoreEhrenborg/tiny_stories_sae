@@ -35,16 +35,28 @@ def main(args):
     )
     print("JSON loaded")
 
-    texts = [x["annotated_text"] for x in highlighted_results if x["feature_idx"] == args.feature]
-
-    response = call_api(texts, model, client).dict()
-    response["feature_idx"] = args.feature
+    response = get_response(highlighted_results, model, client, args.feature_idx)
     output_dir = Path("/results/gpt4_api")
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / time.strftime("%Y%m%d-%H%M%S")
     print(output_file)
     with open(output_file, "w") as f:
         json.dump({"model": model, "responses": [response]}, f)
+
+
+@beartype
+def get_response(
+    highlighted_results: dict, model: str, client: OpenAI, feature_idx
+) -> dict:
+    texts = [
+        x["annotated_text"]
+        for x in highlighted_results
+        if x["feature_idx"] == feature_idx
+    ]
+
+    response = call_api(texts, model, client).dict()
+    response["feature_idx"] = feature_idx
+    return response
 
 
 @beartype
