@@ -2,6 +2,7 @@
 import argparse
 import json
 from pathlib import Path
+from tqdm import tqdm
 import time
 
 from beartype import beartype
@@ -19,7 +20,8 @@ class Pattern(BaseModel):
 def make_arg_parser():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--feature", type=int, required=True)
+    parser.add_argument("--feature_lower_bound", type=int, required=True)
+    parser.add_argument("--feature_upper_bound", type=int, required=True)
     parser.add_argument("--use-mini", action="store_true")
     return parser
 
@@ -35,13 +37,16 @@ def main(args):
     )
     print("JSON loaded")
 
-    response = get_response(highlighted_results, model, client, args.feature)
+    responses = [
+        get_response(highlighted_results, model, client, x)
+        for x in tqdm(range(args.feature_lower_bound, args.feature_upper_bound))
+    ]
     output_dir = Path("/results/gpt4_api")
     output_dir.mkdir(parents=True, exist_ok=True)
     output_file = output_dir / time.strftime("%Y%m%d-%H%M%S")
     print(output_file)
     with open(output_file, "w") as f:
-        json.dump({"model": model, "responses": [response]}, f)
+        json.dump({"model": model, "responses": responses}, f)
 
 
 @beartype
