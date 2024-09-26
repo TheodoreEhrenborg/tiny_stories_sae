@@ -2687,6 +2687,7 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "tensorboard" },
     { name = "torch" },
+    { name = "tqdm" },
     { name = "transformers" },
 ]
 
@@ -2709,6 +2710,7 @@ requires-dist = [
     { name = "python-dotenv", specifier = ">=1.0.1" },
     { name = "tensorboard", specifier = "==2.17.1" },
     { name = "torch", specifier = "==2.4.0" },
+    { name = "tqdm", specifier = ">=4.66.5" },
     { name = "transformers", specifier = "==4.43.3" },
 ]
 
