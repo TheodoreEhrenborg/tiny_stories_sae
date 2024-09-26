@@ -46,7 +46,7 @@ def main(args):
 
 @beartype
 def get_response(
-    highlighted_results: dict, model: str, client: OpenAI, feature_idx
+    highlighted_results: dict, model: str, client: OpenAI, feature_idx: int
 ) -> dict:
     texts = [
         x["annotated_text"]
