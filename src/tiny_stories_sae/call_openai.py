@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import argparse
 import json
+from pathlib import Path
+import time
 
 from beartype import beartype
 from dotenv import load_dotenv
@@ -35,7 +37,11 @@ def main(args):
 
     texts = [x["annotated_text"] for x in results if x["feature_idx"] == args.feature]
 
-    print(call_api(texts, model, client))
+    response = call_api(texts, model, client)
+    output_dir = Path("/results/gpt4_api")
+    output_dir.mkdir(parents=True, exist_ok=True)
+    with open(output_dir / time.strftime("%Y%m%d-%H%M%S"), "w") as f:
+        json.dump({"model": model, "responses": [response.dict()]}, f)
 
 
 @beartype
