@@ -21,12 +21,6 @@ from tiny_stories_sae.lib import (
     setup,
 )
 
-# TODO To deal with negative activations:
-# Should I:
-# - abs them?
-# - just keep the full dynamic range, so 0 looks like partly activated?
-# - relu them?
-
 
 @beartype
 def affine_shift(vec: list[int]) -> list[int]:
@@ -71,11 +65,6 @@ def main(user_args: Namespace):
             activation = get_llm_activation(llm, example, user_args)
             for feature_idx in range(768):
                 strengths = activation[0, :, feature_idx].tolist()
-                # TODO Based on user input, this should either
-                # - Shift the entire list up to be positive
-                # - Apply relu
-                # - Apply abs
-                # Then format_token() can be simplified
 
                 nonnegative_strengths = make_positive(strengths)
                 strongest_activations[feature_idx].append(
