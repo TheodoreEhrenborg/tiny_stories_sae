@@ -17,6 +17,7 @@ from tiny_stories_sae.lib import (
     blocks,
     get_llm_activation,
     make_base_parser,
+    format_token,
     prune,
     setup,
 )
@@ -111,16 +112,6 @@ def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
         for token, strength in zip(sample.tokens, sample.strengths, strict=True)
     )
     return results
-
-
-@beartype
-def format_token(
-    tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
-) -> str:
-    assert strength >= 0
-    rank = int(7 * strength / max_strength) if max_strength != 0 else 0
-    assert 0 <= rank <= 7, rank
-    return f"{tokenizer.decode(token)} {blocks[rank]}"
 
 
 @beartype

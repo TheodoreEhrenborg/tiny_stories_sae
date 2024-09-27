@@ -44,9 +44,7 @@ class SparseAutoEncoder(torch.nn.Module):
         self.decoder = torch.nn.Linear(sae_hidden_dim, llm_hidden_dim)
 
     @jaxtyped(typechecker=beartype)
-    def forward(
-        self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]
-    ) -> tuple[
+    def forward(self, llm_activations: Float[torch.Tensor, "1 seq_len 768"]) -> tuple[
         Float[torch.Tensor, "1 seq_len 768"],
         Float[torch.Tensor, "1 seq_len {self.sae_hidden_dim}"],
     ]:
@@ -166,3 +164,13 @@ def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
     return sorted(sample_list, reverse=True, key=lambda sample: sample.max_strength)[
         :samples_to_keep
     ]
+
+
+@beartype
+def format_token(
+    tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
+) -> str:
+    assert strength >= 0
+    rank = int(7 * strength / max_strength) if max_strength != 0 else 0
+    assert 0 <= rank <= 7, rank
+    return f"{tokenizer.decode(token)} {blocks[rank]}"
