@@ -2,7 +2,7 @@
 # TODO Split into smaller modules
 import math
 from argparse import ArgumentParser, Namespace
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 
 import torch
 from beartype import beartype
@@ -176,3 +176,15 @@ def format_token(
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
     assert 0 <= rank <= 7, rank
     return f"{tokenizer.decode(token)} {blocks[rank]}"
+
+
+@beartype
+def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
+    results = asdict(sample)
+    # This merges them into one string
+    results["text"] = tokenizer.decode(sample.tokens)
+    results["annotated_text"] = "".join(
+        format_token(tokenizer, token, strength, sample.max_strength)
+        for token, strength in zip(sample.tokens, sample.strengths, strict=True)
+    )
+    return results

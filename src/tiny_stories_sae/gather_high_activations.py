@@ -1,25 +1,20 @@
 #!/usr/bin/env python3
 import json
 from argparse import ArgumentParser, Namespace
-from dataclasses import asdict
 from pathlib import Path
 
 import torch
 from beartype import beartype
 from tqdm import tqdm
-from transformers import (
-    GPT2TokenizerFast,
-)
 
 from tiny_stories_sae.lib import (
     Sample,
-    blocks,
+    get_dict,
     get_llm_activation,
     make_base_parser,
     normalize_activations,
     prune,
     setup,
-    format_token,
 )
 
 
@@ -75,18 +70,6 @@ def main(user_args: Namespace):
             indent=2,
             ensure_ascii=False,
         )
-
-
-@beartype
-def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
-    results = asdict(sample)
-    # This merges them into one string
-    results["text"] = tokenizer.decode(sample.tokens)
-    results["annotated_text"] = "".join(
-        format_token(tokenizer, token, strength, sample.max_strength)
-        for token, strength in zip(sample.tokens, sample.strengths, strict=True)
-    )
-    return results
 
 
 @beartype
