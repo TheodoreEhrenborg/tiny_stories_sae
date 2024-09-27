@@ -29,12 +29,40 @@ from tiny_stories_sae.lib import (
 
 
 @beartype
+def affine_shift(vec: list[int]) -> list[int]:
+    min_ = min(vec)
+    return [min_ + x for x in vec]
+
+
+@beartype
+def relu_list(vec: list[int]) -> list[int]:
+    return [0 if x < 0 else x for x in vec]
+
+
+@beartype
+def abs_list(vec: list[int]) -> list[int]:
+    return list(map(abs, vec))
+
+
+def get_positive_algorithm(choice: str):
+    if choice == "affine":
+        return affine_shift
+    elif choice == "relu":
+        return relu_list
+    elif choice == "abs":
+        return abs_list
+    else:
+        raise ValueError(choice)
+
+
+@beartype
 def main(user_args: Namespace):
     filtered_datasets, llm, _, tokenizer = setup(
         user_args.sae_hidden_dim, user_args.fast, False
     )
 
     strongest_activations = [[] for _ in range(768)]
+    make_positive = get_positive_algorithm(user_args.make_positive)
     with torch.no_grad():
         for step, example in enumerate(tqdm(filtered_datasets["validation"])):
             if step > user_args.max_step:
@@ -48,7 +76,7 @@ def main(user_args: Namespace):
                 # - Apply relu
                 # - Apply abs
                 # Then format_token() can be simplified
-                make_positive = lambda x: x
+
                 nonnegative_strengths = make_positive(strengths)
                 strongest_activations[feature_idx].append(
                     Sample(
@@ -100,8 +128,7 @@ def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
 def format_token(
     tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
 ) -> str:
-    if strength < 0:
-        strength = 0
+    assert strength >= 0
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
     assert 0 <= rank <= 7, rank
     return f"{tokenizer.decode(token)} {blocks[rank]}"
@@ -112,6 +139,9 @@ def make_parser() -> ArgumentParser:
     parser = make_base_parser()
     parser.add_argument("--output_file", type=str, default="/results/llm.json")
     parser.add_argument("--samples_to_keep", type=int, default=10)
+    parser.add_argument(
+        "--make_positive", choices=["affine", "relu", "abs"], required=True
+    )
     return parser
 
 
