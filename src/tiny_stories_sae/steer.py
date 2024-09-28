@@ -115,10 +115,7 @@ def main(user_args: Namespace):
         "and print how much the SparseAutoEncoder thinks the LLM activates on the feature"
     )
     activation = get_llm_activation_from_tensor(unmodified_llm, steered_output_tokens)
-    # This can use get_feature_strength too
-    norm_act = normalize_activations(activation)
-    _, feat_magnitudes = sae(norm_act)
-    strengths = feat_magnitudes[0, :, user_args.which_feature].tolist()
+    strengths = get_feature_strength(activation, user_args.which_feature, sae).tolist()
     print(
         get_annotated_text(
             tokenizer, steered_output_tokens[0].tolist(), strengths, max(strengths)
