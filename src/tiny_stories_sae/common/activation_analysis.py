@@ -31,7 +31,7 @@ def prune(sample_list: list[Sample], samples_to_keep: int) -> list[Sample]:
 def format_token(
     tokenizer: GPT2TokenizerFast, token: int, strength: float, max_strength: float
 ) -> str:
-    assert strength >= 0
+    assert strength >= 0, strength
     rank = int(7 * strength / max_strength) if max_strength != 0 else 0
     assert 0 <= rank <= 7, rank
     return f"{tokenizer.decode(token)} {blocks[rank]}"

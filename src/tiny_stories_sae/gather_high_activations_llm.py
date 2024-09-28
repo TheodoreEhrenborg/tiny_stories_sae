@@ -18,7 +18,7 @@ from tiny_stories_sae.common.setting_up import setup
 @beartype
 def affine_shift(vec: list[float]) -> list[float]:
     min_ = min(vec)
-    return [min_ + x for x in vec]
+    return [x - min_ for x in vec]
 
 
 @beartype
