@@ -50,7 +50,7 @@ def main(user_args: Namespace):
     filtered_datasets, llm, _, tokenizer = setup(100, user_args.cuda, False)
 
     strongest_activations = [[] for _ in range(768)]
-    make_positive = get_positive_algorithm(user_args.make_positive)
+    make_positive = get_positive_algorithm(user_args.make_positive_by)
     with torch.no_grad():
         for step, example in enumerate(tqdm(filtered_datasets["validation"])):
             if step > user_args.max_step:
@@ -86,7 +86,7 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--output_file", type=str, required=True)
     parser.add_argument("--samples_to_keep", type=int, default=10)
     parser.add_argument(
-        "--make_positive", choices=["affine", "relu", "abs"], required=True
+        "--make_positive_by", choices=["affine", "relu", "abs"], required=True
     )
     return parser
 
