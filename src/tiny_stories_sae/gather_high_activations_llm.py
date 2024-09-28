@@ -12,9 +12,11 @@ from tiny_stories_sae.common.activations import (
     prune,
     write_activation_json,
 )
+from tiny_stories_sae.common.setting_up import (
+    setup,
+)
 from tiny_stories_sae.lib import (
     get_llm_activation,
-    setup,
 )
 
 
