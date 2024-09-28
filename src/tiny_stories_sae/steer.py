@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 import torch
 from beartype import beartype
 from jaxtyping import Float, jaxtyped
-from transformers import GenerationConfig
+from transformers import GenerationConfig, GPTNeoForCausalLM
 
 from tiny_stories_sae.common.activation_analysis import format_token
 from tiny_stories_sae.common.angle import get_rotation_between
@@ -19,6 +19,18 @@ from tiny_stories_sae.common.setting_up import setup
 # TODO Can debug lines go in own function?
 
 
+@jaxtyped(typechecker=beartype)
+def generate(
+    llm: GPTNeoForCausalLM, prompt_tokens: Float[torch.Tensor, " input_seq_len"]
+) -> Float[torch.Tensor, " output_seq_len"]:
+    return llm.generate(
+        prompt_tokens,
+        max_length=1000,
+        num_beams=1,
+        generation_config=GenerationConfig(do_sample=True, temperature=1.0),
+    )
+
+
 @beartype
 def main(user_args: Namespace):
     _, unmodified_llm, _, tokenizer = setup(
@@ -29,14 +41,9 @@ def main(user_args: Namespace):
     if user_args.cuda:
         input_tokens = input_tokens.cuda()
     if user_args.print_unsteered:
-        output_text = unmodified_llm.generate(
-            input_tokens,
-            max_length=1000,
-            num_beams=1,
-            generation_config=GenerationConfig(do_sample=True, temperature=1.0),
-        )
+        unsteered_output_tokens = generate(unmodified_llm, input_tokens)
         print("Unsteered output:")
-        print(tokenizer.decode(output_text[0]))
+        print(tokenizer.decode(unsteered_output_tokens[0]))
 
     _, steered_llm, _, _ = setup(
         user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
