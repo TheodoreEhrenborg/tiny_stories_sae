@@ -1,6 +1,8 @@
 # Steering
 
+```admonish warning
 Bug: don't add in the bias
+```
 
 The fire neuron really seems to be a danger neuron,
 based on the steering results
