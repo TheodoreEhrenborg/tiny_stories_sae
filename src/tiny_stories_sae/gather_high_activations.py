@@ -6,6 +6,9 @@ from pathlib import Path
 import torch
 from beartype import beartype
 from tqdm import tqdm
+from transformers import (
+    GPT2TokenizerFast,
+)
 
 from tiny_stories_sae.lib import (
     Sample,
@@ -52,7 +55,15 @@ def main(user_args: Namespace):
                 for sample_list in strongest_activations
             ]
     output_path = Path(user_args.checkpoint).with_suffix(".json")
+    write_activation_json(output_path, strongest_activations, tokenizer)
 
+
+@beartype
+def write_activation_json(
+    output_path: Path,
+    strongest_activations: list[list[Sample]],
+    tokenizer: GPT2TokenizerFast,
+):
     num_dead_features = 0
     for sample_list in strongest_activations:
         if max(map(lambda x: x.max_strength, sample_list)) == 0:
