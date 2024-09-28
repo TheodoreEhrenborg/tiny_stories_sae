@@ -76,7 +76,7 @@ def main(user_args: Namespace):
 
     # TODO Pull this into own function?
     @jaxtyped(typechecker=beartype)
-    def get_activation_strength(
+    def get_feature_strength(
         llm_activation: Float[torch.Tensor, "1 seq_len 768"],
     ) -> Float[torch.Tensor, " seq_len"]:
         norm_act = normalize_activations(llm_activation)
@@ -87,14 +87,14 @@ def main(user_args: Namespace):
         activation = output[0]
         if user_args.debug:
             print(
-                "This feature's activation pre nudge",
-                get_activation_strength(activation),
+                "This feature's strength pre nudge",
+                get_feature_strength(activation),
             )
         activation_with_nudge = activation + user_args.feature_strength * norm_nudge
         if user_args.debug:
             print(
-                "This feature's activation post nudge",
-                get_activation_strength(activation_with_nudge),
+                "This feature's strength post nudge",
+                get_feature_strength(activation_with_nudge),
             )
         return activation_with_nudge, output[1]
 
@@ -109,6 +109,7 @@ def main(user_args: Namespace):
         "and print how much the SparseAutoEncoder thinks the LLM activates on the feature"
     )
     activation = get_llm_activation_from_tensor(unmodified_llm, steered_output_tokens)
+    # This can use get_feature_strength too
     norm_act = normalize_activations(activation)
     _, feat_magnitudes = sae(norm_act)
     strengths = feat_magnitudes[0, :, user_args.which_feature].tolist()
