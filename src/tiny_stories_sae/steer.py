@@ -40,7 +40,7 @@ def main(user_args: Namespace):
         print("Unsteered output:")
         print(tokenizer.decode(output_text[0]))
 
-    _, steered_llm, sae, tokenizer = setup(
+    _, steered_llm, _, tokenizer = setup(
         user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
