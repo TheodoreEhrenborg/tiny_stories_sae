@@ -58,7 +58,7 @@ def main(user_args: Namespace):
             )
     if user_args.cuda:
         sae.cuda()
-    sae.eval()
+    sae.eval()  # TODO Is this needed?
     if user_args.cuda:
         decoder_vector = decoder_vector.cuda()
     if user_args.debug:
@@ -98,6 +98,7 @@ def main(user_args: Namespace):
             )
         return activation_with_nudge, output[1]
 
+    # TODO See ??? test for why this is correct
     steered_llm.transformer.h[1].register_forward_hook(simple_nudge_hook)
 
     steered_output_tokens = generate(steered_llm, input_tokens)
