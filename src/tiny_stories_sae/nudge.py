@@ -10,12 +10,12 @@ from tiny_stories_sae.common.activation_analysis import (
     format_token,
 )
 from tiny_stories_sae.common.angle import get_rotation_between
-from tiny_stories_sae.common.setting_up import (
-    setup,
-)
-from tiny_stories_sae.lib import (
+from tiny_stories_sae.common.obtain_activations import (
     get_llm_activation_from_tensor,
     normalize_activations,
+)
+from tiny_stories_sae.common.setting_up import (
+    setup,
 )
 
 
