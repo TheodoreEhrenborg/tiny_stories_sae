@@ -87,13 +87,12 @@ def main(user_args: Namespace):
 
     def simple_nudge_hook(module, args, output):
         activation = output[0]
+        activation_with_nudge = activation + user_args.feature_strength * norm_nudge
         if user_args.debug:
             print(
                 "This feature's strength pre nudge",
                 get_feature_strength(activation),
             )
-        activation_with_nudge = activation + user_args.feature_strength * norm_nudge
-        if user_args.debug:
             print(
                 "This feature's strength post nudge",
                 get_feature_strength(activation_with_nudge),
