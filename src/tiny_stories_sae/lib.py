@@ -18,17 +18,17 @@ from transformers import (
 
 @jaxtyped(typechecker=beartype)
 def get_feature_vectors(
-    sae_activations: Float[torch.Tensor, "1 seq_len {sae_hidden_dim}"],
-    decoder_weight: Float[torch.Tensor, "{sae_hidden_dim} 768"],
-) -> Float[torch.Tensor, "1 seq_len {sae_hidden_dim} 768"]:
+    sae_activations: Float[torch.Tensor, "1 seq_len sae_hidden_dim"],
+    decoder_weight: Float[torch.Tensor, "sae_hidden_dim 768"],
+) -> Float[torch.Tensor, "1 seq_len sae_hidden_dim 768"]:
     return sae_activations.unsqueeze(3) * decoder_weight
 
 
 @jaxtyped(typechecker=beartype)
 def get_feature_magnitudes(
-    sae_activations: Float[torch.Tensor, "1 seq_len {sae_hidden_dim}"],
-    decoder_weight: Float[torch.Tensor, "{sae_hidden_dim} 768"],
-) -> Float[torch.Tensor, "1 seq_len {sae_hidden_dim}"]:
+    sae_activations: Float[torch.Tensor, "1 seq_len sae_hidden_dim"],
+    decoder_weight: Float[torch.Tensor, "sae_hidden_dim 768"],
+) -> Float[torch.Tensor, "1 seq_len sae_hidden_dim"]:
     decoder_magnitudes = torch.linalg.vector_norm(decoder_weight, dim=1, ord=2)
     result = sae_activations * decoder_magnitudes
     return result
