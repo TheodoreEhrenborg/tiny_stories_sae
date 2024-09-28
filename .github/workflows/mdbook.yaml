@@ -38,11 +38,11 @@ jobs:
           curl -sSL https://github.com/rust-lang/mdBook/releases/download/v0.4.40/mdbook-v0.4.40-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
       - name: Install mdbook-admonish
         run: |
-          curl -sSL https://github.com/tommilligan/mdbook-admonish/releases/download/v1.18.0/mdbook-admonish-v1.18.0-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=bin
+          curl -sSL https://github.com/tommilligan/mdbook-admonish/releases/download/v1.18.0/mdbook-admonish-v1.18.0-x86_64-unknown-linux-gnu.tar.gz | tar -xz --directory=/usr/bin
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Run mdbook-admonish
+      - name: Run mdbook-admonish to make CSS
         run: bin/mdbook-admonish install docs
       - name: Build with mdBook
         run: bin/mdbook build docs
