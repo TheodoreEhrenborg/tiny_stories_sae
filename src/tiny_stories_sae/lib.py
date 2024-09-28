@@ -59,30 +59,24 @@ class SparseAutoEncoder(torch.nn.Module):
 def get_llm_activation(
     model: GPTNeoForCausalLM, example: dict, user_args: Namespace
 ) -> Float[torch.Tensor, "1 seq_len 768"]:
+    tokens_tensor = torch.tensor(example["input_ids"]).unsqueeze(0)
+    if user_args.cuda:
+        tokens_tensor = tokens_tensor.cuda()
+    return get_llm_activation_from_tensor(model, tokens_tensor)
+
+
+@jaxtyped(typechecker=beartype)
+def get_llm_activation_from_tensor(
+    model: GPTNeoForCausalLM,
+    tokens_tensor: Int[torch.Tensor, "1 seq_len"],
+) -> Float[torch.Tensor, "1 seq_len 768"]:
     with torch.no_grad():
-        tokens_tensor = torch.tensor(example["input_ids"]).unsqueeze(0)
-        if user_args.cuda:
-            tokens_tensor = tokens_tensor.cuda()
         x = model(
             tokens_tensor,
             output_hidden_states=True,
         )
         assert len(x.hidden_states) == 5
         return x.hidden_states[2]
-
-
-# TODO Combine with above function
-@jaxtyped(typechecker=beartype)
-def get_llm_activation_from_tensor(
-    model: GPTNeoForCausalLM,
-    inputs: Int[torch.Tensor, "1 seq_len"],
-):
-    x = model(
-        inputs,
-        output_hidden_states=True,
-    )
-    assert len(x.hidden_states) == 5
-    return x.hidden_states[2]
 
 
 @beartype
