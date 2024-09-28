@@ -15,9 +15,6 @@ from tiny_stories_sae.common.obtain_activations import (
 from tiny_stories_sae.common.sae import SparseAutoEncoder
 from tiny_stories_sae.common.setting_up import setup
 
-# TODO Try to make main shorter than 100 lines
-# TODO Can debug lines go in own function?
-
 
 @jaxtyped(typechecker=beartype)
 def generate(
