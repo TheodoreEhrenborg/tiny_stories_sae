@@ -69,6 +69,24 @@ def debug_angles(
         )
 
 
+@jaxtyped(typechecker=beartype)
+def debug_strengths(
+    user_args: Namespace,
+    activation: Float[torch.Tensor, "768"],
+    activation_with_nudge: Float[torch.Tensor, "768"],
+    sae: SparseAutoEncoder,
+):
+    if user_args.debug:
+        print(
+            "This feature's strength pre nudge",
+            get_feature_strength(activation, user_args.which_feature, sae),
+        )
+        print(
+            "This feature's strength post nudge",
+            get_feature_strength(activation_with_nudge, user_args.which_feature, sae),
+        )
+
+
 @beartype
 def main(user_args: Namespace):
     _, unmodified_llm, _, tokenizer = setup(
@@ -99,17 +117,7 @@ def main(user_args: Namespace):
     def simple_nudge_hook(module, args, output):
         activation = output[0]
         activation_with_nudge = activation + user_args.feature_strength * norm_nudge
-        if user_args.debug:
-            print(
-                "This feature's strength pre nudge",
-                get_feature_strength(activation, user_args.which_feature, sae),
-            )
-            print(
-                "This feature's strength post nudge",
-                get_feature_strength(
-                    activation_with_nudge, user_args.which_feature, sae
-                ),
-            )
+        debug_strengths(user_args, activation, activation_with_nudge, sae)
         return activation_with_nudge, output[1]
 
     # TODO See ??? test for why this is correct
