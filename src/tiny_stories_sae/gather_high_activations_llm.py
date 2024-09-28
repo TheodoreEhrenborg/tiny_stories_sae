@@ -83,7 +83,7 @@ def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("--cuda", action="store_true")
     parser.add_argument("--max_step", type=float, default=float("inf"))
-    parser.add_argument("--output_file", type=str, default="/results/llm.json")
+    parser.add_argument("--output_file", type=str, required=True)
     parser.add_argument("--samples_to_keep", type=int, default=10)
     parser.add_argument(
         "--make_positive", choices=["affine", "relu", "abs"], required=True
