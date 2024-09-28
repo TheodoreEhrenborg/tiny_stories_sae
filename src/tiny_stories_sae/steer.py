@@ -4,7 +4,7 @@ from argparse import ArgumentParser, Namespace
 import torch
 from beartype import beartype
 from jaxtyping import Float, jaxtyped
-from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
+from transformers import GenerationConfig
 
 from tiny_stories_sae.common.activation_analysis import format_token
 from tiny_stories_sae.common.angle import get_rotation_between
@@ -15,22 +15,15 @@ from tiny_stories_sae.common.obtain_activations import (
 from tiny_stories_sae.common.setting_up import setup
 
 # TODO Don't have two tokenizers
-# TODO Use setup() twice
 # TODO Try to make main shorter than 100 lines
 # TODO Can debug lines go in own function?
 
 
 @beartype
 def main(user_args: Namespace):
-    unmodified_llm = AutoModelForCausalLM.from_pretrained(
-        "roneneldan/TinyStories-33M", local_files_only=user_args.no_internet
+    _, unmodified_llm, _, tokenizer = setup(
+        user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
-    if user_args.cuda:
-        unmodified_llm.cuda()
-    tokenizer = AutoTokenizer.from_pretrained(
-        "EleutherAI/gpt-neo-125M", local_files_only=user_args.no_internet
-    )
-    tokenizer.pad_token = tokenizer.eos_token
     sample = "There once was a cat"
     input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
     if user_args.cuda:
@@ -45,7 +38,7 @@ def main(user_args: Namespace):
         print("Unsteered output:")
         print(tokenizer.decode(output_text[0]))
 
-    _, steered_llm, _, tokenizer = setup(
+    _, steered_llm, _, _ = setup(
         user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
