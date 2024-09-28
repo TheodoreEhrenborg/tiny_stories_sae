@@ -23,7 +23,7 @@ def affine_shift(vec: list[float]) -> list[float]:
 
 @beartype
 def relu_list(vec: list[float]) -> list[float]:
-    return [0 if x < 0 else x for x in vec]
+    return [0.0 if x < 0.0 else x for x in vec]
 
 
 @beartype
