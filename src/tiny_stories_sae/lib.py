@@ -40,10 +40,3 @@ def normalize_activations(
     activation: Float[torch.Tensor, "1 seq_len 768"],
 ) -> Float[torch.Tensor, "1 seq_len 768"]:
     return (activation - activation.mean()) / activation.std() * math.sqrt(768)
-
-
-def get_rotation_between(x, y):
-    xy = torch.dot(x, y)
-    xx = torch.dot(x, x)
-    yy = torch.dot(y, y)
-    return torch.acos(xy / torch.sqrt(xx) / torch.sqrt(yy)) / 2 / torch.pi
