@@ -117,7 +117,9 @@ def main(user_args: Namespace):
         debug_strengths(user_args, activation, activation_with_nudge, sae)
         return activation_with_nudge, output[1]
 
-    # TODO See ??? test for why this is correct
+    # The SAE was trained on the 3rd hidden state,
+    # so we intervene there---this is the state after the 2nd transformer.
+    # test_layer.py confirms this is correct
     steered_llm.transformer.h[1].register_forward_hook(simple_nudge_hook)
     steered_output_tokens = generate(steered_llm, input_tokens)
     print("Steered output:")
