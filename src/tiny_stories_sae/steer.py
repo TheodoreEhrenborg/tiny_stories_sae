@@ -72,8 +72,8 @@ def debug_angles(
 @jaxtyped(typechecker=beartype)
 def debug_strengths(
     user_args: Namespace,
-    activation: Float[torch.Tensor, "768"],
-    activation_with_nudge: Float[torch.Tensor, "768"],
+    activation: Float[torch.Tensor, "1 seq_len 768"],
+    activation_with_nudge: Float[torch.Tensor, "1 seq_len 768"],
     sae: SparseAutoEncoder,
 ):
     if user_args.debug:
