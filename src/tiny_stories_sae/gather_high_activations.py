@@ -1,23 +1,19 @@
 #!/usr/bin/env python3
-import json
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
 import torch
 from beartype import beartype
 from tqdm import tqdm
-from transformers import (
-    GPT2TokenizerFast,
-)
 
 from tiny_stories_sae.lib import (
     Sample,
-    get_dict,
     get_llm_activation,
     make_base_parser,
     normalize_activations,
     prune,
     setup,
+    write_activation_json,
 )
 
 
@@ -56,31 +52,6 @@ def main(user_args: Namespace):
             ]
     output_path = Path(user_args.checkpoint).with_suffix(".json")
     write_activation_json(output_path, strongest_activations, tokenizer)
-
-
-@beartype
-def write_activation_json(
-    output_path: Path,
-    strongest_activations: list[list[Sample]],
-    tokenizer: GPT2TokenizerFast,
-):
-    num_dead_features = 0
-    for sample_list in strongest_activations:
-        if max(map(lambda x: x.max_strength, sample_list)) == 0:
-            num_dead_features += 1
-    print("Proportion of dead features", num_dead_features / len(strongest_activations))
-
-    with open(output_path, "w") as f:
-        json.dump(
-            [
-                get_dict(tokenizer, sample)
-                for sample_list in strongest_activations
-                for sample in sample_list
-            ],
-            f,
-            indent=2,
-            ensure_ascii=False,
-        )
 
 
 @beartype

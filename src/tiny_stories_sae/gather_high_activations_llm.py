@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 # TODO Needs DRY with other gathering script
-import json
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
@@ -10,11 +9,11 @@ from tqdm import tqdm
 
 from tiny_stories_sae.lib import (
     Sample,
-    get_dict,
     get_llm_activation,
     make_base_parser,
     prune,
     setup,
+    write_activation_json,
 )
 
 
@@ -77,24 +76,7 @@ def main(user_args: Namespace):
                 for sample_list in strongest_activations
             ]
     output_path = Path(user_args.output_file)
-
-    num_dead_features = 0
-    for sample_list in strongest_activations:
-        if max(map(lambda x: x.max_strength, sample_list)) == 0:
-            num_dead_features += 1
-    print("Proportion of dead features", num_dead_features / len(strongest_activations))
-
-    with open(output_path, "w") as f:
-        json.dump(
-            [
-                get_dict(tokenizer, sample)
-                for sample_list in strongest_activations
-                for sample in sample_list
-            ],
-            f,
-            indent=2,
-            ensure_ascii=False,
-        )
+    write_activation_json(output_path, strongest_activations, tokenizer)
 
 
 @beartype
