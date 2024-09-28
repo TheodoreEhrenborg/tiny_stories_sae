@@ -14,7 +14,6 @@ from tiny_stories_sae.common.obtain_activations import (
 )
 from tiny_stories_sae.common.setting_up import setup
 
-# TODO Don't have two tokenizers
 # TODO Try to make main shorter than 100 lines
 # TODO Can debug lines go in own function?
 
