@@ -6,7 +6,7 @@ from beartype import beartype
 from jaxtyping import Float, jaxtyped
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
-from tiny_stories_sae.gather_high_activations import (
+from tiny_stories_sae.lib import (
     format_token,
     normalize_activations,
 )
