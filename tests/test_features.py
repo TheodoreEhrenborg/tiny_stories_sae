@@ -1,6 +1,16 @@
 import torch
+from beartype import beartype
+from jaxtyping import Float, jaxtyped
 
-from tiny_stories_sae.lib import get_feature_magnitudes, get_feature_vectors
+from tiny_stories_sae.lib import get_feature_magnitudes
+
+
+@jaxtyped(typechecker=beartype)
+def get_feature_vectors(
+    sae_activations: Float[torch.Tensor, "1 seq_len sae_hidden_dim"],
+    decoder_weight: Float[torch.Tensor, "sae_hidden_dim 768"],
+) -> Float[torch.Tensor, "1 seq_len sae_hidden_dim 768"]:
+    return sae_activations.unsqueeze(3) * decoder_weight
 
 
 def test_running_decoder_manually():
