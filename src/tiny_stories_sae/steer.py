@@ -45,10 +45,10 @@ def main(user_args: Namespace):
         print("Unsteered output:")
         print(tokenizer.decode(unsteered_output_tokens[0]))
 
-    _, steered_llm, _, _ = setup(
+    _, steered_llm, sae, _ = setup(
         user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
-    sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
+    sae.load_state_dict(torch.load(user_args.checkpoint, weights_only=True))
     with torch.no_grad():
         encoder_vector = sae.encoder.weight[user_args.which_feature, :]
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]

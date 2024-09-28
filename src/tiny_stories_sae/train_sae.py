@@ -48,7 +48,7 @@ def main(user_args: Namespace):
         loss.backward()
         optimizer.step()
         if step % 5000 == 0:
-            torch.save(sae, f"{output_dir}/{step}.pt")
+            torch.save(sae.state_dict(), f"{output_dir}/{step}.pt")
 
         writer.add_scalar("act mean/train", activation.mean(), step)
         writer.add_scalar("act std/train", activation.std(), step)
