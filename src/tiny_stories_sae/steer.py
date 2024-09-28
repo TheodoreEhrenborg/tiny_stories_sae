@@ -58,6 +58,8 @@ def main(user_args: Namespace):
     if user_args.debug:
         with torch.no_grad():
             encoder_vector = sae.encoder.weight[user_args.which_feature, :]
+        if user_args.cuda:
+            encoder_vector = encoder_vector.cuda()
         print(
             "Rotation between encoder and decoder vectors for same feature",
             get_rotation_between(encoder_vector, decoder_vector),
