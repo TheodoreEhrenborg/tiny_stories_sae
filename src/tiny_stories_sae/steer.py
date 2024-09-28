@@ -12,6 +12,7 @@ from tiny_stories_sae.common.obtain_activations import (
     get_llm_activation_from_tensor,
     normalize_activations,
 )
+from tiny_stories_sae.common.sae import SparseAutoEncoder
 from tiny_stories_sae.common.setting_up import setup
 
 # TODO Try to make main shorter than 100 lines
@@ -28,6 +29,17 @@ def generate(
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
+
+
+@jaxtyped(typechecker=beartype)
+def get_feature_strength(
+    llm_activation: Float[torch.Tensor, "1 seq_len 768"],
+    which_feature: int,
+    sae: SparseAutoEncoder,
+) -> Float[torch.Tensor, " seq_len"]:
+    norm_act = normalize_activations(llm_activation)
+    _, feat_magnitudes = sae(norm_act)
+    return feat_magnitudes[0, :, which_feature]
 
 
 @beartype
@@ -75,26 +87,19 @@ def main(user_args: Namespace):
         )
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
-    # TODO Pull this into own function?
-    @jaxtyped(typechecker=beartype)
-    def get_feature_strength(
-        llm_activation: Float[torch.Tensor, "1 seq_len 768"],
-    ) -> Float[torch.Tensor, " seq_len"]:
-        norm_act = normalize_activations(llm_activation)
-        strength = sae(norm_act)[1][0, :, user_args.which_feature]
-        return strength
-
     def simple_nudge_hook(module, args, output):
         activation = output[0]
         activation_with_nudge = activation + user_args.feature_strength * norm_nudge
         if user_args.debug:
             print(
                 "This feature's strength pre nudge",
-                get_feature_strength(activation),
+                get_feature_strength(activation, user_args.which_feature, sae),
             )
             print(
                 "This feature's strength post nudge",
-                get_feature_strength(activation_with_nudge),
+                get_feature_strength(
+                    activation_with_nudge, user_args.which_feature, sae
+                ),
             )
         return activation_with_nudge, output[1]
 
