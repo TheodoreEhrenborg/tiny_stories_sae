@@ -5,9 +5,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from beartype import beartype
-from transformers import (
-    GPT2TokenizerFast,
-)
+from transformers import GPT2TokenizerFast
 
 blocks = [chr(x) for x in range(9601, 9609)]
 

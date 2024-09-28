@@ -6,9 +6,7 @@ from argparse import Namespace
 import torch
 from beartype import beartype
 from jaxtyping import Float, Int, jaxtyped
-from transformers import (
-    GPTNeoForCausalLM,
-)
+from transformers import GPTNeoForCausalLM
 
 
 @jaxtyped(typechecker=beartype)
