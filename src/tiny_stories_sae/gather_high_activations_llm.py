@@ -10,7 +10,6 @@ from tqdm import tqdm
 from tiny_stories_sae.lib import (
     Sample,
     get_llm_activation,
-    make_base_parser,
     prune,
     setup,
     write_activation_json,
@@ -46,9 +45,9 @@ def get_positive_algorithm(choice: str):
 
 @beartype
 def main(user_args: Namespace):
-    filtered_datasets, llm, _, tokenizer = setup(
-        user_args.sae_hidden_dim, user_args.fast, False
-    )
+    # Hardcode SAE dim to 100 because we don't
+    # need an SAE in this script
+    filtered_datasets, llm, _, tokenizer = setup(100, user_args.fast, False)
 
     strongest_activations = [[] for _ in range(768)]
     make_positive = get_positive_algorithm(user_args.make_positive)
@@ -81,7 +80,9 @@ def main(user_args: Namespace):
 
 @beartype
 def make_parser() -> ArgumentParser:
-    parser = make_base_parser()
+    parser = ArgumentParser()
+    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--max_step", type=float, default=float("inf"))
     parser.add_argument("--output_file", type=str, default="/results/llm.json")
     parser.add_argument("--samples_to_keep", type=int, default=10)
     parser.add_argument(
