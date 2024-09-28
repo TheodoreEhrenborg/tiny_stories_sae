@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# TODO Needs DRY with other gathering script
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
 
