@@ -52,7 +52,6 @@ def main(user_args: Namespace):
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
     if user_args.cuda:  # TODO Is this needed?
         sae.cuda()
-    sae.eval()  # TODO Is this needed?
     if user_args.cuda:
         decoder_vector = decoder_vector.cuda()
     if user_args.debug:
