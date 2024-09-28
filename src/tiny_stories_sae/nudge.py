@@ -13,7 +13,6 @@ from tiny_stories_sae.gather_high_activations import (
 from tiny_stories_sae.lib import (
     get_llm_activation_from_tensor,
     get_rotation_between,
-    make_base_parser,
     setup,
 )
 
@@ -121,7 +120,9 @@ def main(user_args: Namespace):
 
 @beartype
 def make_parser() -> ArgumentParser:
-    parser = make_base_parser()
+    parser = ArgumentParser()
+    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--sae_hidden_dim", type=int, default=100)
     parser.add_argument("--checkpoint", type=str, required=True)
     parser.add_argument("--which_feature", type=int, required=True)
     parser.add_argument("--feature_strength", type=float, default=10.0)
