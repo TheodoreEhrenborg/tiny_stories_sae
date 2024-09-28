@@ -107,10 +107,6 @@ def main(user_args: Namespace):
     sae.load_state_dict(torch.load(user_args.checkpoint, weights_only=True))
     with torch.no_grad():
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
-    if user_args.cuda:  # TODO Is this needed?
-        sae.cuda()
-    if user_args.cuda:
-        decoder_vector = decoder_vector.cuda()
     debug_angles(user_args, sae, decoder_vector)
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
