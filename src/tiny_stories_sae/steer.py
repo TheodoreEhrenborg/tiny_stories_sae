@@ -3,7 +3,7 @@ from argparse import ArgumentParser, Namespace
 
 import torch
 from beartype import beartype
-from jaxtyping import Float, jaxtyped
+from jaxtyping import Float, Int, jaxtyped
 from transformers import GenerationConfig, GPTNeoForCausalLM
 
 from tiny_stories_sae.common.activation_analysis import get_annotated_text
@@ -21,8 +21,8 @@ from tiny_stories_sae.common.setting_up import setup
 
 @jaxtyped(typechecker=beartype)
 def generate(
-    llm: GPTNeoForCausalLM, prompt_tokens: Float[torch.Tensor, " input_seq_len"]
-) -> Float[torch.Tensor, " output_seq_len"]:
+    llm: GPTNeoForCausalLM, prompt_tokens: Int[torch.Tensor, "1 input_seq_len"]
+) -> Int[torch.Tensor, "1 output_seq_len"]:
     return llm.generate(
         prompt_tokens,
         max_length=1000,
