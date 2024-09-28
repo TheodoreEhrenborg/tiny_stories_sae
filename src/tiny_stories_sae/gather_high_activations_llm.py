@@ -57,6 +57,11 @@ def main(user_args: Namespace):
             # activation is [1, seq_len, 768]
             activation = get_llm_activation(llm, example, user_args)
             for feature_idx in range(768):
+                # py-spy says the next line takes 75% of all runtime.
+                # Possible optimization:
+                # Sample could hold a tensor instead of a list,
+                # and we could only convert
+                # the small fraction of pruned tensors at the end
                 strengths = activation[0, :, feature_idx].tolist()
 
                 nonnegative_strengths = make_positive(strengths)
