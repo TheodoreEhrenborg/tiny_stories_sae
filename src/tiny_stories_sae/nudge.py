@@ -16,9 +16,6 @@ from tiny_stories_sae.lib import (
     setup,
 )
 
-# TODO Refactor argparse:
-# Some scripts have arguments they can't use
-
 
 @beartype
 def main(user_args: Namespace):
