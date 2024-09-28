@@ -48,7 +48,10 @@ def main(user_args: Namespace):
         encoder_vector = sae.encoder.weight[user_args.which_feature, :]
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
         if user_args.debug:
-            print("Rotation", get_rotation_between(encoder_vector, decoder_vector))
+            print(
+                "Rotation between encoder and decoder vectors for same feature",
+                get_rotation_between(encoder_vector, decoder_vector),
+            )
     if user_args.cuda:
         sae.cuda()
     sae.eval()
@@ -62,7 +65,7 @@ def main(user_args: Namespace):
         nudge = sae.decoder(onehot)
         assert nudge.shape == torch.Size([768]), nudge.shape
         print(
-            "Rotation between nudge and decoder_vec",
+            "Rotation between nudge+bias and decoder_vec",
             get_rotation_between(nudge, decoder_vector),
         )
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
