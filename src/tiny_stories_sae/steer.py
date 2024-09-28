@@ -6,7 +6,7 @@ from beartype import beartype
 from jaxtyping import Float, jaxtyped
 from transformers import GenerationConfig, GPTNeoForCausalLM
 
-from tiny_stories_sae.common.activation_analysis import format_token
+from tiny_stories_sae.common.activation_analysis import get_annotated_text
 from tiny_stories_sae.common.angle import get_rotation_between
 from tiny_stories_sae.common.obtain_activations import (
     get_llm_activation_from_tensor,
@@ -115,10 +115,8 @@ def main(user_args: Namespace):
     strengths = feat_magnitudes[0, :, user_args.which_feature].tolist()
     max_strength = max(strengths)
     print(
-        # TODO Can this be refactored away?
-        "".join(
-            format_token(tokenizer, int(token), strength, max_strength)
-            for token, strength in zip(steered_output_tokens[0], strengths, strict=True)
+        get_annotated_text(
+            tokenizer, steered_output_tokens[0].to_list(), strengths, max_strength
         )
     )
 

@@ -42,11 +42,23 @@ def get_dict(tokenizer: GPT2TokenizerFast, sample: Sample) -> dict:
     results = asdict(sample)
     # This merges them into one string
     results["text"] = tokenizer.decode(sample.tokens)
-    results["annotated_text"] = "".join(
-        format_token(tokenizer, token, strength, sample.max_strength)
-        for token, strength in zip(sample.tokens, sample.strengths, strict=True)
+    results["annotated_text"] = get_annotated_text(
+        tokenizer, sample.tokens, sample.strengths, sample.max_strength
     )
     return results
+
+
+@beartype
+def get_annotated_text(
+    tokenizer: GPT2TokenizerFast,
+    tokens: list[int],
+    strengths: list[float],
+    max_strength: float,
+) -> str:
+    return "".join(
+        format_token(tokenizer, token, strength, max_strength)
+        for token, strength in zip(tokens, strengths, strict=True)
+    )
 
 
 @beartype
