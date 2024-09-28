@@ -50,7 +50,7 @@ def main(user_args: Namespace):
     sae.load_state_dict(torch.load(user_args.checkpoint, weights_only=True))
     with torch.no_grad():
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
-    if user_args.cuda:
+    if user_args.cuda:  # TODO Is this needed?
         sae.cuda()
     sae.eval()  # TODO Is this needed?
     if user_args.cuda:
