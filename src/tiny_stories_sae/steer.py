@@ -92,6 +92,7 @@ def main(user_args: Namespace):
     _, unmodified_llm, _, tokenizer = setup(
         user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
+
     sample = "There once was a cat"
     input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
     if user_args.cuda:
@@ -118,7 +119,6 @@ def main(user_args: Namespace):
 
     # TODO See ??? test for why this is correct
     steered_llm.transformer.h[1].register_forward_hook(simple_nudge_hook)
-
     steered_output_tokens = generate(steered_llm, input_tokens)
     print("Steered output:")
     print(tokenizer.decode(steered_output_tokens[0]))
