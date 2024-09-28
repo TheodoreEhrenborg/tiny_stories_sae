@@ -7,12 +7,14 @@ import torch
 from beartype import beartype
 from tqdm import tqdm
 
-from tiny_stories_sae.lib import (
+from tiny_stories_sae.common.activations import (
     Sample,
-    get_llm_activation,
     prune,
-    setup,
     write_activation_json,
+)
+from tiny_stories_sae.lib import (
+    get_llm_activation,
+    setup,
 )
 
 
