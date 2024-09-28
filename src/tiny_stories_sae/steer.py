@@ -49,19 +49,19 @@ def main(user_args: Namespace):
     )
     sae.load_state_dict(torch.load(user_args.checkpoint, weights_only=True))
     with torch.no_grad():
-        encoder_vector = sae.encoder.weight[user_args.which_feature, :]
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
-        if user_args.debug:
-            print(
-                "Rotation between encoder and decoder vectors for same feature",
-                get_rotation_between(encoder_vector, decoder_vector),
-            )
     if user_args.cuda:
         sae.cuda()
     sae.eval()  # TODO Is this needed?
     if user_args.cuda:
         decoder_vector = decoder_vector.cuda()
     if user_args.debug:
+        with torch.no_grad():
+            encoder_vector = sae.encoder.weight[user_args.which_feature, :]
+        print(
+            "Rotation between encoder and decoder vectors for same feature",
+            get_rotation_between(encoder_vector, decoder_vector),
+        )
         onehot = torch.zeros(sae.sae_hidden_dim)
         onehot[user_args.which_feature] = 1
         if user_args.cuda:
