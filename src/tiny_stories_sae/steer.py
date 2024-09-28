@@ -42,6 +42,33 @@ def get_feature_strength(
     return feat_magnitudes[0, :, which_feature]
 
 
+@jaxtyped(typechecker=beartype)
+def debug_angles(
+    user_args: Namespace,
+    sae: SparseAutoEncoder,
+    decoder_vector: Float[torch.Tensor, "768"],
+):
+    if user_args.debug:
+        with torch.no_grad():
+            encoder_vector = sae.encoder.weight[user_args.which_feature, :]
+        if user_args.cuda:
+            encoder_vector = encoder_vector.cuda()
+        print(
+            "Rotation between encoder and decoder vectors for same feature",
+            get_rotation_between(encoder_vector, decoder_vector),
+        )
+        onehot = torch.zeros(sae.sae_hidden_dim)
+        onehot[user_args.which_feature] = 1
+        if user_args.cuda:
+            onehot = onehot.cuda()
+        nudge = sae.decoder(onehot)
+        assert nudge.shape == torch.Size([768]), nudge.shape
+        print(
+            "Rotation between nudge+bias and decoder_vec",
+            get_rotation_between(nudge, decoder_vector),
+        )
+
+
 @beartype
 def main(user_args: Namespace):
     _, unmodified_llm, _, tokenizer = setup(
@@ -66,25 +93,7 @@ def main(user_args: Namespace):
         sae.cuda()
     if user_args.cuda:
         decoder_vector = decoder_vector.cuda()
-    if user_args.debug:
-        with torch.no_grad():
-            encoder_vector = sae.encoder.weight[user_args.which_feature, :]
-        if user_args.cuda:
-            encoder_vector = encoder_vector.cuda()
-        print(
-            "Rotation between encoder and decoder vectors for same feature",
-            get_rotation_between(encoder_vector, decoder_vector),
-        )
-        onehot = torch.zeros(sae.sae_hidden_dim)
-        onehot[user_args.which_feature] = 1
-        if user_args.cuda:
-            onehot = onehot.cuda()
-        nudge = sae.decoder(onehot)
-        assert nudge.shape == torch.Size([768]), nudge.shape
-        print(
-            "Rotation between nudge+bias and decoder_vec",
-            get_rotation_between(nudge, decoder_vector),
-        )
+    debug_angles(user_args, sae, decoder_vector)
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
     def simple_nudge_hook(module, args, output):
