@@ -52,14 +52,15 @@ def main(user_args: Namespace):
     if user_args.cuda:
         sae.cuda()
     sae.eval()
-    onehot = torch.zeros(sae.sae_hidden_dim)
-    onehot[user_args.which_feature] = 1
     if user_args.cuda:
-        onehot = onehot.cuda()
         decoder_vector = decoder_vector.cuda()
-    nudge = sae.decoder(onehot)
-    assert nudge.shape == torch.Size([768]), nudge.shape
     if user_args.debug:
+        onehot = torch.zeros(sae.sae_hidden_dim)
+        onehot[user_args.which_feature] = 1
+        if user_args.cuda:
+            onehot = onehot.cuda()
+        nudge = sae.decoder(onehot)
+        assert nudge.shape == torch.Size([768]), nudge.shape
         print(
             "Rotation between nudge and decoder_vec",
             get_rotation_between(nudge, decoder_vector),
