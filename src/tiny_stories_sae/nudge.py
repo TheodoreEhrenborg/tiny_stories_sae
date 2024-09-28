@@ -8,11 +8,9 @@ from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
 from tiny_stories_sae.lib import (
     format_token,
-    normalize_activations,
-)
-from tiny_stories_sae.lib import (
     get_llm_activation_from_tensor,
     get_rotation_between,
+    normalize_activations,
     setup,
 )
 
