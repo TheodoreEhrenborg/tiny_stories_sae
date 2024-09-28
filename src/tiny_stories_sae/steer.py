@@ -138,7 +138,14 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--feature_strength", type=float, default=10.0)
     parser.add_argument("--print_unsteered", action="store_true")
     parser.add_argument("--no_internet", action="store_true")
-    parser.add_argument("--debug", action="store_true")
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="""
+            This script needed a lot of debugging. I've hidden
+            the debug statements behind a flag. Probably in
+            production I'd delete them to make the code cleaner""",
+    )
     return parser
 
 
