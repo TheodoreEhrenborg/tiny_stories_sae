@@ -72,7 +72,7 @@ def get_llm_activation(
 ) -> Float[torch.Tensor, "1 seq_len 768"]:
     with torch.no_grad():
         tokens_tensor = torch.tensor(example["input_ids"]).unsqueeze(0)
-        if user_args.fast:
+        if user_args.cuda:
             tokens_tensor = tokens_tensor.cuda()
         x = model(
             tokens_tensor,
@@ -110,7 +110,7 @@ def make_dataset(tokenizer: GPT2TokenizerFast) -> DatasetDict:
 @beartype
 def make_base_parser() -> ArgumentParser:
     parser = ArgumentParser()
-    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--cuda", action="store_true")
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     parser.add_argument("--max_step", type=float, default=float("inf"))
     return parser
@@ -118,12 +118,12 @@ def make_base_parser() -> ArgumentParser:
 
 @beartype
 def setup(
-    sae_hidden_dim: int, fast: bool, no_internet: bool
+    sae_hidden_dim: int, cuda: bool, no_internet: bool
 ) -> tuple[DatasetDict, GPTNeoForCausalLM, SparseAutoEncoder, GPT2TokenizerFast]:
     llm = AutoModelForCausalLM.from_pretrained(
         "roneneldan/TinyStories-33M", local_files_only=no_internet
     )
-    if fast:
+    if cuda:
         llm.cuda()
     tokenizer = AutoTokenizer.from_pretrained(
         "EleutherAI/gpt-neo-125M", local_files_only=no_internet
@@ -131,7 +131,7 @@ def setup(
     tokenizer.pad_token = tokenizer.eos_token
     filtered_datasets = make_dataset(tokenizer)
     sae = SparseAutoEncoder(sae_hidden_dim)
-    if fast:
+    if cuda:
         sae.cuda()
     return filtered_datasets, llm, sae, tokenizer
 

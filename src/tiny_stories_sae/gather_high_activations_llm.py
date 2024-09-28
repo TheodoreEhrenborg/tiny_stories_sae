@@ -47,7 +47,7 @@ def get_positive_algorithm(choice: str):
 def main(user_args: Namespace):
     # Hardcode SAE dim to 100 because we don't
     # need an SAE in this script
-    filtered_datasets, llm, _, tokenizer = setup(100, user_args.fast, False)
+    filtered_datasets, llm, _, tokenizer = setup(100, user_args.cuda, False)
 
     strongest_activations = [[] for _ in range(768)]
     make_positive = get_positive_algorithm(user_args.make_positive)
@@ -81,7 +81,7 @@ def main(user_args: Namespace):
 @beartype
 def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
-    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--cuda", action="store_true")
     parser.add_argument("--max_step", type=float, default=float("inf"))
     parser.add_argument("--output_file", type=str, default="/results/llm.json")
     parser.add_argument("--samples_to_keep", type=int, default=10)

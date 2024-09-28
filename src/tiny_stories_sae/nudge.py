@@ -25,7 +25,7 @@ def main(user_args: Namespace):
     llm = AutoModelForCausalLM.from_pretrained(
         "roneneldan/TinyStories-33M", local_files_only=user_args.no_internet
     )
-    if user_args.fast:
+    if user_args.cuda:
         llm.cuda()
     tokenizer = AutoTokenizer.from_pretrained(
         "EleutherAI/gpt-neo-125M", local_files_only=user_args.no_internet
@@ -33,7 +33,7 @@ def main(user_args: Namespace):
     tokenizer.pad_token = tokenizer.eos_token
     sample = "There once was a cat"
     input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
-    if user_args.fast:
+    if user_args.cuda:
         input_tokens = input_tokens.cuda()
     if user_args.print_unsteered:
         output_text = llm.generate(
@@ -46,7 +46,7 @@ def main(user_args: Namespace):
         print(tokenizer.decode(output_text[0]))
 
     _, steered_llm, sae, tokenizer = setup(
-        user_args.sae_hidden_dim, user_args.fast, user_args.no_internet
+        user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
     with torch.no_grad():
@@ -54,12 +54,12 @@ def main(user_args: Namespace):
         decoder_vector = sae.decoder.weight[:, user_args.which_feature]
         if user_args.debug:
             print("Rotation", get_rotation_between(encoder_vector, decoder_vector))
-    if user_args.fast:
+    if user_args.cuda:
         sae.cuda()
     sae.eval()
     onehot = torch.zeros(sae.sae_hidden_dim)
     onehot[user_args.which_feature] = 1
-    if user_args.fast:
+    if user_args.cuda:
         onehot = onehot.cuda()
         decoder_vector = decoder_vector.cuda()
     nudge = sae.decoder(onehot)
@@ -121,7 +121,7 @@ def main(user_args: Namespace):
 @beartype
 def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
-    parser.add_argument("--fast", action="store_true")
+    parser.add_argument("--cuda", action="store_true")
     parser.add_argument("--sae_hidden_dim", type=int, default=100)
     parser.add_argument("--checkpoint", type=str, required=True)
     parser.add_argument("--which_feature", type=int, required=True)

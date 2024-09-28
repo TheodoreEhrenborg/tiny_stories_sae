@@ -30,7 +30,7 @@ def main(user_args: Namespace):
     writer = SummaryWriter(output_dir)
 
     filtered_datasets, llm, sae, _ = setup(
-        user_args.sae_hidden_dim, user_args.fast, False
+        user_args.sae_hidden_dim, user_args.cuda, False
     )
 
     lr = 1e-5

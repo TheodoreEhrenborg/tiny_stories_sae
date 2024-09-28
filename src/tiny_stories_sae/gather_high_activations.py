@@ -20,10 +20,10 @@ from tiny_stories_sae.lib import (
 @beartype
 def main(user_args: Namespace):
     filtered_datasets, llm, sae, tokenizer = setup(
-        user_args.sae_hidden_dim, user_args.fast, False
+        user_args.sae_hidden_dim, user_args.cuda, False
     )
     sae = torch.load(user_args.checkpoint, weights_only=False, map_location="cpu")
-    if user_args.fast:
+    if user_args.cuda:
         sae.cuda()
     sae.eval()
 
