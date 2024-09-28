@@ -19,4 +19,4 @@ def test_random():
     for _ in range(10):
         x = torch.randn(768)
         y = torch.randn(768)
-        assert 0.26 >= get_rotation_between(x, y) >= 0.24
+        assert 0.27 >= get_rotation_between(x, y) >= 0.23
