@@ -115,10 +115,9 @@ def main(user_args: Namespace):
     norm_act = normalize_activations(activation)
     _, feat_magnitudes = sae(norm_act)
     strengths = feat_magnitudes[0, :, user_args.which_feature].tolist()
-    max_strength = max(strengths)
     print(
         get_annotated_text(
-            tokenizer, steered_output_tokens[0].tolist(), strengths, max_strength
+            tokenizer, steered_output_tokens[0].tolist(), strengths, max(strengths)
         )
     )
 
