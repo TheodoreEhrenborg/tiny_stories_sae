@@ -6,7 +6,7 @@ from beartype import beartype
 from jaxtyping import Float, jaxtyped
 from transformers import AutoModelForCausalLM, AutoTokenizer, GenerationConfig
 
-from tiny_stories_sae.common.activations import (
+from tiny_stories_sae.common.activation_analysis import (
     format_token,
 )
 from tiny_stories_sae.common.angle import get_rotation_between

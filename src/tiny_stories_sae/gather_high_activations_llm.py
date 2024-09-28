@@ -7,7 +7,7 @@ import torch
 from beartype import beartype
 from tqdm import tqdm
 
-from tiny_stories_sae.common.activations import (
+from tiny_stories_sae.common.activation_analysis import (
     Sample,
     prune,
     write_activation_json,
