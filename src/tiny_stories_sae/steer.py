@@ -14,14 +14,19 @@ from tiny_stories_sae.common.obtain_activations import (
 )
 from tiny_stories_sae.common.setting_up import setup
 
+# TODO Don't have two tokenizers
+# TODO Use setup() twice
+# TODO Try to make main shorter than 100 lines
+# TODO Can debug lines go in own function?
+
 
 @beartype
 def main(user_args: Namespace):
-    llm = AutoModelForCausalLM.from_pretrained(
+    unmodified_llm = AutoModelForCausalLM.from_pretrained(
         "roneneldan/TinyStories-33M", local_files_only=user_args.no_internet
     )
     if user_args.cuda:
-        llm.cuda()
+        unmodified_llm.cuda()
     tokenizer = AutoTokenizer.from_pretrained(
         "EleutherAI/gpt-neo-125M", local_files_only=user_args.no_internet
     )
@@ -31,7 +36,7 @@ def main(user_args: Namespace):
     if user_args.cuda:
         input_tokens = input_tokens.cuda()
     if user_args.print_unsteered:
-        output_text = llm.generate(
+        output_text = unmodified_llm.generate(
             input_tokens,
             max_length=1000,
             num_beams=1,
@@ -70,6 +75,7 @@ def main(user_args: Namespace):
         )
     norm_nudge = decoder_vector / torch.linalg.vector_norm(decoder_vector)
 
+    # TODO Pull this into own function?
     @jaxtyped(typechecker=beartype)
     def get_activation_strength(
         llm_activation: Float[torch.Tensor, "1 seq_len 768"],
@@ -104,12 +110,17 @@ def main(user_args: Namespace):
     print("Steered output:")
     print(tokenizer.decode(steered_output_text[0]))
 
-    activation = get_llm_activation_from_tensor(llm, steered_output_text)
+    print(
+        "Now feed the steered text into an unmodified LLM, "
+        "and print how much the SparseAutoEncoder thinks the LLM activates on the feature"
+    )
+    activation = get_llm_activation_from_tensor(unmodified_llm, steered_output_text)
     norm_act = normalize_activations(activation)
     _, feat_magnitudes = sae(norm_act)
     strengths = feat_magnitudes[0, :, user_args.which_feature].tolist()
     max_strength = max(strengths)
     print(
+        # TODO Can this be refactored away?
         "".join(
             format_token(tokenizer, int(token), strength, max_strength)
             for token, strength in zip(steered_output_text[0], strengths, strict=True)
