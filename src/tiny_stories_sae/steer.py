@@ -115,7 +115,7 @@ def main(user_args: Namespace):
     max_strength = max(strengths)
     print(
         get_annotated_text(
-            tokenizer, steered_output_tokens[0].to_list(), strengths, max_strength
+            tokenizer, steered_output_tokens[0].tolist(), strengths, max_strength
         )
     )
 
