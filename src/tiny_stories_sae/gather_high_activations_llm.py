@@ -16,18 +16,18 @@ from tiny_stories_sae.common.setting_up import setup
 
 
 @beartype
-def affine_shift(vec: list[int]) -> list[int]:
+def affine_shift(vec: list[float]) -> list[float]:
     min_ = min(vec)
     return [min_ + x for x in vec]
 
 
 @beartype
-def relu_list(vec: list[int]) -> list[int]:
+def relu_list(vec: list[float]) -> list[float]:
     return [0 if x < 0 else x for x in vec]
 
 
 @beartype
-def abs_list(vec: list[int]) -> list[int]:
+def abs_list(vec: list[float]) -> list[float]:
     return list(map(abs, vec))
 
 
