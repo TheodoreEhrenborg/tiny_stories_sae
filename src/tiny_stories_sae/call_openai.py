@@ -47,7 +47,9 @@ def main(args):
     ]
     output_dir = Path("/results/gpt4_api")
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_file = output_dir / time.strftime("%Y%m%d-%H%M%S") + args.custom_output_name
+    output_file = output_dir / (
+        time.strftime("%Y%m%d-%H%M%S") + args.custom_output_name
+    )
     print(output_file)
     with open(output_file, "w") as f:
         json.dump({"model": model, "responses": responses}, f)
