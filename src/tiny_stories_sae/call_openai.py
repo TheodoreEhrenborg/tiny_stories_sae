@@ -11,15 +11,8 @@ from pydantic import BaseModel
 from tqdm import tqdm
 
 
-class Pattern(BaseModel):
-    scratch_work: str
-    clearness: int
-    short_pattern_description: str
-
-
 def make_arg_parser():
     parser = argparse.ArgumentParser()
-
     parser.add_argument("--path_to_feature_strengths", type=str, required=True)
     parser.add_argument("--feature_lower_bound", type=int, required=True)
     parser.add_argument("--feature_upper_bound", type=int, required=True)
@@ -31,6 +24,12 @@ def make_arg_parser():
         help="name appended to the output file",
     )
     return parser
+
+
+class Pattern(BaseModel):
+    scratch_work: str
+    clearness: int
+    short_pattern_description: str
 
 
 def main(args):
