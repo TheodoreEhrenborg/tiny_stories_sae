@@ -24,6 +24,12 @@ def make_arg_parser():
     parser.add_argument("--feature_lower_bound", type=int, required=True)
     parser.add_argument("--feature_upper_bound", type=int, required=True)
     parser.add_argument("--use-mini", action="store_true")
+    parser.add_argument(
+        "--custom_output_name",
+        type=str,
+        default="",
+        help="name appended to the output file",
+    )
     return parser
 
 
@@ -42,7 +48,7 @@ def main(args):
     ]
     output_dir = Path("/results/gpt4_api")
     output_dir.mkdir(parents=True, exist_ok=True)
-    output_file = output_dir / time.strftime("%Y%m%d-%H%M%S")
+    output_file = output_dir / time.strftime("%Y%m%d-%H%M%S") + args.custom_output_name
     print(output_file)
     with open(output_file, "w") as f:
         json.dump({"model": model, "responses": responses}, f)
