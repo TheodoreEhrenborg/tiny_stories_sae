@@ -10,7 +10,6 @@ dependencies = [
     "accelerate==0.33.0",
     "datasets==2.20.0",
     "huggingface-hub==0.24.5",
-    "notebook==7.0.6",
     "torch==2.4.0",
     "transformers==4.43.3",
     "openai>=1.45.0",
