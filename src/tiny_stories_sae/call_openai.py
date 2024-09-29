@@ -20,6 +20,7 @@ class Pattern(BaseModel):
 def make_arg_parser():
     parser = argparse.ArgumentParser()
 
+    parser.add_argument("--path_to_feature_strengths", type=str, required=True)
     parser.add_argument("--feature_lower_bound", type=int, required=True)
     parser.add_argument("--feature_upper_bound", type=int, required=True)
     parser.add_argument("--use-mini", action="store_true")
@@ -32,10 +33,7 @@ def main(args):
 
     client = OpenAI()
 
-    # TODO Need to be able to configure this
-    highlighted_results = json.load(
-        open("/results/enlightened-daring-angelfish-of-teaching/105000.json")
-    )
+    highlighted_results = json.load(open(args.path_to_feature_strengths))
     print("JSON loaded")
 
     responses = [
