@@ -6,7 +6,7 @@ work, except using a far smaller LLM.
 
 Code [here](https://github.com/TheodoreEhrenborg/tiny_stories_sae)
 
-Terminology: 
+Terminology: TODO
 - activation
 - feature---specifically the SAE's
 
@@ -25,10 +25,8 @@ of feature 87.
 
 And indeed, the cat flies:
 
-> There once was a cat named Mittens. Mittens was very fast and loved to play with his friends. One day, Mittens saw a bird fly in the sky like an orange taxi.
-
-> Mittens said to his friend, "I wish I could fly like a bird." The bird replied, "That's easy, just go slow and never be foolish sometimes."
-
-> Mittens practiced every day, getting better and better. One day, they passed each other and Timmy said, "Wow, you're so good at flying!" Mittens' friends laughed and said, "We are like angels!"
-
-> From that day on, Mittens was never lazy again and always remembered to practice and race with other kids. He felt happy and free while flying high in the sky.
+> There once was a cat named Mittens. Mittens was very fast and loved to play with his friends. One day, Mittens saw a bird fly in the sky like an orange taxi.<br><br>
+> Mittens said to his friend, "I wish I could fly like a bird." The bird replied, "That's easy, just go slow and never be foolish sometimes."<br><br>
+> Mittens practiced every day, getting better and better. One day, they passed each other and Timmy said, "Wow, you're so good at flying!" Mittens' friends laughed and said, "We are like angels!"<br><br>
+> From that day on, Mittens was never lazy again and always remembered to practice and race with other kids. He felt happy and free while flying high in the sky.<br>
+><|endoftext|>
