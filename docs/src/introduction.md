@@ -19,8 +19,9 @@ ChatGPT says feature 87 relates to
 
 
 Let's ask the TinyStories model to complete a story starting with 
-"There once was a cat". I'll nudge each activation after layer 2 in the direction
-TODO 
+"There once was a cat". 
+I'll nudge each activation (specifically those just after layer 2) in the direction
+of feature 87.
 
 And indeed, the cat flies:
 
