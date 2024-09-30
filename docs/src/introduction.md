@@ -29,4 +29,4 @@ And indeed, the cat flies:
 > Mittens said to his friend, "I wish I could fly like a bird." The bird replied, "That's easy, just go slow and never be foolish sometimes."<br><br>
 > Mittens practiced every day, getting better and better. One day, they passed each other and Timmy said, "Wow, you're so good at flying!" Mittens' friends laughed and said, "We are like angels!"<br><br>
 > From that day on, Mittens was never lazy again and always remembered to practice and race with other kids. He felt happy and free while flying high in the sky.<br>
-><|endoftext|>
+> <|endoftext|>
