@@ -2,23 +2,16 @@ import seaborn as sns
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-sns.set_theme(style="ticks")
+# sns.set_theme(style="ticks")
+sns.set_theme()
 
-diamonds = sns.load_dataset("diamonds")
 
-f, ax = plt.subplots(figsize=(7, 5))
-sns.despine(f)
-
-seaborn_plot = sns.histplot(
-    diamonds,
-    x="price", hue="cut",
-    multiple="stack",
-    palette="light:m_r",
-    edgecolor=".3",
-    linewidth=.5,
-    log_scale=True,
-)
-ax.xaxis.set_major_formatter(mpl.ticker.ScalarFormatter())
-ax.set_xticks([500, 1000, 2000, 5000, 10000])
+# f, ax = plt.subplots(figsize=(7, 5))
+# sns.despine(f)
+titanic = sns.load_dataset("titanic")
+print(titanic)
+seaborn_plot = sns.barplot([2, 2, 2, 2, 2, 2, 2, 4, 4, 4, 4, 5, 5, 5, 5])
+# ax.xaxis.set_major_formatter(mpl.ticker.ScalarFormatter())
+# ax.set_xticks([1, 2, 3, 4, 5])
 fig = seaborn_plot.get_figure()
-fig.savefig("/tmp/out.png") 
+fig.savefig("/results/out.png")
