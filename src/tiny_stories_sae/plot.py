@@ -11,6 +11,7 @@ from beartype import beartype
 def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("--response_json", type=Path, required=True)
+    parser.add_argument("--output_png", type=str, default="/results/out.png")
     return parser
 
 
@@ -25,7 +26,7 @@ def main(args: Namespace):
         title="LLM activations, put through absolute value",
     )
     fig = seaborn_plot.get_figure()
-    fig.savefig("/results/out.png")
+    fig.savefig(args.output_png)
 
 
 if __name__ == "__main__":
