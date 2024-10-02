@@ -1,5 +1,21 @@
 # Training an Autoencoder
 
+Let's forget about the sparse 
+part for now. What we want is a neural
+network that takes some input and outputs
+the same thing.
+
+## What's the input?
+
+Anthropic trained on the activation
+after a middle layer of Claude
+TODO quote
+
+TinyStories-33M has TODO CHECK
+4 transformer layers. So we 
+take the activation after the 2nd 
+layer.
+
 Talk about getting the activation from the LLM
   
 And the formula: Linear(Relu(Linear(activation)))
