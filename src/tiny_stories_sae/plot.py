@@ -12,19 +12,20 @@ def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("--response_json", type=Path, required=True)
     parser.add_argument("--output_png", type=str, default="/results/out.png")
+    parser.add_argument("--xlabel", type=str)
+    parser.add_argument("--title", type=str)
     return parser
 
 
 def main(args: Namespace):
     sns.set_theme()
-
     data = json.load(args.response_json.open())
     df = pandas.DataFrame(data["responses"])
     seaborn_plot = sns.countplot(df, x="clearness")
-    seaborn_plot.set(
-        xlabel="GPT-4's ranking of clearness",
-        title="LLM activations, put through absolute value",
-    )
+    if args.xlabel is not None:
+        seaborn_plot.set(xlabel=args.xlabel)
+    if args.title is not None:
+        seaborn_plot.set(title=args.title)
     fig = seaborn_plot.get_figure()
     fig.savefig(args.output_png)
 
