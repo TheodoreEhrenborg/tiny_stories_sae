@@ -1,13 +1,23 @@
 import json
+from argparse import ArgumentParser, Namespace
+from pathlib import Path
 
 import pandas
 import seaborn as sns
+from beartype import beartype
 
 
-def main():
+@beartype
+def make_parser() -> ArgumentParser:
+    parser = ArgumentParser()
+    parser.add_argument("--response_json", type=Path, required=True)
+    return parser
+
+
+def main(args: Namespace):
     sns.set_theme()
 
-    data = json.load(open("/results/gpt4_api/20240930-195450llm_abs_full"))
+    data = json.load(args.response_json.open())
     df = pandas.DataFrame(data["responses"])
     seaborn_plot = sns.countplot(df, x="clearness")
     seaborn_plot.set(
@@ -19,4 +29,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(make_parser().parse_args())
