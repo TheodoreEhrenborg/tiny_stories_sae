@@ -27,6 +27,7 @@ def main(args: Namespace):
     if args.title is not None:
         seaborn_plot.set(title=args.title)
     fig = seaborn_plot.get_figure()
+    print(f"Writing to {args.output_png}")
     fig.savefig(args.output_png)
 
 
