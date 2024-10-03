@@ -23,11 +23,17 @@ And the formula: Linear(Relu(Linear(activation)))
 
 Show tensorboard graphs for SAE dim 100, 1000, and 10000
 
+TODO Graph of reconstruction loss
+
+TODO Graph of proportion of nonzero features
+
 ```admonish warning
 Pytorch makes it easy to save models
 using `torch.save(model, path)`.
 
-This is a bad idea: If you 
+This is a bad idea.
+
+If you 
 later move the import class to a different 
 file, you may not be able to load old
 checkpoints.
