@@ -13,6 +13,9 @@ adding in this corrupted `nudge` doesn't make the model generate
 text that resembles the desired feature.
 ```
 
+Feature 6
+
+
 The fire neuron really seems to be a danger neuron,
 based on the steering results
 
