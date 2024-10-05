@@ -7,3 +7,7 @@ seq_len
 number of features (e.g. 10000)
 
 Proportion of nonzero features
+
+TODO Graph comparing the 3? 4? L1 weights
+
+Then graph of the one that went on for a long time
