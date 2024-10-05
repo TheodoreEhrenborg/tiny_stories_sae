@@ -1,4 +1,4 @@
-# Training an Autoencoder
+# Training an autoencoder
 
 Let's forget about the sparse
 part for now. What we want is an autoencoder: a neural
