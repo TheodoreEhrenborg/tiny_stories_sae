@@ -12,6 +12,7 @@ Here's how we encourage the autoencoder to make human-comprehensible features:
   Going forwards I'll instead set \\(F = 10000 \\).
 - Then we make its job harder by not letting it use very many TODO
 
+## Theory for why this might work
 
 The hope is that the LLM is only thinking about a few things at a time.
 If the input text is "Mary had a little lamb", the LLM's internal representation 
@@ -36,7 +37,16 @@ It can best do this by
   Hence the ith feature is \\( a_i \cdot l + b_i \\). Note that \\(b_i \\) is probably negative
   (all of this is theory), so if \\( l \\) doesn't have a large component in the \\(a_i\\) direction,
   the ReLU will set the feature to 0.
-- Now only a few of the features are nonzero, 
+- Now only a few of the features are nonzero, satisfying the L1 penalty.
+- `decoder_linear` 
+- Since the ur-feature for `contains_sheep` is by assumption consistent across the training data,
+  the 
+
+The autoencoder has to reuse these features across all the examples in the training data. 
+  
+  So it has to keep the features synced with the ur-features: Every time the 
+
+  
 
 
 teasing apart the one vector in \\(\mathbb{R}^768\\) into the constituent items, 
