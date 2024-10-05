@@ -7,11 +7,15 @@ the same thing.
 
 ## What's the input?
 
-Anthropic trained on the activation
-after a middle layer of Claude
-TODO quote
+Anthropic trained on the activation after a middle layer of Claude:
 
-TinyStories-33M has TODO CHECK
+> we focused on applying SAEs to residual stream activations halfway through the model (i.e. at the “middle layer”).
+
+They have various justifications for this. My intuition is that the middle layer is maybe where
+the model is thinking the most about concepts, because at the front and back it has
+to think more about processing input and preparing output, respectively.
+
+TinyStories-33M has
 4 transformer layers. So we
 take the activation after the 2nd
 layer.
