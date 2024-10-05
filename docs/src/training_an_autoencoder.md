@@ -76,6 +76,24 @@ Let's train autoencoders with different numbers of features:
 - \\(F=768\\) (red)
 - \\(F=1000\\) (orange)
 
+We'll save checkpoints every 5000 steps because we'll do some inference later.
+
+```admonish warning
+Pytorch makes it easy to save models
+using `torch.save(model, path)`.
+
+This is a bad idea.
+
+If you 
+later move the import class to a different 
+file, you may not be able to load old
+checkpoints. Did I know this anyway but still walk into this footgun? Yes.
+
+The [safe](https://pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-model-for-inference)
+but clunkier way is
+`torch.save(model.state_dict(), path)`.
+```
+
 Graph of the reconstruction loss over time:
 
 <figure>
@@ -112,17 +130,3 @@ to
 \\( \mathbb{R}^{767} \\) (and back) loses just a little information.
 
 
-```admonish warning
-Pytorch makes it easy to save models
-using `torch.save(model, path)`.
-
-This is a bad idea.
-
-If you 
-later move the import class to a different 
-file, you may not be able to load old
-checkpoints.
-The [safe](https://pytorch.org/tutorials/beginner/saving_loading_models.html#saving-loading-model-for-inference)
-but clunkier way is
-`torch.save(model.state_dict(), path)`.
-```
