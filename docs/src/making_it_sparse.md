@@ -26,9 +26,8 @@ A: Sure, go to the [next page](training_a_sparse_autoencoder.md).
 
 ## Theory for how LLMs might think
 
-Under some plausible assumptions
-
-(see Anthropic's previous work here TODO for a longer explanation)
+(See Anthropic's previous work [here](https://transformer-circuits.pub/2022/toy_model/index.html)
+for a longer explanation.)
 
 Assumption 1: The LLM processes information in a sparse way. That is,
 it knows about thousands of human-understandable topics, but
