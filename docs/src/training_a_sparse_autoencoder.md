@@ -14,7 +14,7 @@ non-sparse autoencoder. If it's too large, gradient descent will prevent any fea
 ever being nonzero.
 
 
-sweep
+So let's run a sweep over the L1 penalty strength \\( \lambda \\).
 
 
 
@@ -42,10 +42,32 @@ Luckily there's an alternative route that avoids that large tensor:
 - Apply the L1 penalty
 ```
 
+I trained 4
+
+Results of the sweep 
+
+TODO L1 graph
+
+This is the L1 penalty before being multiplied by \\(\lambda\\)
+
+As expected, a larger \\(\lambda\\) causes the L1 penalty to be smaller,
+since it's more important in the loss function and hence the optimizer
+focuses on it more.
 
 
-Proportion of nonzero features
+Conversely, a larger \\(\lambda\\) causes the L2 reconstruction loss to be worse:
 
-TODO Graph comparing the 3? 4? L1 weights
 
-Then graph of the one that went on for a long time
+TODO L2 graph
+
+How do we choose which of these four models is the right one?
+
+> For all three SAEs, the average number of features active (i.e. with nonzero activations) on a given token was fewer than 300
+
+TODO Proportion of nonzero features graph
+
+
+(I'm choosing the number of steps so that it
+trains on a few hours on my laptop.)
+
+TODO graph of the one that went on for a long time

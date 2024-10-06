@@ -20,5 +20,9 @@ To run uv in this case, use the provided Dockerfile:
 3. To mount a results directory, use `./run.sh -v /absolute/host/path/to/results/:/results`
 4. Then inside the container you can run `uv run ...` as before
 
+## Available scripts
+`uv run src/tiny_stories_sae/train_sae.py`
+TODO a short description for each of them
+
 ## Running tests
 `uv run pytest tests`
