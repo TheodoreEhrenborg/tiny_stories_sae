@@ -19,7 +19,10 @@ Here's how we encourage the autoencoder to make human-comprehensible features:
 
 Q: I don't see the motivation for these steps. Why is this expected to be make the features match up
 to abstract ideas like "this text contains flying"?<br>
-A: It'll be less mysterious once we go through some theory on how LLMs might think.
+A: It'll be less mysterious once we go through some theory on how LLMs might think.<br>
+Q: Can I skip the theory and go to the experiments?<br>
+A: Sure, go to the [next page](training_a_sparse_autoencoder.md).
+
 
 ## Theory for how LLMs might think
 
