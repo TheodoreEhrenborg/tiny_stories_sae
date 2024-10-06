@@ -42,8 +42,8 @@ def autoencoder(activations):
 ```
 In this function:
 - [ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)) maps negative elements to 0
-- `encoder_linear` is an affine transformation \\( x \mapsto Ax+b \\), where A is the weight matrix and b is the bias vector
-- `decoder_linear` is another affine transformation (with different A and b)
+- `encoder_linear` is an affine transformation \\( x \mapsto Ax+b \\), where \\(A\\) is the weight matrix and \\(b\\) is the bias vector
+- `decoder_linear` is another affine transformation (with different weight \\(C\\) and bias \\(d\\))
 
 
 

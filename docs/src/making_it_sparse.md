@@ -55,9 +55,11 @@ the sum of all concept vectors, and there's
 no easy way for humans to read that representation.
 No one neuron of the 768 neurons is the `contains_sheep` concept; it's spread across all neurons.
 
-Note that it's possible to fit [exponentially](https://mathoverflow.net/a/24887)
+```admonish
+It's possible to fit [exponentially](https://mathoverflow.net/a/24887)
 [more](https://en.wikipedia.org/wiki/Johnson%E2%80%93Lindenstrauss_lemma) than 768 near-perpendicular vectors in 
 \\(\mathbb{R}^{768}\\), so the LLM isn't limited to 768 concepts.
+```
 
 ## Theory for how the sparse autoencoder should work
 
@@ -66,7 +68,7 @@ where only a few features are nonzero, and then recover \\(l\\).
 A plausible way to do this is:
 - Use `encoder_linear` as 10000 linear probes. Each probe has two parts: \\(a_i \in \mathbb{R}^{768} \\) 
   that points in the same direction as a concept vector, and a bias \\(b_i \in \mathbb{R} \\). 
-  Hence the ith autoencoder feature is \\( a_i \cdot l + b_i \\). Note that \\(b_i \\) is probably negative
+  Hence the ith autoencoder feature is \\( f_i = a_i \cdot l + b_i \\). Note that \\(b_i \\) is probably negative
   (all of this is theory), so if \\( l \\) doesn't have a large component in the \\(a_i\\) direction,
   the ReLU will set the feature to 0.
 - Now only a few of the features are nonzero, satisfying the L1 penalty.
