@@ -1,7 +1,7 @@
 # Making it sparse
 
-An autoencoder on its own is not so useful for interpreting what the LLM
-is thinking about. Just as the LLM learned incomprehensible ways of encoding
+An autoencoder on its own is not so useful for interpreting the LLM.
+Just as the LLM learned incomprehensible ways of encoding
 text into 768 neural activations, the autoencoder will learn incomprehensible ways
 of encoding those neural activations into its \\(F\\) features.
 
@@ -12,44 +12,72 @@ Here's how we encourage the autoencoder to make human-comprehensible features:
   Going forwards I'll instead set \\(F = 10000 \\).
 - Then we make its job harder by not letting it use very many TODO
 
-## Theory for why this might work
 
-The hope is that the LLM is only thinking about a few things at a time.
+Q: I don't see the motivation for these steps. Why is this expected to be helpful?<br>
+A: It'll be less mysterious once we go through some theory on how LLMs might think.
+
+## Theory for how LLMs might think
+
+Under some plausible assumptions
+
+(see Anthropic's previous work here TODO for a longer explanation)
+
+Assumption 1: The LLM processes information in a sparse way. That is,
+it knows about thousands of human-understandable topics, but
+but an individual sentence only triggers a few of them at a time.
+
 If the input text is "Mary had a little lamb", the LLM's internal representation 
 is something like 
-`[contains_sheep = 1, female_character = 1, male_character = 0, contains_dog = 0, ...]`,
+`[contains_sheep = 0.5, female_character = 1, male_character = 0, contains_dog = 0, ...]`,
 where the `...` is a long list of items that _aren't_ true about the story.
-(Let's call these hypothetical items ur-features, 
-to distinguish them from the \\(F)\\) definitely real features 
-of the sparse autoencoder's hidden layer.)
+Let's call these hypothesized items _concepts_, 
+to distinguish them from the \\(F\\) definitely real _features_
+in the sparse autoencoder's hidden layer. The end goal is to train the
+autoencoder so that we can read off the concepts from the features.
+These concepts 
 
-There's no easy way for humans to read that representation, since the ur-features are
-in fact vectors in \\(\mathbb{R}^{768}\\), and all we see is the sum of all ur-features.
-This is the superposition hypothesis---the LLM stores information as a linear sum
+Assumption 2: The superposition hypothesis---
+the concepts are
+in fact vectors in \\(\mathbb{R}^{768}\\), and
+the LLM stores information as a linear sum
 of near-perpendicular vectors.
-Moreover, no one neuron of the 768 neurons is the `contains_sheep` ur-feature; it's spread across all neurons.
 
-But the sparse autoencoder has to transform the LLM activation \\(l \in \mathbb{R}^{768} \\) into a vector of features
-where only a few features are nonzero. 
-It can best do this by
-- using `encoder_linear` as 10000 linear probes. Each probe is \\(a_i \in \mathbb{R}^{768} \\) 
-  pointing in the same direction as an ur-feature, and also a bias \\(b_i \in \mathbb{R} \\).  
-  Hence the ith feature is \\( a_i \cdot l + b_i \\). Note that \\(b_i \\) is probably negative
+
+When humans look at the activations, we just see
+the sum of all concept vectors, and there's
+no easy way for humans to read that representation.
+No one neuron of the 768 neurons is the `contains_sheep` concept; it's spread across all neurons.
+
+Note that it's possible to fit [exponentially](https://mathoverflow.net/a/24887)
+[more](https://en.wikipedia.org/wiki/Johnson%E2%80%93Lindenstrauss_lemma) than 768 near-perpendicular vectors in 
+\\(\mathbb{R}^{768}\\), so the LLM isn't limited to 768 concepts.
+
+## Theory for how the sparse autoencoder should work
+
+The sparse autoencoder has to transform the LLM activation \\(l \in \mathbb{R}^{768} \\) into a vector of features
+where only a few features are nonzero, and then recover \\(l\\).
+A plausible way to do this is:
+- Use `encoder_linear` as 10000 linear probes. Each probe has two parts: \\(a_i \in \mathbb{R}^{768} \\) 
+  that points in the same direction as a concept vector, and a bias \\(b_i \in \mathbb{R} \\). 
+  Hence the ith autoencoder feature is \\( a_i \cdot l + b_i \\). Note that \\(b_i \\) is probably negative
   (all of this is theory), so if \\( l \\) doesn't have a large component in the \\(a_i\\) direction,
   the ReLU will set the feature to 0.
 - Now only a few of the features are nonzero, satisfying the L1 penalty.
-- `decoder_linear` 
-- Since the ur-feature for `contains_sheep` is by assumption consistent across the training data,
-  the 
+- `decoder_linear` just reverses `encoder_linear`, mapping the ith feature back to the direction
+   \\(a_i \in \mathbb{R}^{768} \\).
+- This reverse mapping isn't perfect, since most features were set to 0 by the ReLU.
+  But those features were associated with concepts
+  that the LLM wasn't thinking about (that's the sparseness assumption). So not much of \\(l\\) is lost
+  from the ReLU.
+
 
 The autoencoder has to reuse these features across all the examples in the training data. 
+Hence the features must be synced with the concepts. So if we look at training examples
+where a certain feature was strongly activated, we should see a specific pattern.
   
-  So it has to keep the features synced with the ur-features: Every time the 
-
-  
 
 
-teasing apart the one vector in \\(\mathbb{R}^768\\) into the constituent items, 
+teasing apart the one vector in \\(\mathbb{R}^{768}\\) into the constituent items, 
 seeing that only `contains_sheep` and `female_character` are true, and setting two
 TODO
 
@@ -63,7 +91,6 @@ break apart the
 
 it
 
-(see Anthropic's previous work here TODO for a longer explanation)
 
 
 
