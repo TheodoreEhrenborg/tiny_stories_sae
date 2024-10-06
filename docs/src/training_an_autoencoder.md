@@ -30,14 +30,14 @@ i.e. a list of activation strengths, one for each of 768 neurons.
 
 If the autoencoder did nothing, that would be
 ```python
-def autoencoder(activations):
-    return activations
+def autoencoder(llm_activations):
+    return llm_activations
 ```
 
 It's a little more complicated than that:
 ```python
-def autoencoder(activations):
-    features = relu(encoder_linear(activations))
+def autoencoder(llm_activations):
+    features = relu(encoder_linear(llm_activations))
     return decoder_linear(features)
 ```
 In this function:
