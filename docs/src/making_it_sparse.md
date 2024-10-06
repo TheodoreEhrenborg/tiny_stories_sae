@@ -10,10 +10,15 @@ Here's how we encourage the autoencoder to make human-comprehensible features:
   As we saw [earlier](training_an_autoencoder.md#training), the autoencoder can't 
   perfectly preserve activations when \\(F < 768\\), but it does ok when \\(F = 1000 \\).
   Going forwards I'll instead set \\(F = 10000 \\).
-- Then we make its job harder by not letting it use very many TODO
+- Then we make its job harder by not letting it use very many features. We'd like to
+  add a L0 penalty to the loss, i.e. we add the number of nonzero features to the loss.
+  Because we need the loss to be differentiable, we instead use a L1 penalty:
+  we add the sum of all the features to the loss. Since the features must be nonnegative
+  because of the ReLU, this pushes most features to zero.
 
 
-Q: I don't see the motivation for these steps. Why is this expected to be helpful?<br>
+Q: I don't see the motivation for these steps. Why is this expected to be make the features match up
+to abstract ideas like "this text contains flying"?<br>
 A: It'll be less mysterious once we go through some theory on how LLMs might think.
 
 ## Theory for how LLMs might think
