@@ -76,29 +76,16 @@ Hence the features must be synced with the concepts. So if we look at training e
 where a certain feature was strongly activated, we should see a specific pattern.
   
 
-
-teasing apart the one vector in \\(\mathbb{R}^{768}\\) into the constituent items, 
-seeing that only `contains_sheep` and `female_character` are true, and setting two
-TODO
-
-the LLM's internal representation
+## Training
 
 
-
-break apart the 
-
-
-
-it
-
-
-
-
+```admonish warning
 Careful when getting the magnitudes for the penalty: If the other dimension isn't summed over first, the tensor ends up being very large
 
 seq_len
 768
 number of features (e.g. 10000)
+```
 
 Proportion of nonzero features
 
