@@ -75,13 +75,30 @@ A plausible way to do this is:
   that the LLM wasn't thinking about (that's the sparseness assumption). So not much of \\(l\\) is lost
   from the ReLU.
 
+We don't know that the autoencoder will use the above algorithm.
+But since this seems like the best algorithm, we hope that gradient descent will converge on it
+and also do the hard work of discovering the linear probes. (I'm hand-waving a lot here.)
 
-The autoencoder has to reuse these features across all the examples in the training data. 
+The autoencoder has to reuse its features across all the examples in the training data. 
 Hence the features must be synced with the concepts. So if we look at training examples
 where a certain feature was strongly activated, we should see a specific pattern.
+
   
 
-## Training
+## Tuning the L1 penalty
+
+Let's get back to experiments. We want to train an autoencoder while minimizing
+the sum of the L2 reconstruction loss and the L1 sparsity penalty. The theory above
+doesn't tell us what their relative importance should be. So the loss function is really
+
+where `lambda` is an unknown hyperparameter. If `lambda` is too small, we've just trained a
+non-sparse autoencoder. If it's too large, gradient descent will prevent any feature from
+ever being nonzero.
+
+
+
+\\( \lambda \\)
+
 
 
 ```admonish warning
