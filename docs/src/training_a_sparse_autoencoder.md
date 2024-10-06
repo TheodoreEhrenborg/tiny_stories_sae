@@ -20,39 +20,29 @@ sweep
 
 
 ```admonish
-Which tensor do we apply the L1 penalty too? We can't just apply it to the feature vector
+Which tensor do we apply the L1 penalty to? We can't only apply it to the feature vector
 \\(f \in \mathbb{R}^{10000} \\).
-In that case the autoencoder could cheat the L1 penalty by making all the features \\(f_i\\) small but nonzero,
-and compensating by making the elements \\(C_{ij}\\) of `decoder_linear`'s weight matrix large.
+In that case the optimizer could cheat the L1 penalty by making all the features \\(f_i\\) small but nonzero,
+while compensating by making the elements \\(C_{ij}\\) of `decoder_linear`'s weight matrix large.
 
 So instead we broadcast multiply \\(f\\) by \\(C\\) to get a list of 10000 feature vectors,
 each one in \\( \mathbb{R}^{768}  \\). Then we collapse each of those feature vectors into a single magnitude using
 the L2 norm,
-and then apply the L1 penalty to that list of 10000 numbers.
+and then apply the L1 penalty to that list (call it `scaled_features`) of 10000 numbers.
 
 But look at those dimensions again.
-We have created a tensor with dimensions `(768, 10000)`. At 4 bytes per single-precision float, 
+We've created a tensor with dimensions `(768, 10000)`. At 4 bytes per single-precision float, 
 that's ~30 megabytes. We need one such tensor per token in the training example,
 so we need 6 gigabytes when the example is 200 tokens long. All of this is batch size 1.
 
-Luckily there's a trick: First we apply the L2 TODO 
-
-
-
-
-so for a single training example, we create a mat
-(easily over 200 tokens per example, which is 6 GB).
-(this is batch size 1)
-
-
-
-
-Careful when getting the magnitudes for the penalty: If the other dimension isn't summed over first, the tensor ends up being very large
-
-seq_len
-768
-number of features (e.g. 10000)
+Luckily there's an alternative route that avoids that large tensor:
+- Apply the L2 norm to collapse \\(C_{ij}\\) into 10000 column magnitudes
+- Multiply elementwise with \\(f\\)
+- This is the same as `scaled_features` (importantly \\(f_i \geq 0 \\))
+- Apply the L1 penalty
 ```
+
+
 
 Proportion of nonzero features
 
