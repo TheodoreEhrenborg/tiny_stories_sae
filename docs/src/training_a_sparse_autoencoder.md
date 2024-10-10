@@ -1,6 +1,5 @@
 # Training a sparse autoencoder
 
-## Tuning the L1 penalty
 
 Let's get back to experiments. We want to train an autoencoder while minimizing
 the sum of the L2 reconstruction loss and the L1 sparsity penalty. The theory 
@@ -13,6 +12,11 @@ where \\( \lambda \\) is an unknown hyperparameter. If \\( \lambda \\) is too sm
 non-sparse autoencoder. If it's too large, gradient descent will prevent any feature from
 ever being nonzero.
 
+Anthropic used \\( \lambda = 5 \\) TODO check,
+but the optimal value could easily differ
+between implementations, e.g. if we used
+the mean L2 reconstruction loss instead of summing it,
+the L1 penalty would get a larger relative weight.
 
 So let's run a sweep over the L1 penalty strength \\( \lambda \\).
 
@@ -42,9 +46,15 @@ Luckily there's an alternative route that avoids that large tensor:
 - Apply the L1 penalty
 ```
 
-I trained 4
+## Tuning the L1 penalty
 
-Results of the sweep 
+I trained 4 models:
+- blue: \\( \lambda = 0 \\) 
+- green: \\( \lambda = 5 \\) 
+- orange: \\( \lambda = 50 \\) 
+- red: \\( \lambda = 500 \\) 
+
+Results of the sweep:
 
 TODO L1 graph
 
@@ -64,10 +74,25 @@ How do we choose which of these four models is the right one?
 
 > For all three SAEs, the average number of features active (i.e. with nonzero activations) on a given token was fewer than 300
 
+So we can plot this value on the training set over time.
+
+TODO Double check that we calculate this right
+
+
 TODO Proportion of nonzero features graph
+
+In particular, the values at step 35k are:
+- Blue: 0.9959 = 9959 active features TODO Change to lambda
+- Green: 0.2484 = 2484 active features
+- Orange: 0.03829 = ~383 active features
+- Red: 0.01068 = ~101 active features
+
+TODO If we zoom in, we see
 
 
 (I'm choosing the number of steps so that it
 trains on a few hours on my laptop.)
+
+
 
 TODO graph of the one that went on for a long time
