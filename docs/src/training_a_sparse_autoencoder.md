@@ -83,7 +83,6 @@ How do we choose which of these four models is the right one?
 
 So we can plot this value on the training set over time.
 
-TODO Double check that we calculate this right
 
 
 <figure>
