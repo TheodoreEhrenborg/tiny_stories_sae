@@ -1,5 +1,6 @@
 # Training a sparse autoencoder
 
+TODO Does the latex render in chrome?
 
 Let's get back to experiments. We want to train an autoencoder while minimizing
 the sum of the L2 reconstruction loss and the L1 sparsity penalty. The theory 
@@ -56,7 +57,10 @@ I trained 4 models:
 
 Results of the sweep:
 
-TODO L1 graph
+<figure>
+  <img src=assets/l1_penalty.png alt=""/>
+  <figcaption>The x-axis is number of steps</figcaption>
+</figure>
 
 This is the L1 penalty before being multiplied by \\(\lambda\\)
 
@@ -68,7 +72,10 @@ focuses on it more.
 Conversely, a larger \\(\lambda\\) causes the L2 reconstruction loss to be worse:
 
 
-TODO L2 graph
+<figure>
+  <img src=assets/l2_reconstruction_loss.png alt=""/>
+  <figcaption>The x-axis is number of steps</figcaption>
+</figure>
 
 How do we choose which of these four models is the right one?
 
@@ -79,20 +86,45 @@ So we can plot this value on the training set over time.
 TODO Double check that we calculate this right
 
 
-TODO Proportion of nonzero features graph
+<figure>
+  <img src=assets/nonzero_proportion.png alt=""/>
+  <figcaption>The x-axis is number of steps</figcaption>
+</figure>
 
 In particular, the values at step 35k are:
-- Blue: 0.9959 = 9959 active features TODO Change to lambda
-- Green: 0.2484 = 2484 active features
-- Orange: 0.03829 = ~383 active features
-- Red: 0.01068 = ~101 active features
+- \\( \lambda = 0 \\):   0.9959 = 9959 active features 
+- \\( \lambda = 5 \\):   0.2484 = 2484 active features
+-  \\( \lambda = 50 \\): 0.03829 = ~383 active features
+- \\( \lambda = 500 \\): 0.01068 = ~107 active features
 
-TODO If we zoom in, we see
+If we zoom in, we see that the proportion is still
+decreasing:
 
+<figure>
+  <img src=assets/nonzero_proportion_zoom.png alt=""/>
+  <figcaption>The x-axis is number of steps</figcaption>
+</figure>
+
+As a rough guide, I want this proportion
+to be under 300, but not too far---else
+the L1 penalty might be too strong.
+So let's choose \\( \lambda = 50 \\)
+and train until step 105k,
+in the hope that the metric goes under 300.
 
 (I'm choosing the number of steps so that it
 trains on a few hours on my laptop.)
 
+And that's what happens: At step 105k,
+there are roughly 156 active features:
 
 
-TODO graph of the one that went on for a long time
+<figure>
+  <img src=assets/nonzero_proportion_105k.png alt=""/>
+  <figcaption>The x-axis is number of steps. Note the x and y scaling are different from the previous figure.</figcaption>
+</figure>
+
+Step 105k is the checkpoint I'll use for downstream
+experiments.
+
+
