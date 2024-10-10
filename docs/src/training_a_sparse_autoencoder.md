@@ -92,9 +92,12 @@ So we can plot this value on the training set over time.
 
 In particular, the values at step 35k are:
 - \\( \lambda = 0 \\):   0.9959 = 9959 active features 
+  - This isn't surprising—with no sparsity penalty,
+    the autoencoder can use all the features to minimize reconstruction loss.
 - \\( \lambda = 5 \\):   0.2484 = 2484 active features
 -  \\( \lambda = 50 \\): 0.03829 = ~383 active features
 - \\( \lambda = 500 \\): 0.01068 = ~107 active features
+
 
 If we zoom in, we see that the proportion is still
 decreasing:
