@@ -12,7 +12,7 @@ where \\( \lambda \\) is an unknown hyperparameter. If \\( \lambda \\) is too sm
 non-sparse autoencoder. If it's too large, gradient descent will prevent any feature from
 ever being nonzero.
 
-Anthropic used \\( \lambda = 5 \\) TODO check,
+Anthropic used \\( \lambda = 5 \\),
 but the optimal value could easily differ
 between implementations, e.g. if we used
 the mean L2 reconstruction loss instead of summing it,
@@ -77,6 +77,8 @@ Conversely, a larger \\(\lambda\\) causes the L2 reconstruction loss to be worse
 </figure>
 
 How do we choose which of these four models is the right one?
+Anthropic trained three sparse autoencoders,
+which each satsified this condition:
 
 > For all three SAEs, the average number of features active (i.e. with nonzero activations) on a given token was fewer than 300
 
@@ -90,12 +92,12 @@ So we can plot this value on the training set over time.
 </figure>
 
 In particular, the values at step 35k are:
-- \\( \lambda = 0 \\):   0.9959 = 9959 active features 
+- For \\( \lambda = 0 \\): proportion = 0.9959, so there are 9959 active features 
   - This isn't surprising—with no sparsity penalty,
     the autoencoder can use all the features to minimize reconstruction loss.
-- \\( \lambda = 5 \\):   0.2484 = 2484 active features
--  \\( \lambda = 50 \\): 0.03829 = ~383 active features
-- \\( \lambda = 500 \\): 0.01068 = ~107 active features
+- For \\( \lambda = 5 \\): proportion =  0.2484, so there are 2484 active features
+- For \\( \lambda = 50 \\): proportion = 0.03829, so there are ~383 active features
+- For \\( \lambda = 500 \\): proportion = 0.01068, so there are ~107 active features
 
 
 If we zoom in, we see that the proportion is still
