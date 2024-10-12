@@ -1,6 +1,5 @@
 # Training a sparse autoencoder
 
-TODO Does the latex render in chrome?
 
 Let's get back to experiments. We want to train an autoencoder while minimizing
 the sum of the L2 reconstruction loss and the L1 sparsity penalty. The theory 
