@@ -44,6 +44,11 @@ TODO Explain highlighting
 
 ### Feature 0
 
+```admonish
+I think the weird artifacts like `�` are caused by the tokenizer struggling
+with quotation marks.
+```
+
 Example 1: `he ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁Wow ▁ thank ▁ you ▁ so ▁ much ▁!`
 <details>
 <summary>Click to see all of example 1</summary>
