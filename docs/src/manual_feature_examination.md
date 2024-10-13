@@ -230,12 +230,16 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 ### Feature 2
 
+Example 1: `It ▁ was ▁ so ▁ much ▁ fun ▁! ▁  ▁\n ▁\n ▁But ▁ then ▁ it ▁ was ▁ time █ to ▁ go ▁ home ▁. ▁`
+
 <details>
 <summary>Click to see all of example 1</summary>
 
 > Today ▁ was ▁ ordinary ▁. ▁ Emma ▁â ▁€ ▁™ ▁s ▁ mom ▁ took ▁ her ▁ to ▁ the ▁ park ▁. ▁ They ▁ played ▁ tag ▁, ▁ and ▁ swung ▁ on ▁ the ▁ swings ▁. ▁ It ▁ was ▁ so ▁ much ▁ fun ▁! ▁  ▁\n ▁\n ▁But ▁ then ▁ it ▁ was ▁ time █ to ▁ go ▁ home ▁. ▁ Emma ▁ felt ▁ sad ▁. ▁ She ▁ hugged ▁ her ▁ mom ▁ and ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁I ▁ miss ▁ the ▁ park ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁Her ▁ mom ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁Me ▁ too ▁. ▁ But ▁ it ▁ will ▁ still ▁ be ▁ here ▁ tomorrow ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁So ▁, ▁ Emma ▁ said ▁ goodbye ▁ and ▁ went ▁ inside ▁. ▁ She ▁ wished ▁ she ▁ could ▁ stay ▁ and ▁ play ▁ forever ▁, ▁ but ▁ tomorrow ▁ would ▁ come ▁. ▁ And ▁ she ▁ knew ▁ she ▁ would ▁ miss ▁ the ▁ park ▁ today ▁, ▁ but ▁ she ▁ could ▁ come ▁ back ▁ tomorrow ▁ to ▁ play ▁ again ▁. ▁
 
 </details>
+
+Example 2: `They ▁ had ▁ so ▁ much ▁ fun ▁ pretending ▁ to ▁ be ▁ a ▁ plane ▁, ▁ but ▁ it ▁ was ▁ time █ for ▁ them ▁ to ▁ go ▁ home ▁. ▁`
 
 <details>
 <summary>Click to see all of example 2</summary>
@@ -244,6 +248,7 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 </details>
 
+Example 3: `He ▁ felt ▁ so ▁ happy ▁ for ▁ his ▁ new ▁ adventure ▁. ▁\n ▁\n ▁The ▁ sun ▁ was ▁ setting ▁ and ▁ it ▁ was ▁ time █ for ▁ Ted ▁ to ▁ go ▁ home ▁, ▁`
 
 <details>
 <summary>Click to see all of example 3</summary>
@@ -252,12 +257,16 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 </details>
 
+Example 4: `Tom ▁ and ▁ Sue ▁ laughed ▁ and ▁ had ▁ a ▁ lot ▁ of ▁ fun ▁ together ▁. ▁  ▁\n ▁\n ▁Finally ▁, ▁ it ▁ was ▁ time █ for ▁ Tom ▁ to ▁ go ▁ home ▁. ▁`
+
 <details>
 <summary>Click to see all of example 4</summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ deaf ▁ boy ▁ called ▁ Tom ▁. ▁ Tom ▁ liked ▁ to ▁ go ▁ for ▁ walks ▁. ▁ One ▁ day ▁, ▁ Tom ▁ asked ▁ his ▁ Mom ▁my ▁ if ▁ he ▁ could ▁ go ▁ for ▁ a ▁ visit ▁. ▁ His ▁ Mom ▁my ▁ said ▁ � ▁� ▁€ ▁� ▁� ▁Yes ▁, ▁ you ▁ can ▁ go ▁ for ▁ a ▁ visit ▁. ▁ But ▁ make ▁ sure ▁ you ▁â ▁€ ▁™ ▁re ▁ home ▁ before ▁ dinner ▁. ▁â ▁€ ▁ So ▁ Tom ▁ put ▁ on ▁ his ▁ shoes ▁ to ▁ go ▁ for ▁ a ▁ walk ▁. ▁\n ▁\n ▁On ▁ his ▁ walk ▁, ▁ Tom ▁ met ▁ a ▁ deaf ▁ girl ▁ called ▁ Sue ▁. ▁ Sue ▁ said ▁ to ▁ Tom ▁, ▁ � ▁� ▁€ ▁� ▁� ▁Hi ▁! ▁ What ▁ are ▁ you ▁ doing ▁? ▁â ▁€ ▁ Tom ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁I ▁â ▁€ ▁™ ▁m ▁ going ▁ for ▁ a ▁ visit ▁. ▁ Would ▁ you ▁ like ▁ to ▁ come ▁ too ▁? ▁â ▁€ ▁ Sue ▁ nodded ▁, ▁ so ▁ Tom ▁ and ▁ Sue ▁ went ▁ for ▁ a ▁ walk ▁ together ▁. ▁  ▁\n ▁\n ▁They ▁ went ▁ to ▁ a ▁ park ▁ and ▁ looked ▁ at ▁ the ▁ birds ▁. ▁ They ▁ watched ▁ the ▁ squirrel ▁s ▁ and ▁ played ▁ on ▁ the ▁ swings ▁. ▁ Tom ▁ and ▁ Sue ▁ laughed ▁ and ▁ had ▁ a ▁ lot ▁ of ▁ fun ▁ together ▁. ▁  ▁\n ▁\n ▁Finally ▁, ▁ it ▁ was ▁ time █ for ▁ Tom ▁ to ▁ go ▁ home ▁. ▁ He ▁ said ▁ goodbye ▁ to ▁ Sue ▁ and ▁ thanked ▁ her ▁ for ▁ coming ▁ with ▁ him ▁ on ▁ his ▁ visit ▁. ▁ Then ▁ Tom ▁ waved ▁ goodbye ▁, ▁ and ▁ went ▁ for ▁ a ▁ walk ▁ back ▁ home ▁. ▁
 
 </details>
+
+Example 5: `it ▁ was ▁ so ▁ much ▁ fun ▁. ▁  ▁\n ▁\n ▁But ▁ then ▁ one ▁ day ▁ Johnny ▁'s ▁ mom ▁ said ▁ it ▁ was ▁ time █ for ▁ bed ▁. ▁`
 
 <details>
 <summary>Click to see all of example 5</summary>
@@ -266,12 +275,16 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 </details>
 
+Example 6: `They ▁ waited ▁ for ▁ a ▁ long ▁ time ▁, ▁ but ▁ the ▁ raven ▁ never ▁ came ▁ back ▁. ▁ Eventually ▁, ▁ it ▁ was ▁ time █ to ▁ go ▁ home ▁`
+
 <details>
 <summary>Click to see all of example 6</summary>
 
 > James ▁ and ▁ his ▁ mom ▁ were ▁ walking ▁ to ▁ the ▁ park ▁ one ▁ day ▁. ▁ James ▁ saw ▁ a ▁ beautiful ▁ raven ▁ flying ▁ in ▁ the ▁ sky ▁. ▁ He ▁ asked ▁ his ▁ mom ▁, ▁ � ▁� ▁€ ▁˜ ▁what ▁ is ▁ that ▁? ▁â ▁€ ▁™ ▁ She ▁ said ▁ it ▁ was ▁ a ▁ raven ▁. ▁ He ▁ asked ▁ what ▁ a ▁ raven ▁ was ▁. ▁ Mom ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁A ▁ raven ▁ is ▁ a ▁ big ▁, ▁ black ▁ bird ▁. ▁â ▁€ ▁\n ▁\n ▁James ▁ wanted ▁ to ▁ see ▁ the ▁ raven ▁, ▁ so ▁ his ▁ mom ▁ and ▁ him ▁ ran ▁ to ▁ the ▁ park ▁. ▁ But ▁, ▁ when ▁ they ▁ arrived ▁, ▁ the ▁ raven ▁ was ▁ gone ▁. ▁ James ▁ asked ▁ where ▁ the ▁ raven ▁ went ▁ and ▁ his ▁ mom ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁It ▁ was ▁ an ▁ unknown ▁ bird ▁, ▁ so ▁ we ▁ won ▁â ▁€ ▁™ ▁t ▁ know ▁ where ▁ it ▁ went ▁. ▁â ▁€ ▁\n ▁\n ▁James ▁ and ▁ his ▁ mom ▁ sat ▁ in ▁ the ▁ park ▁, ▁ looking ▁ for ▁ the ▁ raven ▁. ▁ They ▁ waited ▁ for ▁ a ▁ long ▁ time ▁, ▁ but ▁ the ▁ raven ▁ never ▁ came ▁ back ▁. ▁ Eventually ▁, ▁ it ▁ was ▁ time █ to ▁ go ▁ home ▁ and ▁ the ▁ raven ▁ had ▁ not ▁ returned ▁. ▁ James ▁ asked ▁ what ▁ happened ▁ to ▁ the ▁ bird ▁ and ▁ his ▁ mom ▁ answered ▁, ▁ � ▁� ▁€ ▁� ▁� ▁We ▁ may ▁ never ▁ know ▁. ▁ This ▁ is ▁ the ▁ end ▁ of ▁ the ▁ raven ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁James ▁ was ▁ sad ▁ because ▁ his ▁ mom ▁ said ▁ the ▁ raven ▁ was ▁ gone ▁. ▁ He ▁ told ▁ his ▁ mom ▁, ▁ � ▁� ▁€ ▁� ▁� ▁I ▁ wish ▁ I ▁ could ▁ have ▁ found ▁ the ▁ raven ▁. ▁â ▁€ ▁ His ▁ mom ▁ replied ▁, ▁ \" ▁Me ▁ too ▁, ▁ James ▁. ▁ Me ▁ too ▁.\" ▁
 
 </details>
+
+Example 7: `So ▁ the ▁ family ▁ settled ▁ at ▁ the ▁ playground ▁ and ▁ had ▁ a ▁ wonderful ▁ time ▁ playing ▁ and ▁ exploring ▁. ▁ When ▁ it ▁ was ▁ time █ to ▁ go ▁, ▁`
 
 <details>
 <summary>Click to see all of example 7</summary>
@@ -280,6 +293,8 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 </details>
 
+Example 8: `Daisy ▁ and ▁ Mr ▁. ▁ Rabbit ▁ had ▁ plenty ▁ of ▁ fun ▁ exploring ▁ the ▁ garden ▁ together ▁, ▁ until ▁ the ▁ sun ▁ set ▁ and ▁ it ▁ was ▁ time █ for ▁ Daisy ▁ to ▁ go ▁ home ▁. ▁`
+
 <details>
 <summary>Click to see all of example 8</summary>
 
@@ -287,12 +302,16 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 </details>
 
+Example 9: `She ▁ ran ▁ around ▁ and ▁ had ▁ lots ▁ of ▁ fun ▁. ▁ When ▁ it ▁ was ▁ time █ to ▁ go ▁ back ▁ home ▁, ▁`
+
 <details>
 <summary>Click to see all of example 9</summary>
 
 > Once ▁ there ▁ was ▁ a ▁ brave ▁ child ▁ named ▁ Tina ▁. ▁ She ▁ wanted ▁ to ▁ go ▁ on ▁ an ▁ adventure ▁ to ▁ visit ▁ a ▁ special ▁ square ▁. ▁ So ▁ she ▁ put ▁ on ▁ her ▁ red ▁ coat ▁ and ▁ went ▁ out ▁ the ▁ door ▁. ▁  ▁\n ▁\n ▁On ▁ the ▁ way ▁, ▁ she ▁ met ▁ a ▁ friendly ▁ bird ▁. ▁ The ▁ bird ▁ ch ▁ir ▁ped ▁, ▁ � ▁� ▁€ ▁� ▁� ▁Where ▁ are ▁ you ▁ going ▁? ▁â ▁€ ▁  ▁\n ▁\n ▁â ▁€ ▁� ▁� ▁I ▁ am ▁ going ▁ to ▁ visit ▁ a ▁ special ▁ square ▁, ▁â ▁€ ▁ said ▁ Tina ▁ brave ▁ly ▁. ▁  ▁\n ▁\n ▁The ▁ bird ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁I ▁ can ▁ show ▁ you ▁ the ▁ way ▁. ▁ Follow ▁ me ▁! ▁â ▁€ ▁ So ▁ Tina ▁ followed ▁ the ▁ bird ▁ to ▁ the ▁ square ▁. ▁  ▁\n ▁\n ▁When ▁ she ▁ arrived ▁, ▁ Tina ▁ saw ▁ a ▁ big ▁ park ▁ and ▁ a ▁ playground ▁. ▁ Her ▁ eyes ▁ lit ▁ up ▁ with ▁ joy ▁. ▁ She ▁ ran ▁ around ▁ and ▁ had ▁ lots ▁ of ▁ fun ▁. ▁ When ▁ it ▁ was ▁ time █ to ▁ go ▁ back ▁ home ▁, ▁ Tina ▁ thanked ▁ the ▁ bird ▁ for ▁ showing ▁ her ▁ the ▁ way ▁. ▁  ▁\n ▁\n ▁The ▁ bird ▁ waved ▁ goodbye ▁ and ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁Good ▁bye ▁, ▁ brave ▁ Tina ▁. ▁ I ▁ hope ▁ you ▁ will ▁ visit ▁ us ▁ again ▁! ▁â ▁€ ▁\n ▁\n ▁T ▁ina ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� ▁€ ▁� ▁� ▁Yes ▁, ▁ I ▁ will ▁! ▁â ▁€ ▁ Then ▁ she ▁ waved ▁ goodbye ▁ and ▁ went ▁ back ▁ home ▁. ▁
 
 </details>
+
+Example 10: `It ▁ was ▁ so ▁ much ▁ fun ▁! ▁ They ▁ even ▁ saw ▁ some ▁ ducks ▁ swimming ▁ around ▁ them ▁. ▁\n ▁\n ▁After ▁ a ▁ while ▁, ▁ the ▁ brothers ▁ decided ▁ it ▁ was ▁ time █ to ▁ go ▁ back ▁ home ▁. ▁`
 
 <details>
 <summary>Click to see all of example 10</summary>
