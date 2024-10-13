@@ -40,15 +40,19 @@ strongly the feature activates) for each feature. TODO Fix
 
 TODO Explain highlighting
 
+# Sparse Autoencoder Features
+
 ### Feature 0
 
-
+Example 1: `he ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁Wow ▁ thank ▁ you ▁ so ▁ much ▁!`
 <details>
 <summary>Click to see all of example 1</summary>
 
 > Ben ▁ was ▁ a ▁ happy ▁ three ▁ year ▁ old ▁ boy ▁ who ▁ loved ▁ to ▁ explore ▁ his ▁ garden ▁. ▁ One ▁ day ▁, ▁ he ▁ noticed ▁ a ▁ little ▁ bee ▁ buzzing ▁ around ▁ the ▁ flowers ▁. ▁ He ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁Hello ▁, ▁ little ▁ bee ▁. ▁â ▁€ ▁\n ▁\n ▁The ▁ bee ▁ flew ▁ up ▁ to ▁ him ▁ and ▁ buzz ▁ed ▁ in ▁ a ▁ friendly ▁ way ▁. ▁ Ben ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁What ▁ are ▁ you ▁ doing ▁ here ▁? ▁â ▁€ ▁  ▁\n ▁\n ▁The ▁ bee ▁ flew ▁ away ▁ and ▁ returned ▁ a ▁ moment ▁ later ▁, ▁ carrying ▁ a ▁ drop ▁ of ▁ sweet ▁ honey ▁ in ▁ its ▁ tiny ▁ mouth ▁. ▁ Ben ▁â ▁€ ▁™ ▁s ▁ eyes ▁ lit ▁ up ▁ and ▁ he ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁Wow ▁ thank ▁ you ▁ so ▁ much ▁! ▁ I ▁ love ▁ honey ▁! ▁â ▁€ ▁\n ▁\n ▁The ▁ bee ▁ flew ▁ away ▁ again ▁ and ▁ returned ▁ with ▁ some ▁ more ▁ honey ▁. ▁ Ben ▁ was ▁ filled ▁ with ▁ joy ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁Oh ▁, ▁ thank ▁ you ▁ so ▁ much ▁ lovely ▁ bee ▁! ▁ I ▁ love ▁ you ▁ too ▁! ▁â ▁€ ▁\n ▁\n ▁Just ▁ then ▁, ▁ a ▁ big ▁ dark ▁ cloud ▁ passed ▁ overhead ▁ and ▁ Ben ▁ felt ▁ a ▁ little ▁ bit ▁ miserable ▁. ▁ The ▁ bee ▁ flew ▁ up ▁ to ▁ him ▁ and ▁ buzz ▁ed ▁ in ▁ a ▁ comforting ▁ way ▁. ▁ Ben ▁ understood ▁ what ▁ the ▁ bee ▁ was ▁ trying ▁ to ▁ tell ▁ him ▁ and ▁ said ▁ � ▁� ▇€ ▁� ▁� ▁Thank ▁ you ▁, ▁ little ▁ bee ▁. ▁ I ▁ love ▁ you ▁. ▁ That ▁ helps ▁ me ▁ feel ▁ better ▁. ▁â ▁€ ▁\n ▁\n ▁The ▁ cloud ▁ soon ▁ passed ▁ and ▁ Ben ▁ and ▁ the ▁ bee ▁ went ▁ back ▁ to ▁ playing ▁ and ▁ collecting ▁ honey ▁. ▁ Ben ▁ knew ▁ he ▁ would ▁ always ▁ have ▁ the ▁ little ▁ bee ▁ with ▁ him ▁ in ▁ times ▁ of ▁ sadness ▁ and ▁ that ▁ made ▁ him ▁ feel ▁ very ▁ loved ▁ and ▁ happy ▁. ▁
 
 </details>
+
+Example 2: `He ▁ smiled ▁, ▁ saying ▁, ▁ � ▁� █€ ▁� ▁� ▁Well ▁, ▁ I ▁â ▁€ ▁™ ▁m ▁ glad ▁ it ▁ wasn ▁â ▁€ ▁™ ▁t`
 
 <details>
 <summary>Click to see all of example 2</summary>
@@ -57,6 +61,7 @@ TODO Explain highlighting
 
 </details>
 
+Example 3: `Her ▁ mom ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁Why ▁ don ▁â ▁€ ▁™ ▁t ▁ we ▁`
 
 <details>
 <summary>Click to see all of example 3</summary>
@@ -65,6 +70,8 @@ TODO Explain highlighting
 
 </details>
 
+Example 4: `The ▁ girl ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁Okay ▁! ▁`
+
 <details>
 <summary>Click to see all of example 4</summary>
 
@@ -72,12 +79,18 @@ TODO Explain highlighting
 
 </details>
 
+
+Example 5: `and ▁ then ▁ he ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁I ▁ think ▁ it ▁â ▁€ ▁™ ▁s ▁ one ▁`
+
 <details>
 <summary>Click to see all of example 5</summary>
 
 > Once ▁ there ▁ was ▁ a ▁ little ▁ boy ▁ named ▁ Joe ▁. ▁ He ▁ was ▁ only ▁ three ▁ years ▁ old ▁ and ▁ loved ▁ to ▁ tell ▁ jokes ▁. ▁ One ▁ day ▁, ▁ Joe ▁ and ▁ his ▁ mom ▁ were ▁ walking ▁ home ▁ from ▁ the ▁ park ▁ when ▁ they ▁ saw ▁ a ▁ huge ▁ hot ▁ air ▁ balloon ▁. ▁  ▁\n ▁\n ▁â ▁€ ▁� ▁� ▁Look ▁, ▁ Mom ▁my ▁, ▁â ▁€ ▁ Joe ▁ said ▁, ▁ pointing ▁ at ▁ the ▁ balloon ▁. ▁ � ▁� ▇€ ▁� ▁� ▁It ▁â ▁€ ▁™ ▁s ▁ so ▁ big ▁. ▁â ▁€ ▁\n ▁\n ▁â ▁€ ▁� ▁� ▁Yes ▁, ▁ it ▁ certainly ▁ is ▁, ▁â ▁€ ▁ said ▁ his ▁ mom ▁. ▁ � ▁� ▇€ ▁� ▁� ▁Let ▁â ▁€ ▁™ ▁s ▁ guess ▁ how ▁ high ▁ it ▁ is ▁. ▁â ▁€ ▁\n ▁\n ▁Joe ▁ thought ▁ for ▁ a ▁ moment ▁ and ▁ then ▁ he ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁I ▁ think ▁ it ▁â ▁€ ▁™ ▁s ▁ one ▁ thousand ▁ feet ▁. ▁â ▁€ ▁\n ▁\n ▁His ▁ mom ▁ laughed ▁. ▁ � ▁� ▇€ ▁� ▁� ▁That ▁â ▁€ ▁™ ▁s ▁ too ▁ high ▁, ▁ Joe ▁. ▁â ▁€ ▁\n ▁\n ▁Joe ▁ was ▁ disappointed ▁, ▁ but ▁ he ▁ wanted ▁ to ▁ prove ▁ he ▁ was ▁ right ▁. ▁ He ▁ remembered ▁ the ▁ joke ▁ he ▁ heard ▁ at ▁ the ▁ park ▁ earlier ▁. ▁\n ▁\n ▁â ▁€ ▁� ▁� ▁I ▁ know ▁ a ▁ joke ▁ that ▁ will ▁ tell ▁ us ▁, ▁â ▁€ ▁ he ▁ said ▁ excited ▁ly ▁. ▁ He ▁ rec ▁ited ▁ the ▁ joke ▁ he ▁ remembered ▁, ▁ making ▁ his ▁ mom ▁ laugh ▁. ▁\n ▁\n ▁Suddenly ▁, ▁ the ▁ balloon ▁ began ▁ to ▁ drift ▁ away ▁. ▁ It ▁ was ▁ getting ▁ higher ▁ and ▁ higher ▁. ▁  ▁\n ▁\n ▁Joe ▁ and ▁ his ▁ mom ▁ ran ▁ to ▁ catch ▁ up ▁ to ▁ it ▁, ▁ but ▁ the ▁ balloon ▁ moved ▁ too ▁ fast ▁. ▁ Joe ▁ looked ▁ at ▁ his ▁ mom ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁I ▁ guess ▁ I ▁ was ▁ right ▁ - ▁ it ▁ is ▁ one ▁ thousand ▁ feet ▁ high ▁! ▁â ▁€ ▁\n ▁\n ▁Joe ▁â ▁€ ▁™ ▁s ▁ mom ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁You ▁ were ▁ right ▁, ▁ Joe ▁. ▁ That ▁â ▁€ ▁™ ▁s ▁ one ▁ hot ▁ joke ▁
 
 </details>
+
+
+Example 6: `Mary ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁We ▁ came ▁ to ▁ see ▁ the ▁ bird ▁`
 
 <details>
 <summary>Click to see all of example 6</summary>
@@ -87,12 +100,16 @@ TODO Explain highlighting
 
 </details>
 
+Example 7: `Mom ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁I ▁ know ▁`
+
 <details>
 <summary>Click to see all of example 7</summary>
 
 >  Andy ▁ was ▁ playing ▁ in ▁ the ▁ park ▁. ▁ He ▁ saw ▁ a ▁ p ▁uddle ▁, ▁ and ▁ he ▁ was ▁ really ▁ excited ▁. ▁ He ▁ ran ▁ over ▁ to ▁ the ▁ p ▁uddle ▁ and ▁ said ▁ to ▁ Mom ▁, ▁ � ▁� ▇€ ▁� ▁� ▁Look ▁ at ▁ this ▁! ▁â ▁€ ▁ But ▁ Mom ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁No ▁, ▁ Andy ▁, ▁ you ▁ can ▁â ▁€ ▁™ ▁t ▁ play ▁ here ▁. ▁ You ▁â ▁€ ▁™ ▁ll ▁ get ▁ all ▁ wet ▁. ▁â ▁€ ▁\n ▁\n ▁Andy ▁ was ▁ sad ▁, ▁ and ▁ he ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁But ▁ I ▁ want ▁ to ▁ play ▁ in ▁ it ▁! ▁ Ple ▁ee ▁e ▁ase ▁! ▁â ▁€ ▁ Mom ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁I ▁â ▁€ ▁™ ▁m ▁ sorry ▁, ▁ but ▁ you ▁ can ▁â ▁€ ▁™ ▁t ▁. ▁ It ▁â ▁€ ▁™ ▁s ▁ too ▁ dangerous ▁. ▁â ▁€ ▁\n ▁\n ▁Andy ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁A ▁ww ▁ww ▁. ▁ That ▁â ▁€ ▁™ ▁s ▁ not ▁ fair ▁. ▁â ▁€ ▁ Mom ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁I ▁ know ▁. ▁ I ▁â ▁€ ▁™ ▁m ▁ sorry ▁. ▁ You ▁ can ▁ play ▁ in ▁ the ▁ sandbox ▁ instead ▁. ▁ That ▁ will ▁ be ▁ safer ▁. ▁â ▁€ ▁\n ▁\n ▁Andy ▁ wasn ▁â ▁€ ▁™ ▁t ▁ sure ▁ if ▁ he ▁ wanted ▁ to ▁, ▁ but ▁ then ▁ he ▁ remembered ▁ how ▁ much ▁ fun ▁ it ▁ was ▁ to ▁ play ▁ in ▁ sand ▁. ▁ So ▁ he ▁ decided ▁ to ▁ go ▁ and ▁ play ▁ in ▁ the ▁ sandbox ▁ instead ▁. ▁ He ▁ was ▁ still ▁ a ▁ little ▁ bit ▁ sad ▁, ▁ but ▁ the ▁ thought ▁ of ▁ playing ▁ in ▁ the ▁ sand ▁ soon ▁ made ▁ him ▁ excited ▁ again ▁. ▁  ▁ He ▁ ran ▁ off ▁ to ▁ the ▁ sandbox ▁, ▁ ready ▁ to ▁ have ▁ some ▁ fun ▁. ▁
 
 </details>
+
+Example 8: `T ▁oby ▁ nodded ▁ in ▁ understanding ▁ and ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁Be ▁ brave ▁`
 
 <details>
 <summary>Click to see all of example 8</summary>
@@ -101,12 +118,16 @@ TODO Explain highlighting
 
 </details>
 
+Example 9: `He ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁No ▁, ▁ let ▁â ▁€ ▁™ ▁s ▁ go ▁` 
+
 <details>
 <summary>Click to see all of example 9</summary>
 
 >  Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ were ▁ two ▁ children ▁. ▁ One ▁ child ▁ was ▁ clever ▁, ▁ the ▁ other ▁ was ▁ very ▁ foolish ▁. ▁ They ▁ were ▁ walking ▁ along ▁ the ▁ path ▁ to ▁ school ▁ when ▁ they ▁ passed ▁ by ▁ a ▁ garden ▁. ▁ The ▁ clever ▁ child ▁ said ▁ to ▁ the ▁ foolish ▁ one ▁, ▁ � ▁� ▇€ ▁� ▁� ▁We ▁ should ▁ poke ▁ that ▁ garden ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁But ▁ the ▁ foolish ▁ one ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁No ▁, ▁ don ▁â ▁€ ▁™ ▁t ▁ be ▁ silly ▁. ▁ That ▁â ▁€ ▁™ ▁s ▁ not ▁ a ▁ good ▁ thing ▁ to ▁ do ▁. ▁ We ▁ should ▁ focus ▁ on ▁ the ▁ math ▁ lesson ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁The ▁ clever ▁ child ▁ laughed ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁Don ▁â ▁€ ▁™ ▁t ▁ worry ▁, ▁ I ▁ just ▁ thought ▁ it ▁ would ▁ be ▁ fun ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁Still ▁, ▁ the ▁ foolish ▁ one ▁ didn ▁â ▁€ ▁™ ▁t ▁ bud ▁ge ▁. ▁ He ▁ said ▁, ▁ � ▁� █€ ▁� ▁� ▁No ▁, ▁ let ▁â ▁€ ▁™ ▁s ▁ go ▁ to ▁ school ▁ now ▁. ▁ Math ▁ is ▁ more ▁ important ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁So ▁ the ▁ two ▁ children ▁ continued ▁ on ▁ their ▁ way ▁ to ▁ school ▁. ▁ But ▁ when ▁ they ▁ got ▁ there ▁, ▁ they ▁ were ▁ surprised ▁ to ▁ see ▁ their ▁ teacher ▁ with ▁ a ▁ garden ▁ fork ▁ in ▁ his ▁ hand ▁. ▁ He ▁ was ▁ mad ▁ and ▁ said ▁ to ▁ the ▁ two ▁ children ▁, ▁ � ▁� ▇€ ▁� ▁� ▁Why ▁ did ▁ you ▁ poke ▁ my ▁ garden ▁?! ▁â ▁€ ▁  ▁\n ▁\n ▁The ▁ clever ▁ child ▁ smiled ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁I ▁ told ▁ the ▁ foolish ▁ one ▁ that ▁ it ▁ would ▁ be ▁ fun ▁. ▁ He ▁ didn ▁â ▁€ ▁™ ▁t ▁ want ▁ to ▁ do ▁ it ▁, ▁ so ▁ I ▁ did ▁ it ▁ myself ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁The ▁ teacher ▁ shook ▁ his ▁ head ▁ and ▁ said ▁, ▁ � ▁� ▇€ ▁� ▁� ▁That ▁ was ▁ foolish ▁ of ▁ you ▁. ▁ Next ▁ time ▁, ▁ focus ▁ on ▁ math ▁ instead ▁. ▁â ▁€ ▁  ▁\n ▁\n ▁The ▁ two ▁ children ▁ learned ▁ their ▁ lesson ▁
 
 </details>
+
+Example 10: `Anna ▁ stepped ▁ forward ▁ and ▁ said ▁ in ▁ a ▁ friendly ▁ voice ▁, ▁ � ▁� █€ ▁� ▁� ▁Hello ▁ there ▁!`
 
 <details>
 <summary>Click to see all of example 10</summary>
@@ -117,6 +138,7 @@ TODO Explain highlighting
 
 ### Feature 1
 
+Example 1: `He ▁ pret ▁ends ▁ it ▁ is ▁ a ▂ plane ▂ or ▃ a █ bird ▆ or ▄ a ▇ rocket ▅. ▁`
 
 <details>
 <summary>Click to see all of example 1</summary>
@@ -125,6 +147,8 @@ TODO Explain highlighting
 
 </details>
 
+Example 2: `and ▁ pretend ▁ it ▁ was ▁ a ▂ spaceship ▃ or ▅ a █ tunnel ▅. ▁`
+
 <details>
 <summary>Click to see all of example 2</summary>
 
@@ -132,6 +156,7 @@ TODO Explain highlighting
 
 </details>
 
+Example 3: `and ▁ pretend ▁ it ▁ is ▁ a ▂ spaceship ▃, ▃ a ▆ castle ▄ or ▆ a █ dragon ▄. ▁`
 
 <details>
 <summary>Click to see all of example 3</summary>
@@ -140,12 +165,16 @@ TODO Explain highlighting
 
 </details>
 
+Example 4: `Sometimes ▁ they ▁ pretended ▁ it ▁ was ▁ a ▃ fire ▂ truck ▁ or ▄ a █ garbage ▅ truck ▄ or ▆ a ▇ delivery ▄ truck ▄. ▁`
+
 <details>
 <summary>Click to see all of example 4</summary>
 
 > Ben ▁ and ▁ Lily ▁ liked ▁ to ▁ play ▁ with ▁ their ▁ toy ▁ truck ▁. ▁ It ▁ was ▁ big ▁ and ▁ red ▁ and ▁ had ▁ four ▁ wheels ▁. ▁ They ▁ could ▁ push ▁ it ▁ around ▁ the ▁ yard ▁ and ▁ make ▁ v ▁room ▁- ▁v ▁room ▁ noises ▁. ▁ Sometimes ▁ they ▁ pretended ▁ it ▁ was ▁ a ▃ fire ▂ truck ▁ or ▄ a █ garbage ▅ truck ▄ or ▆ a ▇ delivery ▄ truck ▄. ▁\n ▁\n ▁One ▁ day ▁, ▁ they ▁ decided ▁ to ▁ play ▁ delivery ▁ truck ▁. ▁ They ▁ looked ▁ for ▁ things ▁ to ▁ load ▁ in ▁ the ▁ back ▁ of ▁ the ▁ truck ▁. ▁ They ▁ found ▁ some ▁ rocks ▁, ▁ some ▁ leaves ▁, ▁ some ▁ sticks ▁ and ▁ some ▁ flowers ▁. ▁ They ▁ put ▁ them ▁ in ▁ the ▁ truck ▁ and ▁ said ▁, ▁ \" ▁This ▁ is ▁ our ▁ cargo ▁. ▁ We ▁ have ▁ to ▁ deliver ▁ it ▁ to ▁ our ▁ customers ▁.\" ▁\n ▁\n ▁They ▁ drove ▁ the ▁ truck ▁ around ▁ the ▁ yard ▁, ▁ stopping ▁ at ▁ different ▁ places ▁. ▁ They ▁ gave ▁ a ▁ rock ▁ to ▁ the ▂ dog ▁, ▂ a ▃ leaf ▃ to ▁ the ▃ bird ▁, ▃ a ▄ stick ▂ to ▁ the ▂ cat ▂ and ▂ a ▄ flower ▃ to ▁ the ▄ mom ▁. ▁ They ▁ said ▁, ▁ \" ▁Here ▁ is ▁ your ▁ cargo ▁. ▁ Thank ▁ you ▁ for ▁ choosing ▁ our ▁ delivery ▁ truck ▁.\" ▁\n ▁\n ▁Then ▁ they ▁ saw ▁ a ▁ bunch ▁ of ▁ bananas ▁ on ▁ the ▁ kitchen ▁ table ▁. ▁ They ▁ thought ▁, ▁ \" ▁Ban ▁anas ▁ are ▁ y ▁ummy ▁. ▁ We ▁ want ▁ some ▁ bananas ▁.\" ▁ They ▁ ran ▁ to ▁ the ▁ table ▁ and ▁ grabbed ▁ the ▁ bananas ▁. ▁ They ▁ put ▁ them ▁ in ▁ the ▁ truck ▁ and ▁ said ▁, ▁ \" ▁This ▁ is ▁ our ▁ special ▁ cargo ▁. ▁ We ▁ have ▁ to ▁ deliver ▁ it ▁ to ▁ ourselves ▁.\" ▁\n ▁\n ▁They ▁ drove ▁ the ▁ truck ▁ to ▁ their ▁ favorite ▁ spot ▁ under ▁ the ▁ tree ▁. ▁ They ▁ unloaded ▁ the ▁ bananas ▁ and ▁ peeled ▁ them ▁. ▁ They ▁ ate ▁ them ▁ and ▁ said ▁, ▁ \" ▁M ▁mm ▁, ▁ these ▁ are ▁ the ▁ best ▁ bananas ▁ ever ▁. ▁ We ▁ are ▁ mighty ▁ delivery ▁ truck ▁ drivers ▁. ▁ We ▁ can ▁ load ▁ and ▁ un ▁load ▁ anything ▁.\" ▁ They ▁ smiled ▁ and ▁ hugged ▁ each ▁ other ▁. ▁ They ▁ were ▁ happy ▁ and ▁ full ▁. ▁ 
 
 </details>
+
+Example 5: `She ▁ pret ▁ends ▁ she ▁ is ▁ a ▂ mouse ▁ or ▃ a █ cat ▅ or ▅ a ▇ snake ▄. ▁`  
 
 <details>
 <summary>Click to see all of example 5</summary>
@@ -154,12 +183,16 @@ TODO Explain highlighting
 
 </details>
 
+Example 6: `They ▁ pretended ▁ they ▁ were ▁ crossing ▁ a ▁ jungle ▁ or ▅ a █ mountain ▅.`
+
 <details>
 <summary>Click to see all of example 6</summary>
 
 > L ▁ily ▁ and ▁ Ben ▁ were ▁ best ▁ friends ▁. ▁ They ▁ liked ▁ to ▁ play ▁ in ▁ the ▁ park ▁ every ▁ day ▁. ▁ They ▁ had ▁ a ▁ lot ▁ of ▁ fun ▁ on ▁ the ▁ swings ▁, ▁ the ▁ slide ▁ and ▁ the ▃ sees ▁aw ▁. ▁ But ▁ their ▁ favorite ▁ thing ▁ was ▁ the ▁ rope ▁ bridge ▁. ▁ It ▁ was ▁ high ▁ and ▁ long ▁ and ▁ w ▁obb ▁ly ▁. ▁ They ▁ pretended ▁ they ▁ were ▁ crossing ▁ a ▁ jungle ▁ or ▅ a █ mountain ▅. ▁\n ▁\n ▁One ▁ day ▁, ▁ they ▁ saw ▁ a ▁ new ▁ boy ▁ in ▁ the ▁ park ▁. ▁ His ▁ name ▁ was ▁ Max ▁. ▁ He ▁ looked ▁ sad ▁ and ▁ lonely ▁. ▁ Lily ▁ and ▁ Ben ▁ wanted ▁ to ▁ be ▁ nice ▁ to ▁ him ▁. ▁ They ▁ asked ▁ him ▁ if ▁ he ▁ wanted ▁ to ▁ play ▁ with ▁ them ▁. ▁ Max ▁ nodded ▁ and ▁ smiled ▁. ▁ They ▁ showed ▁ him ▁ the ▁ rope ▁ bridge ▁ and ▁ told ▁ him ▁ it ▁ was ▁ fun ▁. ▁\n ▁\n ▁But ▁ Max ▁ was ▁ scared ▁ of ▁ the ▁ rope ▁ bridge ▁. ▁ He ▁ thought ▁ it ▁ was ▁ too ▁ high ▁ and ▁ too ▁ w ▁obb ▁ly ▁. ▁ He ▁ did ▁ not ▁ want ▁ to ▁ cross ▁ it ▁. ▁ He ▁ said ▁ he ▁ would ▁ wait ▁ for ▁ them ▁ on ▁ the ▁ other ▁ side ▁. ▁ Lily ▁ and ▁ Ben ▁ said ▁ okay ▁ and ▁ started ▁ to ▁ cross ▁ the ▁ rope ▁ bridge ▁. ▁ They ▁ held ▁ the ▁ rope ▁ tight ▁ and ▁ walked ▁ slowly ▁. ▁\n ▁\n ▁But ▁ when ▁ they ▁ were ▁ in ▁ the ▁ middle ▁ of ▁ the ▁ bridge ▁, ▁ they ▁ heard ▁ a ▁ loud ▁ snap ▁. ▁ One ▁ of ▁ the ▁ ropes ▁ had ▁ broken ▁. ▁ The ▁ bridge ▁ tilted ▁ and ▁ shook ▁. ▁ Lily ▁ and ▁ Ben ▁ screamed ▁. ▁ They ▁ were ▁ afraid ▁ they ▁ would ▁ fall ▁. ▁ They ▁ looked ▁ for ▁ Max ▁, ▁ but ▁ he ▁ was ▁ not ▁ there ▁. ▁ He ▁ had ▁ run ▁ away ▁. ▁\n ▁\n ▁L ▁ily ▁ and ▁ Ben ▁ did ▁ not ▁ know ▁ what ▁ to ▁ do ▁. ▁ They ▁ were ▁ stuck ▁ on ▁ the ▁ bridge ▁. ▁ They ▁ cried ▁ for ▁ help ▁. ▁ But ▁ no ▁ one ▁ heard ▁ them ▁. ▁ They ▁ wished ▁ Max ▁ had ▁ stayed ▁ with ▁ them ▁. ▁ They ▁ wished ▁ they ▁ had ▁ a ▁ friend ▁ who ▁ would ▁ not ▁ leave ▁ them ▁. ▁\n ▁\n ▁Then ▁ they ▁ saw ▁ a ▁ man ▁ coming ▁. ▁ He ▁ was ▁ wearing ▁ a ▁ hat ▁ and ▁ a ▁ badge ▁. ▁ He ▁ was ▁ a ▁ park ▁ ranger ▁. ▁ He ▁ saw ▁ Lily ▁ and ▁ Ben ▁ on ▁ the ▁ bridge ▁. ▁ He ▁ ran ▁ to ▁ help ▁ them ▁. ▁ He ▁ had ▁ a ▁ big ▁ rope ▁. ▁ He ▁ threw ▁ it ▁ to ▁ them ▁ and ▁ told ▁ them ▁ to ▁ hold ▁ it ▁ tight ▁. ▁ He ▁ pulled ▁ them ▁ to ▁ safety ▁. ▁ He ▁ hugged ▁ them ▁ and ▁ said ▁ they ▁ were ▁ brave ▁. ▁\n ▁\n ▁L ▁ily ▁ and ▁ Ben ▁ thanked ▁ the ▁ park ▁ ranger ▁. ▁ They ▁ were ▁ happy ▁ he ▁ had ▁ saved ▁ them ▁. ▁ They ▁ learned ▁ a ▁ lesson ▁ that ▁ day ▁. ▁ They ▁ learned ▁ that ▁ a ▁ true ▁ friend ▁ is ▁ someone ▁ who ▁ remains ▁ with ▁ you ▁ when ▁ you ▁ need ▁ them ▁. ▁ They ▁ learned ▁ that ▁ a ▁ rope ▁ can ▁ be ▁ tight ▁ or ▁ loose ▁, ▁ but ▁ a ▁ friendship ▁ should ▁ always ▁ be ▁ tight ▁. ▁
 
 </details>
+
+Example 7: `Sometimes ▁ they ▁ pretended ▁ that ▁ the ▁ curtain ▁ was ▁ a ▂ door ▂ to ▁ a ▂ different ▁ place ▁, ▂ like ▁ a ▂ castle ▂ or ▅ a █ jungle ▅ or ▆ a ▇ spaceship ▇. ▁`
 
 <details>
 <summary>Click to see all of example 7</summary>
@@ -168,6 +201,8 @@ TODO Explain highlighting
 
 </details>
 
+Example 8: `They ▁ can ▁ go ▁ inside ▁ and ▁ pretend ▁ it ▁ is ▁ a ▂ ship ▂ or ▄ a █ house ▆. ▁`
+
 <details>
 <summary>Click to see all of example 8</summary>
 
@@ -175,12 +210,16 @@ TODO Explain highlighting
 
 </details>
 
+Example 9: `They ▁ wondered ▁ if ▁ it ▁ was ▁ a ▁ lion ▁ or ▄ a █ bear ▃ or ▅ a ▇ monster ▃. ▁`
+
 <details>
 <summary>Click to see all of example 9</summary>
 
 >  L ▁ily ▁ and ▁ Ben ▁ were ▁ playing ▁ in ▁ the ▁ park ▁ with ▁ their ▁ toy ▁ cars ▁. ▁ They ▁ liked ▁ to ▁ make ▁ noises ▁ as ▁ they ▁ zoom ▁ed ▁ them ▁ around ▁ the ▁ grass ▁ and ▁ the ▂ sand ▁. ▁ Lily ▁ had ▁ a ▁ red ▁ car ▁ and ▁ Ben ▁ had ▁ a ▁ blue ▁ car ▁. ▁ They ▁ pretended ▁ they ▁ were ▁ racing ▁ each ▁ other ▁. ▁\n ▁\n ▁Suddenly ▁, ▁ they ▁ heard ▁ a ▁ loud ▁ roar ▁ from ▁ behind ▁ the ▁ trees ▁. ▁ They ▁ stopped ▁ playing ▁ and ▁ looked ▁ at ▁ each ▁ other ▁. ▁ They ▁ felt ▁ scared ▁. ▁ What ▁ could ▁ make ▁ such ▁ a ▁ big ▁ noise ▁? ▁ They ▁ wondered ▁ if ▁ it ▁ was ▁ a ▁ lion ▁ or ▄ a █ bear ▃ or ▅ a ▇ monster ▃. ▁\n ▁\n ▁They ▁ saw ▁ a ▁ flash ▁ of ▁ light ▁ from ▁ behind ▁ the ▁ trees ▁. ▁ It ▁ was ▁ bright ▁ and ▁ yellow ▁. ▁ They ▁ heard ▁ another ▁ roar ▁, ▂ louder ▁ than ▁ before ▁. ▁ They ▁ saw ▁ something ▁ big ▁ and ▁ brown ▁ come ▁ out ▁ of ▁ the ▁ trees ▁. ▁ It ▁ had ▁ a ▁ wide ▁ mouth ▁ and ▁ sharp ▁ teeth ▁. ▁ It ▁ was ▁ a ▁ crocod ▁ile ▁! ▁\n ▁\n ▁L ▁ily ▁ and ▁ Ben ▁ dropped ▁ their ▁ toy ▁ cars ▁ and ▁ ran ▁ away ▁ as ▁ fast ▁ as ▁ they ▁ could ▁. ▁ They ▁ screamed ▁ for ▁ help ▁. ▁ They ▁ saw ▁ their ▁ mom ▁ and ▁ dad ▁ sitting ▁ on ▁ a ▁ bench ▁ nearby ▁. ▁ They ▁ ran ▁ to ▁ them ▁ and ▁ hugged ▁ them ▁. ▁ They ▁ told ▁ them ▁ what ▁ they ▁ saw ▁. ▁\n ▁\n ▁Mom ▁ and ▁ dad ▁ looked ▁ at ▁ the ▁ trees ▁. ▁ They ▁ saw ▁ the ▁ light ▁ and ▁ the ▁ crocod ▁ile ▁ too ▁. ▁ But ▁ they ▁ also ▁ saw ▁ something ▁ else ▁. ▁ They ▁ saw ▁ a ▁ man ▁ with ▁ a ▁ camera ▁ and ▁ a ▂ speaker ▁. ▁ He ▁ was ▁ making ▁ the ▁ roar ▁ and ▁ the ▁ light ▁. ▁ He ▁ was ▁ making ▁ a ▁ movie ▁ about ▁ crocod ▁iles ▁. ▁\n ▁\n ▁Mom ▁ and ▁ dad ▁ laughed ▁ and ▁ explained ▁ to ▁ Lily ▁ and ▁ Ben ▁ that ▁ it ▁ was ▁ not ▁ a ▁ real ▁ crocod ▁ile ▁. ▁ It ▁ was ▁ a ▁ fake ▁ one ▁. ▁ It ▁ was ▁ just ▁ for ▁ fun ▁. ▁ They ▁ said ▁ they ▁ were ▁ sorry ▁ for ▁ sc ▁aring ▁ them ▁. ▁ They ▁ said ▁ they ▁ could ▁ go ▁ and ▁ see ▁ the ▁ movie ▁ when ▁ it ▁ was ▁ done ▁. ▁\n ▁\n ▁L ▁ily ▁ and ▁ Ben ▁ felt ▁ better ▁. ▁ They ▁ were ▁ not ▁ scared ▁ anymore ▁. ▁ They ▁ were ▁ curious ▁. ▁ They ▁ wanted ▁ to ▁ see ▁ the ▁ movie ▁ too ▁. ▁ They ▁ picked ▁ up ▁ their ▁ toy ▁ cars ▁ and ▁ went ▁ to ▁ the ▁ man ▁. ▁ They ▁ said ▁ hello ▁ and ▁ asked ▁ him ▁ questions ▁. ▁ He ▁ was ▁ nice ▁ and ▁ showed ▁ them ▁ how ▁ he ▁ made ▁ the ▁ roar ▁ and ▁ the ▁ light ▁. ▁ He ▁ let ▁ them ▁ touch ▁ the ▁ fake ▁ crocod ▁ile ▁. ▁ It ▁ was ▁ soft ▁ and ▁ smooth ▁. ▁\n ▁\n ▁L ▁ily ▁ and ▁ Ben ▁ had ▁ fun ▁. ▁ They ▁ learned ▁ something ▁ new ▁. ▁ They ▁ liked ▁ the ▁ movie ▁ man ▁ and ▁ the ▁ fake ▁ crocod ▁ile ▁. ▁ They ▁ said ▁ thank ▁ you ▁ and ▁ goodbye ▁. ▁ They ▁ went ▁ back ▁ to ▁ playing ▁ with ▁ their ▁ toy ▁ cars ▁. ▁ They ▁ still ▁ made ▁ noises ▁, ▁ but ▁ they ▁ also ▁ made ▁ ro ▁ars ▁ and ▁ lights ▁. ▁ They ▁ pretended ▁ they ▁ were ▁ crocod ▁iles ▁ too ▁. ▁
 
 </details>
+
+Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂ bird ▂ or ▁ a ▆ plane ▄ or ▄ a █ k ▅ite ▄,\" ▁ Lily ▁ said ▁`
 
 <details>
 <summary>Click to see all of example 10</summary>
