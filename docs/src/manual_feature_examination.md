@@ -325,28 +325,3 @@ Example 10: `It ▁ was ▁ so ▁ much ▁ fun ▁! ▁ They ▁ even ▁ saw �
 
 </details>
 
-## Comparing to raw LLM neurons
-
-My prior is that the LLM activations
-won't correspond to specific topics.
-
-But we should give them the benefit of the doubt.
-
-There are three ways we could interpret the activations:
-
-Go through some examples in detail to show that ChatGPT is wrong
-
-### Feature 0
-### Feature 1
-
-### Feature 2
-
-### Feature 3
-
-### Feature 4
-
-### Feature 5
-### Feature 6
-### Feature 7
-### Feature 8
-### Feature 9

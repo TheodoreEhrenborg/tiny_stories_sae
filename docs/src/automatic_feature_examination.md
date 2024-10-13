@@ -10,6 +10,11 @@
 ![LLM graph using ReLU](assets/llm_relu.png)
 ![LLM graph using affine shift](assets/llm_affine.png)
 
+My prior is that the LLM activations
+won't correspond to specific topics.
+
+There are three ways we could interpret the activations:
+
 
 Go through some examples in detail to show that ChatGPT is wrong
 
