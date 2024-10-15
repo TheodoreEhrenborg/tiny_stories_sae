@@ -1,9 +1,6 @@
 # Manual feature examination
 
-Look at features 0, 1, 2
-
-all the way to 10?
-
+TODO Some intro section
 
 On 1000 examples from the validation set,
 each of the autoencoders 10000 features activated at least once
