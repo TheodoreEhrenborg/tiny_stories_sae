@@ -127,7 +127,14 @@ there are roughly 156 active features:
   <figcaption>The x-axis is number of steps. Note the x and y scaling are different from the previous figure.</figcaption>
 </figure>
 
+At this step, the model has seen
+2.29e7 tokens. In comparison,
+Anthropic trained for TODO
+
+
+TODO Anthropic purposely  left number of tokens off their graph, but in previous with they trained for x steps with much smaller models, so presumably they trained for >x. In fact they said y about scaling, so since their SAE went from z to w, perhaps their number of steps is alpha 
+
 Step 105k is the checkpoint I'll use for downstream
-experiments.
+experiments. 
 
 
