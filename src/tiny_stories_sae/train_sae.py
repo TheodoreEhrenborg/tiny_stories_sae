@@ -19,6 +19,11 @@ from tiny_stories_sae.common.setting_up import make_base_parser, setup
 def make_parser() -> ArgumentParser:
     parser = make_base_parser()
     parser.add_argument("--l1_coefficient", type=float, default=0.0)
+    parser.add_argument(
+        "--only_count_tokens",
+        action="store_true",
+        help="Skip training and just log how many tokens were seen",
+    )
     return parser
 
 
@@ -35,9 +40,14 @@ def main(user_args: Namespace):
     lr = 1e-5
     optimizer = torch.optim.Adam(sae.parameters(), lr=lr)
 
+    tokens_seen = 0
     for step, example in enumerate(tqdm(filtered_datasets["train"])):
         if step > user_args.max_step:
             break
+        tokens_seen += len(example["input_ids"])
+        writer.add_scalar("Tokens seen/train", tokens_seen, step)
+        if user_args.only_count_tokens:
+            continue
         optimizer.zero_grad()
         activation = get_llm_activation(llm, example, user_args)
         norm_act = normalize_activations(activation)
