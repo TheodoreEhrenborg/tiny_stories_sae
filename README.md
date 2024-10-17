@@ -1,7 +1,11 @@
-# TinyStories SAE
-Trains a SparseAutoEncoder on a [TinyStories](https://huggingface.co/roneneldan/TinyStories-33M) model 
+WIP---not quite done yet
 
-WIP
+# TinyStories SAE
+Trains a sparse autoencoder on this [TinyStories](https://huggingface.co/roneneldan/TinyStories-33M) model 
+
+Docs are [here](https://sae.ehrenborg.dev/).
+The rest of this readme is software engineering details.
+
 
 ## Installation
 
@@ -21,8 +25,20 @@ To run uv in this case, use the provided Dockerfile:
 4. Then inside the container you can run `uv run ...` as before
 
 ## Available scripts
-`uv run src/tiny_stories_sae/train_sae.py`
-TODO a short description for each of them
+### train_sae.py
+For example:
+### call_openai.py
+For example:
+### gather_high_activations_llm.py
+For example:
+### gather_high_activations.py
+For example:
+### plot.py
+For example:
+### steer.py
+For example:
+
+TODO a short description and example usage for each of them
 
 ## Running tests
 `uv run pytest tests`
