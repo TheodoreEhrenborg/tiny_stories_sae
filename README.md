@@ -32,7 +32,7 @@ To run uv in this case, use the provided Dockerfile:
 ### train_sae.py
 
 Trains a sparse autoencoder
-on activations from `roneneldan/TinyStories-33M`.
+on activations from the language model `roneneldan/TinyStories-33M`.
 
 Example usage:
 
@@ -44,7 +44,7 @@ uv run src/tiny_stories_sae/train_sae.py \
 
 ### steer.py
 
-This script uses `roneneldan/TinyStories-33M` to generate text,
+This script uses the LM `roneneldan/TinyStories-33M` to generate text,
 but it adds a fixed vector (one of the autoencoder's features)
 to the activations,
 skewing the text responses towards a certain topic.
@@ -58,17 +58,52 @@ uv run src/tiny_stories_sae/steer.py \
   --feature_strength 5 --cuda
 ```
 
-### gather_high_activations_llm.py
-
-Example usage:
-
 ### gather_high_activations.py
 
+This runs the LM on the validation set
+and tracks how strongly the various
+autoencoder features activate.
+It saves a list of validation examples
+that made the features activate the most.
+
 Example usage:
+
+```bash
+uv run src/tiny_stories_sae/gather_high_activations.py \
+  --checkpoint path/to/sparse_autoencoder.pt \ 
+  --cuda --sae_hidden_dim 10000 
+```
+
+### gather_high_activations_llm.py
+
+The same as `gather_high_activations.py`,
+except it instead tracks how strongly
+the LM's neurons activate.
+
+Example usage:
+
+```bash
+uv run src/tiny_stories_sae/gather_high_activations_llm.py \
+  --cuda --output_file path/to/log.json --make_positive_by abs
+```
 
 ### call_openai.py
 
+Given a log file produced by
+`gather_high_activations.py` or `gather_high_activations_llm.py`,
+this script sends the examples to GPT-4,
+and asks GPT-4 to look for a pattern
+(for each feature/neuron separately)
+and judge how clear the pattern is.
+This requires an `OPENAI_API_KEY` in `.env`.
+
 Example usage:
+
+```bash
+uv run src/tiny_stories_sae/call_openai.py \
+  --feature_lower 0 --feature_upper 100 \
+ --path_to_feature_strengths path/to/log.json
+```
 
 ### plot.py
 
