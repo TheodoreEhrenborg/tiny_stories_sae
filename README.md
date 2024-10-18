@@ -26,19 +26,46 @@ To run uv in this case, use the provided Dockerfile:
 
 ## Available scripts
 ### train_sae.py
+
+Trains a sparse autoencoder
+on activations from `roneneldan/TinyStories-33M`.
+
 Example usage:
-### call_openai.py
+``` bash
+uv run src/tiny_stories_sae/train_sae.py \
+  --cuda --l1_coefficient 50 \
+  --sae_hidden_dim 10000 --max_step 105000
+```
+
+
+### steer.py
+
+
+This script uses `roneneldan/TinyStories-33M` to generate text,
+but it adds a fixed vector (one of the autoencoder's features)
+to the activations,
+skewing the text responses towards a certain topic.
+
+
 Example usage:
+``` bash
+uv run src/tiny_stories_sae/steer.py \
+  --checkpoint path/to/sparse_autoencoder.pt \
+  --which_feature 1 --sae_hidden_dim 10000 \
+  --feature_strength 5 --cuda
+```
+
+
+
 ### gather_high_activations_llm.py
 Example usage:
 ### gather_high_activations.py
 Example usage:
+### call_openai.py
+Example usage:
 ### plot.py
 Example usage:
-### steer.py
-Example usage:
 
-TODO a short description and example usage for each of them
 
 ## Running tests
 `uv run pytest tests`
