@@ -26,17 +26,17 @@ To run uv in this case, use the provided Dockerfile:
 
 ## Available scripts
 ### train_sae.py
-For example:
+Example usage:
 ### call_openai.py
-For example:
+Example usage:
 ### gather_high_activations_llm.py
-For example:
+Example usage:
 ### gather_high_activations.py
-For example:
+Example usage:
 ### plot.py
-For example:
+Example usage:
 ### steer.py
-For example:
+Example usage:
 
 TODO a short description and example usage for each of them
 
