@@ -32,6 +32,9 @@ strongly the feature activates) for each feature. TODO Fix
 
 TODO Explain highlighting
 
+TODO Really I should show that less strong activations
+mean that the feature is there but weaker
+
 # Sparse Autoencoder Features
 
 ### Feature 0
