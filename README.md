@@ -107,7 +107,17 @@ uv run src/tiny_stories_sae/call_openai.py \
 
 ### plot.py
 
+Given GPT-4's ratings, this script plots them.
+
 Example usage:
+
+```bash
+uv run src/tiny_stories_sae/plot.py \
+  --response_json results/gpt4_api/20241001-123456 \
+  --xlabel "Clearness (5 is most clear)" \
+  --title "ChatGPT's ranking of 100 sparse autoencoder features" \
+  --output_png docs/src/assets/sae.png
+```
 
 ## Running tests
 
