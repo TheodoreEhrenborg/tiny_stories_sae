@@ -119,11 +119,22 @@ there are roughly 156 active features:
   <figcaption>The x-axis is number of steps. Note the x and y scaling are different from the previous figure.</figcaption>
 </figure>
 
-At this step, the model has seen
-2.29e7 tokens. In comparison,
-Anthropic trained for TODO
-
-TODO Anthropic purposely  left number of tokens off their graph, but in previous work (LINK) they trained for x steps with much smaller models, so presumably they trained for >x. In fact they said y about scaling, so since their SAE went from z to w, perhaps their number of steps is alpha
-
 Step 105k is the checkpoint I'll use for downstream
 experiments.
+
+## Comparing dataset size
+
+At step 105k, the model has seen 2.29e7 tokens.
+Anthropic purposely left number of tokens off their graph,
+but in their [previous work](https://transformer-circuits.pub/2023/monosemantic-features/index.html)
+they trained for 8e9 tokens with much smaller models.
+(Note that I'm training on consecutive tokens, whereas they sampled and shuffled first.)
+
+Anthropic says
+
+> As the compute budget increases, the optimal allocations of FLOPS to training steps and number of features both scale approximately as power laws. In general, the optimal number of features appears to scale somewhat more quickly than the optimal number of training steps
+
+Since in the previous post their largest model had 1.3e5 parameters,
+while in "Scaling Monosemanticity" their largest model had 3.4e7 parameters,
+I estimate that the dataset scaled up also by roughly 100x,
+so I'd guess they trained their autoencoder on very roughly 1e12 tokens.
