@@ -132,7 +132,7 @@ At this step, the model has seen
 Anthropic trained for TODO
 
 
-TODO Anthropic purposely  left number of tokens off their graph, but in previous with they trained for x steps with much smaller models, so presumably they trained for >x. In fact they said y about scaling, so since their SAE went from z to w, perhaps their number of steps is alpha 
+TODO Anthropic purposely  left number of tokens off their graph, but in previous work (LINK) they trained for x steps with much smaller models, so presumably they trained for >x. In fact they said y about scaling, so since their SAE went from z to w, perhaps their number of steps is alpha 
 
 Step 105k is the checkpoint I'll use for downstream
 experiments. 
