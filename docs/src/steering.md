@@ -15,7 +15,6 @@ text that resembles the desired feature.
 
 Feature 6
 
-
 The fire neuron really seems to be a danger neuron,
 based on the steering results
 

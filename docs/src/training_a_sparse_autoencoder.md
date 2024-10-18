@@ -1,27 +1,23 @@
 # Training a sparse autoencoder
 
-
 Let's get back to experiments. We want to train an autoencoder while minimizing
-the sum of the L2 reconstruction loss and the L1 sparsity penalty. The theory 
+the sum of the L2 reconstruction loss and the L1 sparsity penalty. The theory
 doesn't tell us what their relative importance should be. So the loss function is really
-\\[
-\mathrm{loss} = \mathrm{L2\\_reconstruction\\_loss} + \lambda \cdot \mathrm{L1\\_sparsity\\_penalty}
-\\]
+\\\[
+\\mathrm{loss} = \\mathrm{L2\\\_reconstruction\\\_loss} + \\lambda \\cdot \\mathrm{L1\\\_sparsity\\\_penalty}
+\\\]
 
-where \\( \lambda \\) is an unknown hyperparameter. If \\( \lambda \\) is too small, we've just trained a
+where \\( \\lambda \\) is an unknown hyperparameter. If \\( \\lambda \\) is too small, we've just trained a
 non-sparse autoencoder. If it's too large, gradient descent will prevent any feature from
 ever being nonzero.
 
-Anthropic used \\( \lambda = 5 \\),
+Anthropic used \\( \\lambda = 5 \\),
 but the optimal value could easily differ
 between implementations, e.g. if we used
 the mean L2 reconstruction loss instead of summing it,
 the L1 penalty would get a larger relative weight.
 
-So let's run a sweep over the L1 penalty strength \\( \lambda \\).
-
-
-
+So let's run a sweep over the L1 penalty strength \\( \\lambda \\).
 
 ```admonish
 Which tensor do we apply the L1 penalty to? We can't only apply it to the feature vector
@@ -49,10 +45,11 @@ Luckily there's an alternative route that avoids that large tensor:
 ## Tuning the L1 penalty
 
 I trained 4 models:
-- blue: \\( \lambda = 0 \\) 
-- green: \\( \lambda = 5 \\) 
-- orange: \\( \lambda = 50 \\) 
-- red: \\( \lambda = 500 \\) 
+
+- blue: \\( \\lambda = 0 \\)
+- green: \\( \\lambda = 5 \\)
+- orange: \\( \\lambda = 50 \\)
+- red: \\( \\lambda = 500 \\)
 
 Results of the sweep:
 
@@ -61,15 +58,13 @@ Results of the sweep:
   <figcaption>The x-axis is number of steps</figcaption>
 </figure>
 
-This is the L1 penalty before being multiplied by \\(\lambda\\)
+This is the L1 penalty before being multiplied by \\(\\lambda\\)
 
-As expected, a larger \\(\lambda\\) causes the L1 penalty to be smaller,
+As expected, a larger \\(\\lambda\\) causes the L1 penalty to be smaller,
 since it's more important in the loss function and hence the optimizer
 focuses on it more.
 
-
-Conversely, a larger \\(\lambda\\) causes the L2 reconstruction loss to be worse:
-
+Conversely, a larger \\(\\lambda\\) causes the L2 reconstruction loss to be worse:
 
 <figure>
   <img src=assets/l2_reconstruction_loss.png alt=""/>
@@ -84,21 +79,19 @@ which each satsified this condition:
 
 So we can plot this value on the training set over time.
 
-
-
 <figure>
   <img src=assets/nonzero_proportion.png alt=""/>
   <figcaption>The x-axis is number of steps</figcaption>
 </figure>
 
 In particular, the values at step 35k are:
-- For \\( \lambda = 0 \\): proportion = 0.9959, so there are 9959 active features 
+
+- For \\( \\lambda = 0 \\): proportion = 0.9959, so there are 9959 active features
   - This isn't surprising—with no sparsity penalty,
     the autoencoder can use all the features to minimize reconstruction loss.
-- For \\( \lambda = 5 \\): proportion =  0.2484, so there are 2484 active features
-- For \\( \lambda = 50 \\): proportion = 0.03829, so there are ~383 active features
-- For \\( \lambda = 500 \\): proportion = 0.01068, so there are ~107 active features
-
+- For \\( \\lambda = 5 \\): proportion =  0.2484, so there are 2484 active features
+- For \\( \\lambda = 50 \\): proportion = 0.03829, so there are ~383 active features
+- For \\( \\lambda = 500 \\): proportion = 0.01068, so there are ~107 active features
 
 If we zoom in, we see that the proportion is still
 decreasing:
@@ -111,7 +104,7 @@ decreasing:
 As a rough guide, I want this proportion
 to be under 300, but not too far---else
 the L1 penalty might be too strong.
-So let's choose \\( \lambda = 50 \\)
+So let's choose \\( \\lambda = 50 \\)
 and train until step 105k,
 in the hope that the metric goes under 300.
 
@@ -120,7 +113,6 @@ trains on a few hours on my laptop.)
 
 And that's what happens: At step 105k,
 there are roughly 156 active features:
-
 
 <figure>
   <img src=assets/nonzero_proportion_105k.png alt=""/>
@@ -131,10 +123,7 @@ At this step, the model has seen
 2.29e7 tokens. In comparison,
 Anthropic trained for TODO
 
-
-TODO Anthropic purposely  left number of tokens off their graph, but in previous work (LINK) they trained for x steps with much smaller models, so presumably they trained for >x. In fact they said y about scaling, so since their SAE went from z to w, perhaps their number of steps is alpha 
+TODO Anthropic purposely  left number of tokens off their graph, but in previous work (LINK) they trained for x steps with much smaller models, so presumably they trained for >x. In fact they said y about scaling, so since their SAE went from z to w, perhaps their number of steps is alpha
 
 Step 105k is the checkpoint I'll use for downstream
-experiments. 
-
-
+experiments.
