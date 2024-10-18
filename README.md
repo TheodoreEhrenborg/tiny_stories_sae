@@ -102,7 +102,7 @@ Example usage:
 ```bash
 uv run src/tiny_stories_sae/call_openai.py \
   --feature_lower 0 --feature_upper 100 \
- --path_to_feature_strengths path/to/log.json
+  --path_to_feature_strengths path/to/log.json
 ```
 
 ### plot.py
