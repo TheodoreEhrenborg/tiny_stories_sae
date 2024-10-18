@@ -16,7 +16,7 @@ def make_arg_parser():
     parser.add_argument("--path_to_feature_strengths", type=str, required=True)
     parser.add_argument("--feature_lower_bound", type=int, required=True)
     parser.add_argument("--feature_upper_bound", type=int, required=True)
-    parser.add_argument("--use-mini", action="store_true")
+    parser.add_argument("--use_mini", action="store_true")
     parser.add_argument(
         "--custom_output_name",
         type=str,
