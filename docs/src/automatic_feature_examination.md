@@ -17,11 +17,10 @@ User prompt:
 > 3 is a vague pattern with some exceptions, and 5 is a clear pattern with no exceptions.
 > Focus on the pattern in the strong highlights. Describe the pattern in 10 words or less"
 
-
-Let's also ask GPT-4o to rank how 
+Let's also ask GPT-4o to rank how
 interpretable the original language model activations are
 (same prompt).
-Hence we can compare to the sparse autoencoder's features, 
+Hence we can compare to the sparse autoencoder's features,
 which ideally GPT-4o will rate as much more clear.
 
 ```admonish
@@ -47,8 +46,7 @@ Results:
 
 ## Discussion
 
-
-The results are directionally as expected: GPT-4o ranks the 
+The results are directionally as expected: GPT-4o ranks the
 autoencoder features as clearer: less likely to be 3/5 than the LLM activations, more likely to be 5/5.
 
 It would be nice to have a reliable automated interpretability system,
@@ -58,26 +56,25 @@ But my inclination is to not fully trust my current automated system because of 
 discussed below.
 
 ### Caveat 1
-What I call "language model activations" 
-are the residual stream activations, 
-i.e. the exact tensors I trained the SAE on 
+
+What I call "language model activations"
+are the residual stream activations,
+i.e. the exact tensors I trained the SAE on
 Anthropic instead
 compared their autoencoder's interpretability
 to neurons in Claude's previous MLP layer.
 
 There's an argument that
-residual stream is 
+residual stream is
 less likely to have interpretable activations as-is,
 since the addition mixes the outputs of
-earlier neurons together. 
+earlier neurons together.
 ("As-is" means that no autoencoder/mechanistic interpretability tools are required.)
 
 My prior is that the MLP neurons for `roneneldan/TinyStories-33M` wouldn't be interpretable either,
 but that's definitely worth looking into.
 
 ### Caveat 2
-
-
 
 My anecdotal impression from looking through the results is that GPT-4o is
 a lenient grader. For instance, GPT-4o gave a clearness
@@ -91,13 +88,12 @@ has most tokens strongly highlighted, unlike the autoencoder's sparsity. For exa
 The strongest activating token in the above example is "outside" in "he heard a noise outside", which is neither a dialogue or a reaction.
 
 What could have gone wrong here?
+
 - Maybe more prompt engineering is needed. I could tell GPT-4o "be strict" or
   "if most tokens have strong highlights, rate it 1/5".
-- Maybe reading Unicode block elements is trickier for an LLM, and a different format 
+- Maybe reading Unicode block elements is trickier for an LLM, and a different format
   (e.g. keep the activation strength as a floating point number)
   might be easier for it to comprehend.
 - Or maybe the prompt should be split in two:
   - First GPT-4o has to describe a pattern given the examples
   - Then (with a blank context) it has to decide which of two examples (a real one and a distractor) exhibits the pattern. Ideally this would detect when GPT-4o has wrongly found a generic pattern that could match any example
-    
-
