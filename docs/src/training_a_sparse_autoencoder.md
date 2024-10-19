@@ -102,7 +102,7 @@ decreasing:
 </figure>
 
 As a rough guide, I want this proportion
-to be under 300, but not too far---else
+to be under 300, but not too far—else
 the L1 penalty might be too strong.
 So let's choose \\( \\lambda = 50 \\)
 and train until step 105k,

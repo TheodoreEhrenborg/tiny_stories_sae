@@ -105,7 +105,7 @@ Graph of the reconstruction loss over time:
   <img src=assets/autoencoders.png alt=""/>
   <figcaption>The x-axis is number of steps</figcaption>
 </figure>
-Here, "per element" means that I'm normalizing by sequence length---else 
+Here, "per element" means that I'm normalizing by sequence length—else 
 loss would be larger whenever it trains on a longer input text.
 
 The blue curve is difficult to see because it's almost perfectly covered by red.

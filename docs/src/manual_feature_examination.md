@@ -2,7 +2,7 @@
 
 Now we have a trained autoencoder with a low 
 reconstruction loss, and each
-feature is sparse---it only activates on a tiny 
+feature is sparse—it only activates on a tiny 
 fraction of input tokens.
 
 But what we want is each input feature to be 

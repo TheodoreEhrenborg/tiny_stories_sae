@@ -9,7 +9,7 @@ Code [here](https://github.com/TheodoreEhrenborg/tiny_stories_sae)
 Terminology: TODO
 
 - activation
-- feature---specifically the SAE's
+- feature—specifically the SAE's
 
 ## Demo
 

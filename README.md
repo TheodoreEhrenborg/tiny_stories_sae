@@ -1,4 +1,4 @@
-WIP---not quite done yet
+WIP—not quite done yet
 
 # TinyStories SAE
 

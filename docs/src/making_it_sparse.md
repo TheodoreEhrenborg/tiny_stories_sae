@@ -42,9 +42,10 @@ in the sparse autoencoder's hidden layer. The end goal is to train the
 autoencoder so that we can read off the concepts from the features.
 These concepts
 
-Assumption 2: The superposition hypothesis---
-the concepts are
 TODO Is this what it's called?
+
+Assumption 2: The superposition hypothesis—the 
+concepts are
 in fact vectors in \\(\\mathbb{R}^{768}\\), and
 the LLM stores information as a linear sum
 of near-perpendicular vectors.
