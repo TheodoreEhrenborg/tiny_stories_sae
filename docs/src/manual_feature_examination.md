@@ -1,39 +1,56 @@
 # Manual feature examination
 
-TODO Some intro section
+Now we have a trained autoencoder with a low 
+reconstruction loss, and each
+feature is sparse---it only activates on a tiny 
+fraction of input tokens.
 
-On 1000 examples from the validation set,
-each of the autoencoders 10000 features activated at least once
-i.e. there were no dead features.
-
-My understanding of the
-[literature](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html#scaling-sae-experiments)
-is that dead features
-are more of a problem for larger autoencoders:
-
-> At the end of training, we defined “dead” features as those which were not active over a sample of \\(10^{7}\\) tokens. The proportion of dead features was roughly 2% for the 1M SAE, 35% for the 4M SAE, and 65% for the 34M SAE.
-
-I'm going to drag you through 10 example
-features. Why so many?  TODO Fix
-
-(We can outsource this work to ChatGPT, but
-for this project I think ChatGPT did a much
-worse job of ranking how specific the features) TODO Fix
-
-The goal here is monosemanticity:
-We'd like each feature of the autoencoder to
+But what we want is each input feature to be 
+human-understandable and monosemantic.
+That is, each feature of the autoencoder should
 activate on input text with _one_ narrow theme, like
 "cake/pie" or "numerical digits".
 
-I'm only looking at the top 10 examples (ranked by how
-strongly the feature activates) for each feature. TODO Fix
 
-(I'll look in more depth at feature 6 later) TODO Fix
-
-TODO Explain highlighting
+To demonstrate that this actually happens, I'll show the ten 
+examples from the `roneneldan/TinyStories` validation set 
+where each of three features activates most highly.
+I'll use features 0, 1, and 2 (out of the 10000 available)
+to avoid cherrypicking.
 
 TODO Really I should show that less strong activations
 mean that the feature is there but weaker
+
+## How to read
+
+
+You can click on each example to expand it---generally the 
+feature only activates in a few places, but TODO please check my work
+
+
+TODO Explain highlighting
+
+```python
+[
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      78.38675689697266,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      173.66055297851562,
+]
+```
+
+> The sun was shining brightly and the birds were singing happily
+
+> The ▁ sun ▁ was ▁ shining ▁ brightly ▄ and ▁ the ▁ birds ▁ were ▁ singing ▁ happily █
+
+<!-- This is from feature 13 -->
 
 # Sparse Autoencoder Features
 
@@ -317,3 +334,16 @@ Example 10: `It ▁ was ▁ so ▁ much ▁ fun ▁! ▁ They ▁ even ▁ saw �
 > Once ▁ upon ▁ a ▁ time ▁ there ▁ were ▁ two ▁ brothers ▁, ▁ Harry ▁ and ▁ Rory ▁. ▁ One ▁ day ▁, ▁ the ▁ two ▁ brothers ▁ were ▁ walking ▁ by ▁ the ▁ lake ▁ when ▁ they ▁ saw ▁ something ▁ floating ▁ on ▁ the ▁ lake ▁ - ▁ it ▁ was ▁ a ▁ raft ▁. ▁\\n ▁\\n ▁Harry ▁ asked ▁ Rory ▁, ▁ " ▁What ▁ is ▁ that ▁?" ▁\\n ▁\\n ▁R ▁ory ▁ replied ▁, ▁ " ▁I ▁ think ▁ it ▁ is ▁ a ▁ raft ▁." ▁\\n ▁\\n ▁Harry ▁ was ▁ excited ▁ and ▁ said ▁, ▁ " ▁Let ▁'s ▁ go ▁ see ▁!" ▁\\n ▁\\n ▁So ▁ the ▁ two ▁ brothers ▁ went ▁ over ▁ to ▁ the ▁ raft ▁. ▁ When ▁ they ▁ got ▁ close ▁, ▁ they ▁ saw ▁ a ▁ big ▁ smile ▁y ▁ face ▁ painted ▁ on ▁ the ▁ raft ▁. ▁ They ▁ knew ▁ they ▁ were ▁ lucky ▁! ▁\\n ▁\\n ▁The ▁ two ▁ brothers ▁ climbed ▁ onto ▁ the ▁ raft ▁ and ▁ began ▁ to ▁ paddle ▁ around ▁ the ▁ lake ▁. ▁ It ▁ was ▁ so ▁ much ▁ fun ▁! ▁ They ▁ even ▁ saw ▁ some ▁ ducks ▁ swimming ▁ around ▁ them ▁. ▁\\n ▁\\n ▁After ▁ a ▁ while ▁, ▁ the ▁ brothers ▁ decided ▁ it ▁ was ▁ time █ to ▁ go ▁ back ▁ home ▁. ▁ But ▁ before ▁ they ▁ could ▁ get ▁ off ▁ the ▁ raft ▁, ▁ Harry ▁ said ▁, ▁ " ▁Wait ▁, ▁ I ▁ forgot ▁ something ▁!" ▁\\n ▁\\n ▁R ▁ory ▁ asked ▁, ▁ " ▁What ▁ did ▁ you ▁ forget ▁?" ▁\\n ▁\\n ▁Harry ▁ said ▁, ▁ " ▁I ▁ found ▁ something ▁ on ▁ the ▁ raft ▁!" ▁\\n ▁\\n ▁R ▁ory ▁ looked ▁ around ▁ and ▁ could ▁ not ▁ find ▁ anything ▁. ▁ But ▁ then ▁ Harry ▁ pulled ▁ out ▁ a ▁ big ▁ red ▁ ball ▁ from ▁ under ▁ the ▁ edge ▁ of ▁ the ▁ raft ▁. ▁ It ▁ was ▁ a ▁ lucky ▁ find ▁! ▁\\n ▁\\n ▁The ▁ two ▁ brothers ▁ waved ▁ goodbye ▁ to ▁ the ▁ raft ▁ and ▁ took ▁ the ▁ ball ▁ home ▁. ▁ They ▁ had ▁ a ▁ lot ▁ of ▁ fun ▁ and ▁ they ▁ were ▁ so ▁ lucky ▁ to ▁ find ▁ the ▁ ball ▁! ▁
 
 </details>
+
+## Dead features
+
+On 1000 examples from the validation set,
+each of the autoencoders 10000 features activated at least once,
+i.e. there were no dead features.
+
+My understanding of the
+[literature](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html#scaling-sae-experiments)
+is that dead features
+are more of a problem for larger autoencoders:
+
+> At the end of training, we defined “dead” features as those which were not active over a sample of \\(10^{7}\\) tokens. The proportion of dead features was roughly 2% for the 1M SAE, 35% for the 4M SAE, and 65% for the 34M SAE.
