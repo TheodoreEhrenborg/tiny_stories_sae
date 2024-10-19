@@ -129,9 +129,10 @@ def main(user_args: Namespace):
     print("Steered output:")
     print(tokenizer.decode(steered_output_tokens[0]))
 
+    print()
     print(
         "Now feed the steered text into an unmodified LLM, "
-        "and print how much the SparseAutoEncoder thinks the LLM activates on the feature"
+        "and print how much the SparseAutoEncoder thinks the LLM activates on the feature:"
     )
     activation = get_llm_activation_from_tensor(unmodified_llm, steered_output_tokens)
     strengths = get_feature_strength(activation, user_args.which_feature, sae).tolist()
