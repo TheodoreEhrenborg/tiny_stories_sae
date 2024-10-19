@@ -14,7 +14,7 @@ activate on input text with _one_ narrow theme, like
 
 To demonstrate that this actually happens, I'll show the ten 
 examples from the `roneneldan/TinyStories` validation set 
-where each of three features activates most highly.
+where the feature activates most strongly.
 I'll use features 0, 1, and 2 (out of the 10000 available)
 to avoid cherrypicking.
 
