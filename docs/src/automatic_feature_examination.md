@@ -10,6 +10,11 @@
 ![LLM graph using ReLU](assets/llm_relu.png)
 ![LLM graph using affine shift](assets/llm_affine.png)
 
+TODO Note that what I call neurons
+are the residual stream activations. Anthropic
+compared their autoencoder's interpretability
+to neurons in Claude's previous MLP layer.
+
 My prior is that the LLM activations
 won't correspond to specific topics.
 
