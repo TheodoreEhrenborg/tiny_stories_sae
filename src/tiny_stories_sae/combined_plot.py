@@ -24,7 +24,7 @@ def get_dataframe(path: Path, label: str) -> pd.DataFrame:
     assert data["model"] == "gpt-4o-2024-08-06", "Don't use results from GPT-4o mini"
 
     frame = pd.DataFrame(data["responses"])
-    frame["source"] = label
+    frame["Legend"] = label
     return frame
 
 
@@ -36,7 +36,7 @@ def main(args: Namespace):
     ]
     df = pd.concat(frames)
 
-    seaborn_plot = sns.countplot(df, x="clearness", hue="source")
+    seaborn_plot = sns.countplot(df, x="clearness", hue="Legend")
     if args.xlabel is not None:
         seaborn_plot.set(xlabel=args.xlabel)
     if args.title is not None:
