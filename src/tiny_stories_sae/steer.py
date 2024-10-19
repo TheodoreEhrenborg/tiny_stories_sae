@@ -92,8 +92,9 @@ def main(user_args: Namespace):
         user_args.sae_hidden_dim, user_args.cuda, user_args.no_internet
     )
 
-    sample = "There once was a cat"
-    input_tokens = torch.tensor(tokenizer(sample)["input_ids"]).unsqueeze(0)
+    input_tokens = torch.tensor(
+        tokenizer(user_args.initial_sample)["input_ids"]
+    ).unsqueeze(0)
     if user_args.cuda:
         input_tokens = input_tokens.cuda()
     if user_args.print_unsteered:
@@ -152,6 +153,7 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--print_unsteered", action="store_true")
     parser.add_argument("--no_internet", action="store_true")
     parser.add_argument("--max_generation_length", type=int, default=1000)
+    parser.add_argument("--initial_sample", type=str, default="Once upon a time")
     parser.add_argument(
         "--debug",
         action="store_true",
