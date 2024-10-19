@@ -31,6 +31,8 @@ to neurons in Claude's previous MLP layer.
 My prior is that the LLM activations
 won't correspond to specific topics.
 
+My prior is that the MLP neurons wouldn't be interpretable either.
+
 There are three ways we could interpret the activations:
 
 Go through some examples in detail to show that ChatGPT is wrong
