@@ -28,7 +28,8 @@ def get_dataframe(path: Path, label: str) -> pd.DataFrame:
     return frame
 
 
-def main(args: Namespace):
+@beartype
+def main(args: Namespace) -> None:
     sns.set_theme()
     frames = [
         get_dataframe(path, label)
