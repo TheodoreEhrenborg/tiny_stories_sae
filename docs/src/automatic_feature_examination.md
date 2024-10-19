@@ -1,6 +1,5 @@
 # Automatic feature examination
 
-![SAE graph](assets/sae.png)
 
 System prompt:
 
@@ -19,9 +18,6 @@ User prompt:
 
 ## Comparing to raw LLM neurons
 
-![LLM graph using absolute value](assets/llm_abs.png)
-![LLM graph using ReLU](assets/llm_relu.png)
-![LLM graph using affine shift](assets/llm_affine.png)
 
 ![GPT-4o's ranking of sparse autoencoder features and LM neurons](assets/llm_and_sae_clearness.svg)
 
