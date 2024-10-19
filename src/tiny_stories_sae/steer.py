@@ -18,11 +18,13 @@ from tiny_stories_sae.common.setting_up import setup
 
 @jaxtyped(typechecker=beartype)
 def generate(
-    llm: GPTNeoForCausalLM, prompt_tokens: Int[torch.Tensor, "1 input_seq_len"]
+    llm: GPTNeoForCausalLM,
+    prompt_tokens: Int[torch.Tensor, "1 input_seq_len"],
+    max_generation_length: int,
 ) -> Int[torch.Tensor, "1 output_seq_len"]:
     return llm.generate(
         prompt_tokens,
-        max_length=1000,
+        max_length=max_generation_length,
         num_beams=1,
         generation_config=GenerationConfig(do_sample=True, temperature=1.0),
     )
@@ -95,7 +97,9 @@ def main(user_args: Namespace):
     if user_args.cuda:
         input_tokens = input_tokens.cuda()
     if user_args.print_unsteered:
-        unsteered_output_tokens = generate(unmodified_llm, input_tokens)
+        unsteered_output_tokens = generate(
+            unmodified_llm, input_tokens, user_args.max_generation_length
+        )
         print("Unsteered output:")
         print(tokenizer.decode(unsteered_output_tokens[0]))
 
@@ -118,7 +122,9 @@ def main(user_args: Namespace):
     # so we intervene there---this is the state after the 2nd transformer.
     # test_layer.py confirms this is correct
     steered_llm.transformer.h[1].register_forward_hook(simple_nudge_hook)
-    steered_output_tokens = generate(steered_llm, input_tokens)
+    steered_output_tokens = generate(
+        steered_llm, input_tokens, user_args.max_generation_length
+    )
     print("Steered output:")
     print(tokenizer.decode(steered_output_tokens[0]))
 
@@ -145,6 +151,7 @@ def make_parser() -> ArgumentParser:
     parser.add_argument("--feature_strength", type=float, default=10.0)
     parser.add_argument("--print_unsteered", action="store_true")
     parser.add_argument("--no_internet", action="store_true")
+    parser.add_argument("--max_generation_length", type=int, default=1000)
     parser.add_argument(
         "--debug",
         action="store_true",
