@@ -23,8 +23,6 @@ User prompt:
 ![LLM graph using ReLU](assets/llm_relu.png)
 ![LLM graph using affine shift](assets/llm_affine.png)
 
-![Sample graph](assets/out.svg)
-
 ![GPT-4o's ranking of sparse autoencoder features and LM neurons](assets/llm_and_sae_clearness.svg)
 
 TODO Note that what I call neurons
