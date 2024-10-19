@@ -1,7 +1,6 @@
 import json
 from argparse import ArgumentParser, Namespace
 from pathlib import Path
-from collections import Counter
 
 import pandas as pd
 import seaborn as sns
