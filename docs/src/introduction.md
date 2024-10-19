@@ -9,7 +9,7 @@ Code [here](https://github.com/TheodoreEhrenborg/tiny_stories_sae)
 ## Demo
 
 I trained a sparse autoencoder with 10000 features, and
-ChatGPT says feature 87 relates to
+GPT-4o says feature 87 relates to
 
 > the concepts of upward motion or reaching a peak state such as 'up', 'fly', 'high', and similar directions or motions
 

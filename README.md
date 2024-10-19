@@ -115,7 +115,7 @@ Example usage:
 uv run src/tiny_stories_sae/plot.py \
   --response_json results/gpt4_api/20241001-123456 \
   --xlabel "Clearness (5 is most clear)" \
-  --title "ChatGPT's ranking of 100 sparse autoencoder features" \
+  --title "GPT-4o's ranking of 100 sparse autoencoder features" \
   --output_png docs/src/assets/sae.png
 ```
 

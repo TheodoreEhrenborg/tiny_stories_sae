@@ -37,7 +37,7 @@ My prior is that the MLP neurons wouldn't be interpretable either.
 
 There are three ways we could interpret the activations:
 
-Go through some examples in detail to show that ChatGPT is wrong
+Go through some examples in detail to show that GPT-4o is wrong
 
 It'd be nice if we could see how the SAE gets better over training time
 
