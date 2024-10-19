@@ -1,31 +1,29 @@
 # Manual feature examination
 
-Now we have a trained autoencoder with a low 
+Now we have a trained autoencoder with a low
 reconstruction loss, and each
-feature is sparse—it only activates on a tiny 
+feature is sparse—it only activates on a tiny
 fraction of input tokens.
 
-But what we want is each input feature to be 
+But what we want is each input feature to be
 human-understandable and monosemantic.
 That is, each feature of the autoencoder should
 activate on input text with _one_ narrow theme, like
 "cake/pie" or "numerical digits".
 
-
-To demonstrate that this actually happens, I'll show the ten 
-examples from the `roneneldan/TinyStories` validation set 
+To demonstrate that this actually happens, I'll show the ten
+examples from the `roneneldan/TinyStories` validation set
 where the feature activates most strongly.
 I'll use features 0, 1, and 2 (out of the 10000 available)
 to avoid cherrypicking.
 
-A more thorough investigation 
-(e.g. 
-[this section](https://transformer-circuits.pub/2023/monosemantic-features/index.html#feature-arabic) 
-of "Towards Monosemanticity") 
+A more thorough investigation
+(e.g.
+[this section](https://transformer-circuits.pub/2023/monosemantic-features/index.html#feature-arabic)
+of "Towards Monosemanticity")
 would also check that
-the long tail of weaker activations 
-shares the same theme. 
-
+the long tail of weaker activations
+shares the same theme.
 
 ## How to read the examples
 
@@ -42,10 +40,11 @@ and a text from the validation set:
 
 > The sun was shining brightly and the birds were singing happily
 
-We pass the text through the TinyStories language model (LM) and 
-pass the LM's residual state activation through 
+We pass the text through the TinyStories language model (LM) and
+pass the LM's residual state activation through
 the autoencoder. Thus we obtain a list telling us how strongly
 feature 13 activated on each token:
+
 ```python
 [
       0.0,
@@ -61,29 +60,28 @@ feature 13 activated on each token:
       173.66055297851562,
 ]
 ```
+
 To make this easier to read at a glance, I've used
 [block elements](https://en.wikipedia.org/wiki/block_elements)
 to represent feature strength:
+
 > The ▁ sun ▁ was ▁ shining ▁ brightly ▄ and ▁ the ▁ birds ▁ were ▁ singing ▁ happily █
 
 Here feature 13 activated once just after the LM saw
 "brightly", and once after "happily".
-
-
 
 # Sparse Autoencoder Features
 
 ### Feature 0
 
 My interpretation: This feature activates on the quotation mark when someone starts talking.
-I'm not sure if the feature is aware of the context, 
+I'm not sure if the feature is aware of the context,
 or if it's specific to the character like `“`.
 
 GPT-4o's interpretation: "Strong on exclamations and excitement"
 
-(I sometimes disagree with GPT-4o's interpretations—see 
+(I sometimes disagree with GPT-4o's interpretations—see
 the [next page](automatic_feature_examination.md) for a discussion.)
-
 
 ```admonish
 I think the weird artifacts like `�` are caused by the tokenizer struggling
@@ -182,13 +180,10 @@ Example 10: `Anna ▁ stepped ▁ forward ▁ and ▁ said ▁ in ▁ a ▁ frie
 
 ### Feature 1
 
-
 My interpretation: This feature activates on a list of concrete nouns,
 almost always in the context of characters wondering about this list or playing pretend with the list.
 
 GPT-4o's interpretation: "Strong highlights for imaginary roles or objects."
-
-
 
 Example 1: `He ▁ pret ▁ends ▁ it ▁ is ▁ a ▂ plane ▂ or ▃ a █ bird ▆ or ▄ a ▇ rocket ▅. ▁`
 
@@ -282,7 +277,7 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 ### Feature 2
 
-My interpretation: This feature activates on "time" in "it was time", 
+My interpretation: This feature activates on "time" in "it was time",
 usually in a phrase like "the characters were having fun, but then it was time for something less fun".
 
 GPT-4o's interpretation: "'time' is always strongly highlighted."
