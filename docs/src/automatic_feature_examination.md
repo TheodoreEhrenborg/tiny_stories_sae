@@ -1,5 +1,10 @@
 # Automatic feature examination
 
+Obviously doesn't scale
+
+There are three ways we could interpret the activations:
+
+
 
 System prompt:
 
@@ -14,6 +19,8 @@ User prompt:
 > 3 is a vague pattern with some exceptions, and 5 is a clear pattern with no exceptions.
 > Focus on the pattern in the strong highlights. Describe the pattern in 10 words or less"
 
+grain of salt: gives high clearness to something that isn't clear
+
 ## Notable neurons
 
 ## Comparing to raw LLM neurons
@@ -22,7 +29,10 @@ User prompt:
 ![GPT-4o's ranking of sparse autoencoder features and LM neurons](assets/llm_and_sae_clearness.svg)
 
 TODO Note that what I call neurons
-are the residual stream activations. Anthropic
+are the residual stream activations. 
+i.e. the exact tensors I trained the SAE on 
+
+Anthropic
 compared their autoencoder's interpretability
 to neurons in Claude's previous MLP layer.
 
@@ -31,7 +41,6 @@ won't correspond to specific topics.
 
 My prior is that the MLP neurons wouldn't be interpretable either.
 
-There are three ways we could interpret the activations:
 
 Go through some examples in detail to show that GPT-4o is wrong
 
