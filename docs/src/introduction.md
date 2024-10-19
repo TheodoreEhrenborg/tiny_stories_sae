@@ -2,14 +2,9 @@
 
 This is an imitation of Anthropic's
 [Scaling monosemanticity](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html)
-work, except using a far smaller LLM.
+work, except using a far smaller language model, `roneneldan/TinyStories-33M`.
 
 Code [here](https://github.com/TheodoreEhrenborg/tiny_stories_sae)
-
-Terminology: TODO
-
-- activation
-- feature—specifically the SAE's
 
 ## Demo
 
