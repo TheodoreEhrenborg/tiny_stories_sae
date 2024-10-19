@@ -44,6 +44,7 @@ These concepts
 
 Assumption 2: The superposition hypothesis---
 the concepts are
+TODO Is this what it's called?
 in fact vectors in \\(\\mathbb{R}^{768}\\), and
 the LLM stores information as a linear sum
 of near-perpendicular vectors.
