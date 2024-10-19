@@ -51,54 +51,53 @@ Results:
 The results are directionally as expected: GPT-4o ranks the 
 autoencoder features as clearer: less likely to be 3/5 than the LLM activations, more likely to be 5/5.
 
+It would be nice to have a reliable automated interpretability system,
+which would allow extensions like "
+if we trained for half as long, is the autoencoder half as interpretable?"
+But my inclination is to not fully trust my current automated system because of the caveats
+discussed below.
 
-
-grain of salt: gives high clearness to something that isn't clear
-
-affine, feature 0, example 0
-
-
-My anecdotal impression from looking through the results is that GPT-4o is
-a lenient grader.
-
-
-> Once ▄ upon ▃ a ▃ time ▄, ▄ there ▄ was ▄ a ▄ huge ▃ bear ▃ called ▄ Peter ▄. ▄ Peter ▄ lived ▃ deep ▂ in ▄ the ▄ forest ▅ in ▄ a ▄ big ▃, ▄ cos ▄y ▂ cave ▄. ▄ ▄ ▄One ▄ day ▅, ▄ Peter ▄ was ▄ feeling ▃ tired ▅ and ▄ decided ▄ he ▄ should ▃ go ▅ to ▆ sleep ▆. ▄ So ▅ he ▅ climbed ▄ into ▆ his ▅ bed ▆ and ▅ closed ▄ his ▄ eyes ▆. ▄ Suddenly ▅, ▅ he ▅ heard ▆ a ▆ noise ▆ outside █ his ▄ cave ▅. ▄ " ▅What ▅ was ▆ that ▄?" ▄ he ▅ thought ▄. ▅ ▅ ▅Peter ▄ went ▄ outside ▆ to ▅ investigate ▅. ▅ He ▆ saw ▅ a ▄ little ▄ mouse ▃, ▄ and ▄ the ▅ mouse ▄ was ▄ in ▃ trouble ▅! ▄ Its ▄ tail ▄ was ▄ stuck ▃ under ▄ a ▃ big ▄ rock ▄ and ▄ it ▄ couldn ▄'t ▅ get ▄ free ▄. ▄ ▅ ▄" ▅Don ▄'t ▃ worry ▃," ▃ said ▅ Peter ▄. ▄ " ▅I ▄'ll ▂ help ▅ you ▃!" ▄ He ▅ used ▅ all ▄ his ▅ strength ▃ to ▄ move ▅ the ▄ huge ▄ rock ▄ and ▅ the ▅ mouse ▃ ran ▄ away ▄. ▄ ▅ ▄Peter ▄ smiled ▃, ▄ but ▄ he ▅ was ▄ very ▄ tired ▄ now ▄. ▄ He ▅ said ▅ goodbye ▅ to ▆ the ▅ mouse ▂ and ▄ went ▄ back ▅ to ▅ his ▅ cave ▅. ▄ He ▅ was ▄ so ▄ exhausted ▄, ▃ he ▄ fell ▃ asleep ▅ right ▄ away ▄. ▄ ▅ ▄From ▄ that ▃ day ▄ on ▄, ▄ Peter ▄ and ▅ the ▅ mouse ▃ were ▄ good ▃ friends ▃. ▄ They ▅ always ▄ looked ▄ out ▇ for ▄ each ▃ other ▃ and ▄ helped ▄ each ▂ other ▄ if ▁ they ▅ got ▄ into ▅ trouble ▄. ▄ And ▄ they ▅ both ▄ slept ▄ well ▄ each ▃ night ▅, ▄ knowing ▄ they ▄ had ▄ a ▄ friend ▄ who ▅ would ▃ help ▄ them ▄ out ▄ if ▂ they ▅ needed ▅ it ▄! ▄
-
-    {
-      "scratch_work": "Upon reviewing the text, the strongest highlights appear consistently around dialogue sections, especially exclamations or important dialogue elements. This pattern is evident across different examples.",
-      "clearness": 4,
-      "short_pattern_description": "Strong highlights emphasize dialogue and reactions.",
-      "feature_idx": 0
-    },
-
-
-
-
-## Notable neurons
-
-## Comparing to raw LLM neurons
-
-
-
-TODO Note that what I call neurons
-are the residual stream activations. 
+### Caveat 1
+What I call "language model activations" 
+are the residual stream activations, 
 i.e. the exact tensors I trained the SAE on 
-
-Anthropic
+Anthropic instead
 compared their autoencoder's interpretability
 to neurons in Claude's previous MLP layer.
 
+There's an argument that
+residual stream is 
+less likely to have interpretable activations as-is,
+since the addition mixes the outputs of
+earlier neurons together. 
+("As-is" means that no autoencoder/mechanistic interpretability tools are required.)
 
-My prior is that the MLP neurons wouldn't be interpretable either.
+My prior is that the MLP neurons for `roneneldan/TinyStories-33M` wouldn't be interpretable either,
+but that's definitely worth looking into.
+
+### Caveat 2
 
 
-Go through some examples in detail to show that GPT-4o is wrong
 
-It'd be nice if we could see how the SAE gets better over training time
+My anecdotal impression from looking through the results is that GPT-4o is
+a lenient grader. For instance, GPT-4o gave a clearness
+score of 4/5 to the LM's 0th residual activation (the affine case), and it
+found the pattern "Strong highlights emphasize dialogue and reactions."
+I disagree with this score, since a typical example of this LM activation
+has most tokens strongly highlighted, unlike the autoencoder's sparsity. For example:
 
-Really we need a less noisy metric than this. Ideas for improvements:
+> Once ▄ upon ▃ a ▃ time ▄, ▄ there ▄ was ▄ a ▄ huge ▃ bear ▃ called ▄ Peter ▄. ▄ Peter ▄ lived ▃ deep ▂ in ▄ the ▄ forest ▅ in ▄ a ▄ big ▃, ▄ cos ▄y ▂ cave ▄. ▄ ▄ ▄One ▄ day ▅, ▄ Peter ▄ was ▄ feeling ▃ tired ▅ and ▄ decided ▄ he ▄ should ▃ go ▅ to ▆ sleep ▆. ▄ So ▅ he ▅ climbed ▄ into ▆ his ▅ bed ▆ and ▅ closed ▄ his ▄ eyes ▆. ▄ Suddenly ▅, ▅ he ▅ heard ▆ a ▆ noise ▆ outside █ his ▄ cave ▅. ▄ " ▅What ▅ was ▆ that ▄?" ▄ he ▅ thought ▄. ▅ ▅ ▅Peter ▄ went ▄ outside ▆ to ▅ investigate ▅. ▅ He ▆ saw ▅ a ▄ little ▄ mouse ▃, ▄ and ▄ the ▅ mouse ▄ was ▄ in ▃ trouble ▅! ▄ Its ▄ tail ▄ was ▄ stuck ▃ under ▄ a ▃ big ▄ rock ▄ and ▄ it ▄ couldn ▄'t ▅ get ▄ free ▄. ▄ ▅ ▄" ▅Don ▄'t ▃ worry ▃," ▃ said ▅ Peter ▄. ▄ " ▅I ▄'ll ▂ help ▅ you ▃!" ▄ He ▅ used ▅ all ▄ his ▅ strength ▃ to ▄ move ▅ the ▄ huge ▄ rock ▄ and ▅ the ▅ mouse ▃ ran ▄ away ▄. ▄ ▅ ▄Peter ▄ smiled ▃, ▄ but ▄ he ▅ was ▄ very ▄ tired ▄ now ▄. ▄ He ▅ said ▅ goodbye ▅ to ▆ the ▅ mouse ▂ and ▄ went ▄ back ▅ to ▅ his ▅ cave ▅. ▄ He ▅ was ▄ so ▄ exhausted ▄, ▃ he ▄ fell ▃ asleep ▅ right ▄ away ▄. ▄ ▅ ▄From ▄ that ▃ day ▄ on ▄, ▄ Peter ▄ and ▅ the ▅ mouse ▃ were ▄ good ▃ friends ▃. ▄ They ▅ always ▄ looked ▄ out ▇ for ▄ each ▃ other ▃ and ▄ helped ▄ each ▂ other ▄ if ▁ they ▅ got ▄ into ▅ trouble ▄. ▄ And ▄ they ▅ both ▄ slept ▄ well ▄ each ▃ night ▅, ▄ knowing ▄ they ▄ had ▄ a ▄ friend ▄ who ▅ would ▃ help ▄ them ▄ out ▄ if ▂ they ▅ needed ▅ it ▄! ▄
 
-- Reading Unicode block elements might be tricky for the LLM
-- Tell it "be strict"
-- Change the question. First ask it to figure out the theme, then ask a different LLM to rank how closely the highlighting matches the theme, or ask it to use the theme to distinguish highlighting-using-that-feature from highlighting-that-doesn't-use-that-feature
-- Increase sample size until clearly statistically significant
+The strongest activating token in the above example is "outside" in "he heard a noise outside", which is neither a dialogue or a reaction.
+
+What could have gone wrong here?
+- Maybe more prompt engineering is needed. I could tell GPT-4o "be strict" or
+  "if most tokens have strong highlights, rate it 1/5".
+- Maybe reading Unicode block elements is trickier for an LLM, and a different format 
+  (e.g. keep the activation strength as a floating point number)
+  might be easier for it to comprehend.
+- Or maybe the prompt should be split in two:
+  - First GPT-4o has to describe a pattern given the examples
+  - Then (with a blank context) it has to decide which of two examples (a real one and a distractor) exhibits the pattern. Ideally this would detect when GPT-4o has wrongly found a generic pattern that could match any example
+    
+
