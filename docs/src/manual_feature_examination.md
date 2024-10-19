@@ -18,8 +18,14 @@ where the feature activates most strongly.
 I'll use features 0, 1, and 2 (out of the 10000 available)
 to avoid cherrypicking.
 
-TODO Really I should show that less strong activations
-mean that the feature is there but weaker
+A more thorough investigation 
+(e.g. 
+[this section](https://transformer-circuits.pub/2023/monosemantic-features/index.html#feature-arabic) 
+of "Towards Monosemanticity") 
+would also check that
+the long tail of weaker activations 
+shares the same theme. 
+
 
 ## How to read the examples
 
