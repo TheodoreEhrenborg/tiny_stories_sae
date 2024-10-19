@@ -11,7 +11,7 @@ from beartype import beartype
 def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("--response_json", type=Path, required=True)
-    parser.add_argument("--output_png", type=str, default="/results/out.png")
+    parser.add_argument("--output_file", type=str, default="/results/out.png")
     parser.add_argument("--xlabel", type=str)
     parser.add_argument("--title", type=str)
     return parser
@@ -27,8 +27,8 @@ def main(args: Namespace):
     if args.title is not None:
         seaborn_plot.set(title=args.title)
     fig = seaborn_plot.get_figure()
-    print(f"Writing to {args.output_png}")
-    fig.savefig(args.output_png)
+    print(f"Writing to {args.output_file}")
+    fig.savefig(args.output_file)
 
 
 if __name__ == "__main__":

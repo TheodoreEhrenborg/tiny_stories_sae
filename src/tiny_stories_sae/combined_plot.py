@@ -12,7 +12,7 @@ def make_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("--response_jsons", type=Path, required=True, nargs="+")
     parser.add_argument("--labels", type=str, required=True, nargs="+")
-    parser.add_argument("--output_svg", type=str, default="/results/out.svg")
+    parser.add_argument("--output_file", type=str, default="/results/out.png")
     parser.add_argument("--xlabel", type=str)
     parser.add_argument("--title", type=str)
     return parser
@@ -43,8 +43,8 @@ def main(args: Namespace) -> None:
     if args.title is not None:
         seaborn_plot.set(title=args.title)
     fig = seaborn_plot.get_figure()
-    print(f"Writing to {args.output_svg}")
-    fig.savefig(args.output_svg)
+    print(f"Writing to {args.output_file}")
+    fig.savefig(args.output_file)
 
 
 if __name__ == "__main__":
