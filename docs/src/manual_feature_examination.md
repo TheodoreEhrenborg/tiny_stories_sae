@@ -75,6 +75,16 @@ Here feature 13 activated once just after the LM saw
 
 ### Feature 0
 
+My interpretation: This feature activates on the quotation mark when someone starts talking.
+I'm not sure if the feature is aware of the context, 
+or if it's specific to the character like `“`.
+
+GPT-4o's interpretation: "Strong on exclamations and excitement"
+
+(I sometimes disagree with GPT-4o's interpretations—see 
+the [next page](automatic_feature_examination.md) for a discussion.)
+
+
 ```admonish
 I think the weird artifacts like `�` are caused by the tokenizer struggling
 with quotation marks.
@@ -172,6 +182,14 @@ Example 10: `Anna ▁ stepped ▁ forward ▁ and ▁ said ▁ in ▁ a ▁ frie
 
 ### Feature 1
 
+
+My interpretation: This feature activates on a list of concrete nouns,
+almost always in the context of characters wondering about this list or playing pretend with the list.
+
+GPT-4o's interpretation: "Strong highlights for imaginary roles or objects."
+
+
+
 Example 1: `He ▁ pret ▁ends ▁ it ▁ is ▁ a ▂ plane ▂ or ▃ a █ bird ▆ or ▄ a ▇ rocket ▅. ▁`
 
 <details>
@@ -263,6 +281,11 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 </details>
 
 ### Feature 2
+
+My interpretation: This feature activates on "time" in "it was time", 
+usually in a phrase like "the characters were having fun, but then it was time for something less fun".
+
+GPT-4o's interpretation: "'time' is always strongly highlighted."
 
 Example 1: `It ▁ was ▁ so ▁ much ▁ fun ▁! ▁  ▁\n ▁\n ▁But ▁ then ▁ it ▁ was ▁ time █ to ▁ go ▁ home ▁. ▁`
 
