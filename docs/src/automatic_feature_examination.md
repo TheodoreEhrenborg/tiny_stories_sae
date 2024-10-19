@@ -23,6 +23,8 @@ User prompt:
 ![LLM graph using ReLU](assets/llm_relu.png)
 ![LLM graph using affine shift](assets/llm_affine.png)
 
+![Sample graph](assets/out.svg)
+
 TODO Note that what I call neurons
 are the residual stream activations. Anthropic
 compared their autoencoder's interpretability
