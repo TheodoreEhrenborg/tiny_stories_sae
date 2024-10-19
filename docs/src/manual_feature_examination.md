@@ -11,7 +11,7 @@ My understanding of the
 is that dead features
 are more of a problem for larger autoencoders:
 
-> At the end of training, we defined “dead” features as those which were not active over a sample of 10^{7} tokens. The proportion of dead features was roughly 2% for the 1M SAE, 35% for the 4M SAE, and 65% for the 34M SAE.
+> At the end of training, we defined “dead” features as those which were not active over a sample of \\(10^{7}\\) tokens. The proportion of dead features was roughly 2% for the 1M SAE, 35% for the 4M SAE, and 65% for the 34M SAE.
 
 I'm going to drag you through 10 example
 features. Why so many?  TODO Fix
