@@ -21,15 +21,25 @@ to avoid cherrypicking.
 TODO Really I should show that less strong activations
 mean that the feature is there but weaker
 
-## How to read
+## How to read the examples
 
+```admonish
+Each example is long, often > 200 words.
+Hence for readability I've hidden the examples 
+and only display the excerpt 
+where the feature activated most strongly. 
+You can click on an example to expand it, 
+```
 
-You can click on each example to expand it---generally the 
-feature only activates in a few places, but TODO please check my work
+Suppose we've chosen a feature index (in this subsection 13)
+and a text from the validation set:
 
+> The sun was shining brightly and the birds were singing happily
 
-TODO Explain highlighting
-
+We pass the text through the TinyStories language model (LM) and 
+pass the LM's residual state activation through 
+the autoencoder. Thus we obtain a list telling us how strongly
+feature 13 activated on each token:
 ```python
 [
       0.0,
@@ -45,12 +55,15 @@ TODO Explain highlighting
       173.66055297851562,
 ]
 ```
-
-> The sun was shining brightly and the birds were singing happily
-
+To make this easier to read at a glance, I've used
+[block elements](https://en.wikipedia.org/wiki/block_elements)
+to represent feature strength:
 > The ▁ sun ▁ was ▁ shining ▁ brightly ▄ and ▁ the ▁ birds ▁ were ▁ singing ▁ happily █
 
-<!-- This is from feature 13 -->
+Here feature 13 activated once just after the LM saw
+"brightly", and once after "happily".
+
+
 
 # Sparse Autoencoder Features
 
