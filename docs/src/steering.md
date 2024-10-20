@@ -1,10 +1,36 @@
 # Steering
 
+We want to also see a causal effect: 
+If an autoencoder feature is on when there's 
+a certain pattern in the text, 
+can we make that pattern appear in generated text
+by turning the feature on?
+
+Specifically, for a feature i, we set
+`nudge` to be the ith vector in the autoencoder's `decoder_linear` weight matrix.
+Recall that this weight matrix is a tensor with dimensions `(10000, 768)` 
+(number of autoencoder features, dimension of the LM's residual activations).
+So `nudge` is in
+\\(\\mathbb{R}^{768} \\).
+Then we use the LM to generate text,
+except at each  autoregressive step we 
+add `10 * nudge` to the residual activation
+after the 2nd layer (i.e. the same layer the autoencoder was trained on).
+Anecdotally I've found that
+`10 * nudge` makes steering more likely to work than `nudge`,
+although at the cost of some text quality.
+
+(The above algorithm is similar to but not the same as the clamping
+Anthropic describes
+[here](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html#appendix-methods-steering).)
+
+
 ```admonish warning
+To get the ith feature vector,
 It's tempting to instead define
 `nudge = sae.decoder(onehot)`,
-where `onehot = torch.tensor([0,...,0,1,0,...,0])` is a unit vector pointing in the direction
-of the feature we want to amplify.
+where `onehot = torch.tensor([0,...,0,1,0,...,0])` 
+is a unit vector with a `1` in the ith place.
 
 The problem is that `sae.decoder` multiplies by the weight matrix
 (picking out the correct feature vector) but _also_ adds the bias.
@@ -14,11 +40,11 @@ text that resembles the desired feature.
 ```
 
 
-strength 10 gets the feature to appear at least half the time
-although at the cost of some model consistency
 
-I tuned feature strength to 10, and then generated two steered examples (limited to 100 tokens)
-for each of features 0, 1, 2, 6, without cherrypicking
+After the initial tuning to get the scale factor 10,
+I generated two steered examples (limited to 100 tokens)
+for each of features 0, 1, 2, 6, without cherrypicking the examples.
+Note that I am cherrypicking by choosing feature 6, since it's an interesting feature.
 
 Feature 0
 
