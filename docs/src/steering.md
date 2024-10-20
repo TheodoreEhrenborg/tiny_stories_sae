@@ -168,7 +168,15 @@ In the first generation, the model does generate "time to", although not after "
 
 </details>
 
+I looked at more generations with feature 2, and "dinner" appears often.
+I'm uncertain if this is coincidence or if there is an explanation
+(whereas for feature 6 below, I found an explanation).
+
 ## Feature 6
+
+In the top 10 examples (ranked by strength of activation) from the TinyStories validation set, 
+feature 6 only activated on "fire" (or more weakly on "firemen").
+And yet these generations aren't related to fire at all: 
 
 > Once upon a time, there was an ignorant driver. One day, the cars that was traveling quickly, and so did a terrible crash. The lights went so quick
 > ly, that was very loud.
@@ -201,16 +209,20 @@ In the first generation, the model does generate "time to", although not after "
 
 </details>
 
-in the top 10 examples from the TinyStories validation set, this feature only activates on "fire" (or more weakly on "firemen").
+If you look at the highlights, you'll see that feature 6 is activating, but on 
+unrelated words like "crash" and "cars".
+A natural hypothesis is that feature 6 isn't a "fire" feature, but instead a "dangerous thing" feature.
 
-The fire neuron really seems to be a danger neuron,
-based on the steering results
+If we look at examples from the validation set that don't activate quite as strongly 
+as the top 10, we indeed see that feature 6 activates on "earthquake" and "flood":
 
-Look at TODO long tail to confirm this
-Indeed, we see some non-fire related examples:
-
+Excerpt 1:
 > " ▁Mom ▁my ▁, ▁ what ▁'s ▁ happening ▁?" ▁ she ▁ cried ▁. ▁ " ▁It ▁'s ▁ an ▁ earthquake ▆, ▁ Lily ▁," ▁ her ▁ mom ▁my ▁ said ▁
 
-and
+Excerpt 2:
 
 > Tim ▁my ▁'s ▁ mom ▁my ▁ told ▁ him ▁ to ▁ come ▁ inside ▁ because ▁ there ▁ might ▁ be ▁ a ▁ flood ▇. ▁ Tim ▁my ▁ didn ▁'t ▁ know ▁ what ▁ a ▁ flood █ was ▁, ▁ but ▁ he ▁ listened ▁ to ▁ his ▁ mom ▁my ▁ and ▁ went ▁ inside ▁. ▁
+
+I speculate that the LM thinks fire is the most dangerous of all dangerous things, 
+so the top-activating examples were all fire.
+
