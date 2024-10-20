@@ -105,7 +105,7 @@ uv run src/tiny_stories_sae/call_openai.py \
 
 ### plot.py and combined_plot.py
 
-Given GPT-4's ratings, these scripts plots them. 
+Given GPT-4's ratings, these scripts plots them.
 `combined_plot.py` can graph multiple ratings in different colors.
 
 Example usage:
@@ -116,8 +116,10 @@ uv run src/tiny_stories_sae/plot.py \
   --xlabel "Clearness (5 is most clear)" \
   --title "GPT-4o's ranking of 100 sparse autoencoder features"
 ```
+
 and
-``` bash
+
+```bash
 uv run src/tiny_stories_sae/combined_plot.py \
   --response_jsons results/1.json results/2.json \
   --labels "1" "2" 

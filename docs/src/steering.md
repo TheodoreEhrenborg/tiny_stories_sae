@@ -52,6 +52,7 @@ exhibiting feature i's pattern, the text should make feature i activate.
 These highlighted texts are hidden by default, but you can click to see them.
 
 ## Feature 0
+
 I [said](manual_feature_examination.md#feature-0), "This feature activates on the quotation mark when someone starts talking". Steering is a complete failure here. If you look at the highlights, feature 0 doesn't even activate on the one quotation mark in the second generation.
 
 > Once upon a time, there was a little boy named Tim. He went on vacation with his mom, who put on a big bed. in small jail, so she said thank you. Tim was in jail, but in her while she was. They had to get in their room and make a big, clear room. Tim was so happy to enter the room and make everything in.
@@ -83,7 +84,7 @@ I [said](manual_feature_examination.md#feature-0), "This feature activates on th
 
 ## Feature 1
 
-I [said](manual_feature_examination.md#feature-1), 
+I [said](manual_feature_examination.md#feature-1),
 "This feature activates on a list of concrete nouns, almost always in the context of characters wondering about this list or playing pretend with the list."
 Steering is somewhat successful here: there are lists like "a cloud, a small bird" or "a game or a pretend game". And feature 1 then activates on those lists.
 
@@ -174,9 +175,9 @@ I'm uncertain if this is coincidence or if there is an explanation
 
 ## Feature 6
 
-In the top 10 examples (ranked by strength of activation) from the TinyStories validation set, 
+In the top 10 examples (ranked by strength of activation) from the TinyStories validation set,
 feature 6 only activated on "fire" (or more weakly on "firemen").
-And yet these generations aren't related to fire at all: 
+And yet these generations aren't related to fire at all:
 
 > Once upon a time, there was an ignorant driver. One day, the cars that was traveling quickly, and so did a terrible crash. The lights went so quick
 > ly, that was very loud.
@@ -209,20 +210,20 @@ And yet these generations aren't related to fire at all:
 
 </details>
 
-If you look at the highlights, you'll see that feature 6 is activating, but on 
+If you look at the highlights, you'll see that feature 6 is activating, but on
 unrelated words like "crash" and "cars".
 A natural hypothesis is that feature 6 isn't a "fire" feature, but instead a "dangerous thing" feature.
 
-If we look at examples from the validation set that don't activate quite as strongly 
+If we look at examples from the validation set that don't activate quite as strongly
 as the top 10, we indeed see that feature 6 activates on "earthquake" and "flood":
 
 Excerpt 1:
+
 > " ▁Mom ▁my ▁, ▁ what ▁'s ▁ happening ▁?" ▁ she ▁ cried ▁. ▁ " ▁It ▁'s ▁ an ▁ earthquake ▆, ▁ Lily ▁," ▁ her ▁ mom ▁my ▁ said ▁
 
 Excerpt 2:
 
 > Tim ▁my ▁'s ▁ mom ▁my ▁ told ▁ him ▁ to ▁ come ▁ inside ▁ because ▁ there ▁ might ▁ be ▁ a ▁ flood ▇. ▁ Tim ▁my ▁ didn ▁'t ▁ know ▁ what ▁ a ▁ flood █ was ▁, ▁ but ▁ he ▁ listened ▁ to ▁ his ▁ mom ▁my ▁ and ▁ went ▁ inside ▁. ▁
 
-I speculate that the LM thinks fire is the most dangerous of all dangerous things, 
+I speculate that the LM thinks fire is the most dangerous of all dangerous things,
 so the top-activating examples were all fire.
-

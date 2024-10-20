@@ -42,8 +42,7 @@ in the sparse autoencoder's hidden layer. The end goal is to train the
 autoencoder so that we can read off the concepts from the features.
 These concepts
 
-
-Assumption 2: The 
+Assumption 2: The
 [one-dimensional linear representation hypothesis](https://transformer-circuits.pub/2024/july-update/index.html#linear-representations)—the
 concepts are
 in fact vectors in \\(\\mathbb{R}^{768}\\), and
