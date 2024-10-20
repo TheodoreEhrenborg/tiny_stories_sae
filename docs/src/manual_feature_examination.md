@@ -277,7 +277,7 @@ Example 10: `Something ▁ that ▁ likes ▁ to ▁ fly ▁. ▁ Like ▁ a ▂
 
 ### Feature 2
 
-My interpretation: This feature activates on "time" in "it was time",
+My interpretation: This feature activates on "time" in "it was time to/for",
 usually in a phrase like "the characters were having fun, but then it was time for something less fun".
 
 GPT-4o's interpretation: "'time' is always strongly highlighted."

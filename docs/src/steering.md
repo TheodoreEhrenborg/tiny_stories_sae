@@ -40,7 +40,7 @@ text that resembles the desired feature.
 
 After the initial tuning to get the scale factor 10,
 I generated two steered examples (limited to 100 tokens)
-for each of features 0, 1, 2, and 6, without cherrypicking the examples.
+for each of features 0, 1, 2, and 6, without cherrypicking the generations.
 Note that I've specifically chosen feature 6 since it's an interesting case.
 
 After generating the text, I fed it back into the unsteered LM, and used
@@ -52,6 +52,7 @@ exhibiting feature i's pattern, the text should make feature i activate.
 These highlighted texts are hidden by default, but you can click to see them.
 
 ## Feature 0
+I [said](manual_feature_examination.md#feature-0), "This feature activates on the quotation mark when someone starts talking". Steering is a complete failure here. If you look at the highlights, feature 0 doesn't even activate on the one quotation mark in the second generation.
 
 > Once upon a time, there was a little boy named Tim. He went on vacation with his mom, who put on a big bed. in small jail, so she said thank you. Tim was in jail, but in her while she was. They had to get in their room and make a big, clear room. Tim was so happy to enter the room and make everything in.
 > After the door,, Tim was in a room with many passages. She,thanks for her home
@@ -81,6 +82,10 @@ These highlighted texts are hidden by default, but you can click to see them.
 </details>
 
 ## Feature 1
+
+I [said](manual_feature_examination.md#feature-1), 
+"This feature activates on a list of concrete nouns, almost always in the context of characters wondering about this list or playing pretend with the list."
+Steering is somewhat successful here: there are lists like "a cloud, a small bird" or "a game or a pretend game". And feature 1 then activates on those lists.
 
 > Once upon a time, there was a little bird, and each day.
 > One day, when it was a bit of a wind, when it saw a cloud, a small bird.
@@ -127,6 +132,11 @@ These highlighted texts are hidden by default, but you can click to see them.
 </details>
 
 ## Feature 2
+
+I [said](manual_feature_examination.md#feature-2),
+"This feature activates on 'time' in 'it was time to/for', usually in a phrase like 'the characters were having fun, but then it was time for something less fun'."
+
+In the first generation, the model does generate "time to", although not after "it was". So that's a partial success. The second generation is another complete failure, and feature 2 doesn't activate anywhere on it.
 
 > Once upon a time, there was a group to play with to a group for a long time to for the one to go to to the nation for a parade. "Time to go for the parade to for the parade to for the last to go for the Wheel. to the Wheel to the room for the Wheel. to remove the group for the tank to to exit for the to to exit.
 > As for the for the group to go, the excited for to be for the new exit
