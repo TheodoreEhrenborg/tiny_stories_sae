@@ -203,7 +203,7 @@ in the top 10 examples from the TinyStories validation set, this feature only ac
 The fire neuron really seems to be a danger neuron,
 based on the steering results
 
-Look at long tail to confirm this
+Look at TODO long tail to confirm this
 Indeed, we see some non-fire related examples:
 > " ▁Mom ▁my ▁, ▁ what ▁'s ▁ happening ▁?\" ▁ she ▁ cried ▁. ▁ \" ▁It ▁'s ▁ an ▁ earthquake ▆, ▁ Lily ▁,\" ▁ her ▁ mom ▁my ▁ said ▁
 and
