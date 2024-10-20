@@ -20,7 +20,7 @@ Anecdotally I've found that
 `10 * nudge` makes steering more likely to work than `nudge`,
 although at the cost of some text quality. We prompt the LM with "Once upon a time".
 
-(The above algorithm is similar to but not the same as the clamping
+(The above algorithm is similar to, but not the same as, the clamping
 Anthropic describes
 [here](https://transformer-circuits.pub/2024/scaling-monosemanticity/index.html#appendix-methods-steering).)
 
@@ -59,7 +59,7 @@ I [said](manual_feature_examination.md#feature-0), "This feature activates on th
 > After the door,, Tim was in a room with many passages. She,thanks for her home
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ little ▁ boy ▁ named ▁ Tim ▁. ▁ He ▁ went ▁ on ▁ vacation ▁ with ▁ his ▁ mom ▁, ▁ who ▁ put ▁ on ▁ a ▁ big ▁ bed ▁. ▁ in ▁ small ▁ jail ▁, ▁ so ▁ she ▁ said ▁ thank ▁ you ▁. ▁ Tim ▁ was ▁ in ▁ jail ▁, ▁ but ▁ in ▁ her ▁ while ▁ she ▁ was ▁. ▁ They ▁ had ▁ to ▁ get ▁ in ▁ their ▁ room ▁ and ▁ make ▁ a ▁ big ▁, ▁ clear ▁ room ▁. ▁ Tim ▁ was ▁ so ▁ happy ▁ to ▁ enter █ the ▁ room ▁ and ▁ make ▁ everything ▁ in ▁. ▁
 > ▁
@@ -72,7 +72,7 @@ I [said](manual_feature_examination.md#feature-0), "This feature activates on th
 > They both had surprise, and had to say goodbye, so they got
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ little ▁ girl ▁ named ▁ Lily ▁. ▁ She ▁ had ▁ a ▁ silver ▁ crown ▁ and ▁ her ▁ brother ▁ had ▁ won ▁ before ▁. ▁. ▁ She ▁ was ▁ a ▁ good ▁ boy ▁, ▁ who ▁ win █ced ▁og ▁ means ▁ so ▁ smooth ▁ in ▁." ▁  ▁
 > ▁
@@ -97,7 +97,7 @@ Steering is somewhat successful here: there are lists like "a cloud, a small bir
 > Then, many more.
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ little ▁ bird ▁, ▁ and ▁ each ▁ day ▁. ▁
 > ▁
@@ -120,7 +120,7 @@ Steering is somewhat successful here: there are lists like "a cloud, a small bir
 > "Are so many
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ wise ▁ old ▁ man ▁ who ▁ liked ▁ to ▁ travel ▁. ▁ He ▁ liked ▁ to ▁ eat ▁, ▁ he ▁ was ▁ very ▁ curious ▁ and ▁ he ▁ wanted ▁ a ▁ new ▁, ▁ sweet ▁ sometimes ▁. ▁ He ▁ loved ▁ to ▁ learn ▁ new ▁ things ▁. ▁  ▁
 > ▁
@@ -143,7 +143,7 @@ In the first generation, the model does generate "time to", although not after "
 > As for the for the group to go, the excited for to be for the new exit
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ group ▁ to ▁ play ▁ with ▁ to ▁ a ▁ group ▁ for ▁ a ▁ long ▁ time ▁ to ▁ for ▁ the ▁ one ▁ to ▁ go ▁ to ▁ to ▁ the ▁ nation ▁ for ▁ a ▁ parade ▁. ▁ " ▁Time █ to ▁ go ▁ for ▁ the ▁ parade ▁ to ▁ for ▁ the ▁ parade ▁ to ▁ for ▁ the ▁ last ▁ to ▁ go ▁ for ▁ the ▁ Wheel ▁. ▁ to ▁ the ▁ Wheel ▁ to ▁ the ▁ room ▁ for ▁ the ▁ Wheel ▁. ▁ to ▁ remove ▁ the ▁ group ▁ for ▁ the ▁ tank ▁ to ▁ to ▁ exit ▁ for ▁ the ▁ to ▁ to ▁ exit ▁. ▁
 > ▁
@@ -157,7 +157,7 @@ In the first generation, the model does generate "time to", although not after "
 > The day to
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ family ▁ for ▁ dinner ▁. ▁ They ▁ all ▁ sat ▁ down ▁ for ▁ dinner ▁ for ▁ the ▁ meal ▁ to ▁ eat ▁. ▁
 > ▁
@@ -184,7 +184,7 @@ And yet these generations aren't related to fire at all:
 > \<|endoftext|>
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ an ▁ ignorant ▁ driver ▁. ▁ One ▁ day ▁, ▁ the ▁ cars █ that ▁ was ▁ traveling ▁ quickly ▁, ▁ and ▁ so ▁
 > did ▁ a ▁ terrible ▁ crash ▇. ▁ The ▁ lights ▁ went ▅ so ▁ quickly ▁, ▁ that ▁ was ▁ very ▁ loud ▂. ▁
@@ -198,7 +198,7 @@ And yet these generations aren't related to fire at all:
 > The red
 
 <details>
-<summary>Click to see the highlighted version </summary>
+<summary>Click to see the version with feature activations highlighted </summary>
 
 > Once ▁ upon ▁ a ▁ time ▁, ▁ there ▁ was ▁ a ▁ train ▂. ▁ On ▁ one ▁ of ▁ the ▁ roads ▁, ▁ a ▁ very ▁ big ▁ crash ▆ happened ▁. ▁ It ▁ made ▁ a ▁ lot ▁ of ▁ noise ▂. ▁ " ▁". ▁ crash ▆ the ▁ cars ▄ and ▁ truck ▁. ▁," ▁ and ▁ cars ▃," ▁ crash ▄ with ▁ a ▁ loud ▁ noise ▂. ▁ That ▁ noise ▅ and ▁ accident ▃. ▁
 > ▁

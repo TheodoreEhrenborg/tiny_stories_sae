@@ -375,7 +375,7 @@ Example 10: `It ▁ was ▁ so ▁ much ▁ fun ▁! ▁ They ▁ even ▁ saw �
 ## Dead features
 
 On 1000 examples from the validation set,
-each of the autoencoders 10000 features activated at least once,
+each of the autoencoder's 10000 features activated at least once,
 i.e. there were no dead features.
 
 My understanding of the

@@ -95,5 +95,5 @@ What could have gone wrong here?
   (e.g. keep the activation strength as a floating point number)
   might be easier for it to comprehend.
 - Or maybe the prompt should be split in two:
-  - First GPT-4o has to describe a pattern given the examples
-  - Then (with a blank context) it has to decide which of two examples (a real one and a distractor) exhibits the pattern. Ideally this would detect when GPT-4o has wrongly found a generic pattern that could match any example
+  - First ask GPT-4o to describe a pattern given the examples
+  - Then ask it (with a blank context) to decide which of two examples (a real one and a distractor) exhibits the pattern. Ideally this would detect when GPT-4o has wrongly found a generic pattern that could match any example

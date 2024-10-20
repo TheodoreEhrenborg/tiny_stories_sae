@@ -137,4 +137,4 @@ Anthropic says
 Since in the previous post their largest model had 1.3e5 parameters,
 while in "Scaling Monosemanticity" their largest model had 3.4e7 parameters,
 I estimate that the dataset scaled up also by roughly 100x,
-so I'd guess they trained their autoencoder on very roughly 1e12 tokens.
+so I'd guess they trained their largest autoencoder on very roughly 1e12 tokens.

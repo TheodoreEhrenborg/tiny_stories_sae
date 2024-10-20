@@ -17,11 +17,13 @@ Anthropic trained on the activation after a middle layer of Claude:
 They have various justifications for this. My intuition is that the middle layer is maybe where
 the model is thinking the most about concepts, because at the front and back it has
 to think more about processing input and preparing output, respectively.
+(See also [this paper](http://arxiv.org/abs/2308.03296):
+"the middle layers [focus] on more abstract patterns".)
 
 TinyStories-33M has
 4 transformer layers. So we
 take the activation after the 2nd
-layer, while feeding it short stories\
+layer, while feeding it short stories
 from the `roneneldan/TinyStories` dataset.
 This is a vector in \\( \\mathbb{R}^{768}  \\),
 i.e. a list of activation strengths, one for each of 768 neurons.
