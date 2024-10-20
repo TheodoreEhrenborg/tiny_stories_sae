@@ -43,10 +43,18 @@ text that resembles the desired feature.
 
 After the initial tuning to get the scale factor 10,
 I generated two steered examples (limited to 100 tokens)
-for each of features 0, 1, 2, 6, without cherrypicking the examples.
-Note that I am cherrypicking by choosing feature 6, since it's an interesting feature.
+for each of features 0, 1, 2, and 6, without cherrypicking the examples.
+Note that I've specifically chosen feature 6 since it's an interesting case.
 
-Feature 0
+After generating the text, I fed it back into the unsteered LM, and used
+the autoencoder to check whether the feature activated, using the same
+block element format as 
+[here](manual_feature_examination.md#how-to-read-the-examples).
+This is a sanity check: If steering pushes the generated text towards
+exhibiting feature i's pattern, the text should make feature i activate.
+These highlighted texts are hidden by default, but you can click to see them.
+
+## Feature 0
 
 > Once upon a time, there was a little boy named Tim. He went on vacation with his mom, who put on a big bed. in small jail, so she said thank you. Tim was in jail, but in her while she was. They had to get in their room and make a big, clear room. Tim was so happy to enter the room and make everything in.
 
@@ -71,7 +79,7 @@ Feature 0
  ▁
  > ▁They ▁ both ▁ had ▁ surprise ▁, ▁ and ▁ had ▁ to ▁ say ▁ goodbye ▁, ▁ so ▁ they ▁ got ▁
 
-Feature 1
+## Feature 1
 
 
 > Steered output:
@@ -122,7 +130,7 @@ Feature 1
  > ▁" ▁Are ▁ so ▁ many ▁
 
 
-Feature 2
+## Feature 2
 
 
 > Once upon a time, there was a group to play with to a group for a long time to for the one to go to to the nation for a parade. "Time to go for the parade to for the parade to for the last to go for the Wheel. to the Wheel to the room for the Wheel. to remove the group for the tank to to exit for the to to exit.
@@ -154,7 +162,7 @@ Feature 2
  
 
 
-Feature 6
+## Feature 6
 
 
 > Once upon a time, there was an ignorant driver. One day, the cars that was traveling quickly, and so did a terrible crash. The lights went so quick
