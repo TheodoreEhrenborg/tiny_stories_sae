@@ -18,7 +18,7 @@ They have various justifications for this. My intuition is that the middle layer
 the model is thinking the most about concepts, because at the front and back it has
 to think more about processing input and preparing output, respectively.
 (See also [this paper](http://arxiv.org/abs/2308.03296):
-"the middle layers [focus] on more abstract patterns".)
+"the middle layers \[focus\] on more abstract patterns".)
 
 TinyStories-33M has
 4 transformer layers. So we
