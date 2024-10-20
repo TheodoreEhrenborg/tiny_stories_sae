@@ -1,5 +1,3 @@
-WIP—not quite done yet
-
 # TinyStories SAE
 
 Trains a sparse autoencoder on this [TinyStories](https://huggingface.co/roneneldan/TinyStories-33M) model
