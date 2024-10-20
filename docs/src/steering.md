@@ -18,7 +18,7 @@ add `10 * nudge` to the residual activation
 after the 2nd layer (i.e. the same layer the autoencoder was trained on).
 Anecdotally I've found that
 `10 * nudge` makes steering more likely to work than `nudge`,
-although at the cost of some text quality.
+although at the cost of some text quality. We prompt the LM with "Once upon a time".
 
 (The above algorithm is similar to but not the same as the clamping
 Anthropic describes
