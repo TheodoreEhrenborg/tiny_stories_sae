@@ -1,6 +1,6 @@
 # TinyStories SAE
 
-Trains a sparse autoencoder on this [TinyStories](https://huggingface.co/roneneldan/TinyStories-33M) model
+Train a sparse autoencoder using your laptop on this [TinyStories](https://huggingface.co/roneneldan/TinyStories-33M) model
 
 Docs are [here](https://sae.ehrenborg.dev/).
 The rest of this readme is software engineering details.
