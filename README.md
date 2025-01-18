@@ -17,7 +17,7 @@ This repo uses [uv](https://github.com/astral-sh/uv) for packaging,
 
 ### With docker
 
-uv doesn't work well on machines that don't follow that Filesystem Hierarchy Standard (e.g. NixOS).
+uv doesn't work well on machines that don't follow the Filesystem Hierarchy Standard (e.g. NixOS).
 To run uv in this case, use the provided Dockerfile:
 
 1. Build the image with `./build.sh`
